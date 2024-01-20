@@ -5,7 +5,11 @@ VLSI Hardware Development program. This repository contains the entire flow from
  * Create the GitHub repository.
  * Download and install VirtualBox.
  * Download and install Ubuntu 20.04. The VM configured with 8GB of RAM and 70 GB of storage.
- * * Update and upgrade the Ubuntu to latest version of program.
+   * Update and upgrade the Ubuntu to latest version of program.
+   * ```
+     sudo apt-get update
+     sudo apt-get upgrade
+     ```
  * Install Yosys
 
    
