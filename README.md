@@ -24,5 +24,16 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ make
      $ sudo make install
      ```
-
+ * Install iverilog `$ sudo apt-get install iverilog`
+ * Install GTKWave `$ sudo apt-get install gtkwave`
+ * Install OpenSTA
+     ```
+     $ apt-get install cmake swig
+     $ git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
+     $ cd OpenSTA
+     $ mkdir build
+     $ cd build
+     $ cmake ..
+     $ make
+     ```
    
