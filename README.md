@@ -24,8 +24,14 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ make
      $ sudo make install
      ```
+  ![Yosys_install](https://github.com/pitman75/vsd-hdp/assets/12179612/7525dcc7-a00c-4932-9f53-110079a0adbf)
+  
  * Install iverilog `$ sudo apt-get install iverilog`
+  ![iverilog_install](https://github.com/pitman75/vsd-hdp/assets/12179612/934d85c3-262d-436e-b23d-4ce7bac61452)
+
  * Install GTKWave `$ sudo apt-get install gtkwave`
+  ![GTKWave_install](https://github.com/pitman75/vsd-hdp/assets/12179612/aa926e90-c702-4b58-953a-c5f9ad9e1de0)
+
  * Install OpenSTA
      ```
      $ apt-get install cmake swig
@@ -36,6 +42,8 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ cmake ..
      $ make
      ```
+  ![OpenSTA_install](https://github.com/pitman75/vsd-hdp/assets/12179612/e4aebe41-848f-4de7-8bfa-333daf78f3e3)
+  
  * Install NGSpice
      ```
      $ wget -c https://sourceforge.net/projects/ngspice/files/ng-spice-rework/old-releases/37/ngspice-37.tar.gz
@@ -56,6 +64,8 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ make
      $ sudo make install
      ```
+  ![Magic_install](https://github.com/pitman75/vsd-hdp/assets/12179612/de7367c1-b028-4a45-b590-69cb242de9df)
+  
  * Install OpenLANE
      ```
      $ sudo apt install -y build-essential python3 python3-venv python3-pip
@@ -73,4 +83,4 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ make
      $ make test
      ```
-     
+![OpenLANE_install](https://github.com/pitman75/vsd-hdp/assets/12179612/1d0a7ef1-50bb-4c19-995e-2780761a74be)
