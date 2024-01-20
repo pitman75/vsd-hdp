@@ -36,4 +36,41 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ cmake ..
      $ make
      ```
-   
+ * Install NGSpice
+     ```
+     $ wget -c https://sourceforge.net/projects/ngspice/files/ng-spice-rework/old-releases/37/ngspice-37.tar.gz
+     $ tar -xzf ngspice-37.tar.gz
+     $ cd ngspice-37
+     $ mkdir release
+     $ cd release
+     $ ../configure  --with-x --with-readline=yes --disable-debug
+     $ make
+     $ sudo make install
+     ```
+ * Install Magic
+     ```
+     $ sudo apt-get install m4 tcsh csh libx11-dev tcl-dev tk-dev libcairo2-dev mesa-common-dev libglu1-mesa-dev libncurses-dev
+     $ git clone https://github.com/RTimothyEdwards/magic
+     $ cd magic
+     $ ./configure
+     $ make
+     $ sudo make install
+     ```
+ * Install OpenLANE
+     ```
+     $ sudo apt install -y build-essential python3 python3-venv python3-pip
+     $ sudo apt install apt-transport-https ca-certificates curl software-properties-common
+     $ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+     $ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+     $ sudo apt-get update
+     $ sudo apt install docker-ce docker-ce-cli containerd.io
+     $ sudo docker run hello-world
+     $ sudo usermod -aG docker $USER
+     # After reboot
+     $ docker run hello-world
+     $ git clone https://github.com/The-OpenROAD-Project/OpenLane
+     $ cd OpenLane
+     $ make
+     $ make test
+     ```
+     
