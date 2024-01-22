@@ -34,13 +34,14 @@ VLSI Hardware Development program. This repository contains the entire flow from
 
  * Install OpenSTA
      ```
-     $ apt-get install cmake swig
+     $ sudo apt-get install cmake swig
      $ git clone https://github.com/The-OpenROAD-Project/OpenSTA.git
      $ cd OpenSTA
      $ mkdir build
      $ cd build
      $ cmake ..
      $ make
+     $ sudo make install
      ```
   ![OpenSTA_install](https://github.com/pitman75/vsd-hdp/assets/12179612/e4aebe41-848f-4de7-8bfa-333daf78f3e3)
   
