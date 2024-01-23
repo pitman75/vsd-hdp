@@ -115,3 +115,32 @@ gtkwave tb_good_mux.vcd
 ```
 ![good_mux_testbench](https://github.com/pitman75/vsd-hdp/assets/12179612/fe4a56be-0f3e-46d7-a242-97d378d3b771)
 
+**Yosys Synthesis:**
+
+Yosys transforms RTL verilog source to gate-level netlist and map the netlist to silicon's factory logic primitives library.
+
+**Usage:**
+```
+$ yosys
+yosys> read_liberty -lib ../path_of_library_file/silicon_library.lib
+yosys> read_verilog design_top_file.v
+yosys> synth -top top_module_name
+yosys> abc -liberty ../path_of_library_file/silicon_library.lib
+yosys> show
+```
+
+For the lab it's:
+```
+$ yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog good_mux.v
+yosys> synth -top good_mux
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+**Synthesis to actual design: **
+![yosys_god_mux](https://github.com/pitman75/vsd-hdp/assets/12179612/b5632545-fe3a-49aa-a8fd-eb26a4595ff9)
+
+
+
