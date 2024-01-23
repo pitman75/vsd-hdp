@@ -153,4 +153,15 @@ yosys> write_verilog -noattr good_mux_netlist.v
 
 ![good_mux_netlist](https://github.com/pitman75/vsd-hdp/assets/12179612/5f7ede79-e65c-4b87-88da-c3fcd6aba7e6)
 
+## Day 2
 
+Introduction to library file - notation and naming.
+
+ 1. What information is seen in a .lib file and how is it written and how to understand this. The .lib (library) file consists of all the information on the electrical behaviour of the std silicon cells used in the Chip design. It includes area, power for various standard cells and delays.
+ 2. Different flavours are used as per the requirement of operation as in slow, medium or fast.
+ 3. Combinational logic delay in logic path determines the speed of operation of digital logic circuits.
+ 4. We have to consider setup time, and hold time and what happens if there are any violations (negative slack).
+ 5. Difference between faster and slower cells and where to use which one. This selection of specific cells means that there are synthesis constraints.
+ 6. What is PVT (Process-Voltage-Temperature) and what variations or how the libs will be characterised to model the PVTs.
+ 7. Hierarchical model and the flat model, differences in synthesis.
+ 8. Flip-flops and how to utilise.
