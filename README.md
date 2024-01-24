@@ -172,13 +172,16 @@ Read and synthesys _multiple_modules.v_ by default result will be done in hierar
 
 ![multiple_modules_hier_verilog](https://github.com/pitman75/vsd-hdp/assets/12179612/d0573624-931a-43db-aa95-8f505060dd81)
 
-Sometimes switch synthesys to flat manner is very usefull. To switch to flat manner just do it: `yousys> flatten`
+Sometimes switch synthesys to flat manner is very usefull. To switch to flat manner just do it: 
+
+`yousys> flatten`
 
 ![multiple_modules_flat](https://github.com/pitman75/vsd-hdp/assets/12179612/0f91685d-6b0e-4658-8b54-26d0fd28be8b)
 
 ![multiple_modules_flat_verilog](https://github.com/pitman75/vsd-hdp/assets/12179612/20b07812-04f5-41d1-a2a2-f33a7c414e8c)
 
 For huge design or design with same as submodules it possible to syntesys only submodules by command: 
+
 `yosys> synth -top submodule_name`
 
 ![multiple_modules_subm1](https://github.com/pitman75/vsd-hdp/assets/12179612/935a8189-a113-4046-81ae-e860c693a3aa)
