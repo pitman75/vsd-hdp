@@ -186,6 +186,58 @@ For huge design or design with same as submodules it possible to syntesys only s
 
 ![multiple_modules_subm1](https://github.com/pitman75/vsd-hdp/assets/12179612/935a8189-a113-4046-81ae-e860c693a3aa)
 
+Let's play with some sort of D flip-flops (DFF). There are can be:
 
+ * with asynchronous reset
+ * with asynchronous set
+ * with synchronous reset
+ * other
+
+###DFF with asynchronous reset
+
+**Verilog snippet for this DFF**
+
+```
+module dff_asyncres ( input clk ,  input async_reset , input d , output reg q );
+always @ (posedge clk , posedge async_reset)
+begin
+	if(async_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+**Waveform**
+
+![dff_asyncres_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/7af5e499-1ef7-4718-a778-9b61acf2789e)
+
+**Synthesys**
+
+Checking for synthesis, here we would specify the library for the dff using dfflibmap command. In this case, everything is in the same library, there is not much change noticed in the paths. In general workflow is:
+
+```
+yosys> read_liberty -lib ../path_of_library_file/library.lib
+yosys> read_verilog design_verilog_file.v
+yosys> synth -top module_name
+yosys> dfflibmap -liberty ../path_of_library_file/library.lib
+yosys> abc -liberty ../path_of_library_file/library.lib
+yosys> show 
+```
+
+For DFF with async reset commands are there:
+
+```
+$ yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_asyncres.v
+yosys> synth -top dff_asyncres
+yosys> dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+![dff_asyncres_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/e21c7e43-7770-404d-b2a4-5ef1e2bbe877)
 
 
