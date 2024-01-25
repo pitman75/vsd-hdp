@@ -193,7 +193,7 @@ Let's play with some sort of D flip-flops (DFF). There are can be:
  * with synchronous reset
  * other
 
-###DFF with asynchronous reset
+### DFF with asynchronous reset
 
 **Verilog snippet for this DFF**
 
@@ -239,5 +239,54 @@ yosys> show
 ```
 
 ![dff_asyncres_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/e21c7e43-7770-404d-b2a4-5ef1e2bbe877)
+
+### DFF with asynchronous set
+
+**Verilog snippet for this DFF**
+
+```
+module dff_async_set ( input clk ,  input async_set , input d , output reg q );
+always @ (posedge clk , posedge async_set)
+begin
+	if(async_set)
+		q <= 1'b1;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+**Waveform**
+
+![dff_asyncset_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/2ddc25bd-d0a8-418d-a81d-4e2a430a610f)
+
+**Synthesys**
+
+![dff_asyncset_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/1c4375ea-c6ce-47c0-a838-f3b4bbdd572a)
+
+### DFF with synchronous reset
+
+**Verilog snippet for this DFF**
+
+```
+module dff_syncres ( input clk , input async_reset , input sync_reset , input d , output reg q );
+always @ (posedge clk )
+begin
+	if (sync_reset)
+		q <= 1'b0;
+	else	
+		q <= d;
+end
+endmodule
+```
+
+**Waveform**
+
+![dff_syncres_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/d091fbf5-2348-4736-b773-ea783831e47a)
+
+**Synthesys**
+
+![dff_syncres_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/86f07b1a-68ba-429a-8d5f-02ed37cd5a59)
+
 
 
