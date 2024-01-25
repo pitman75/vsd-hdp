@@ -288,5 +288,44 @@ endmodule
 
 ![dff_syncres_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/86f07b1a-68ba-429a-8d5f-02ed37cd5a59)
 
+### Special cases optimization
+
+Let's two special cases with multiplication and how to Yosys syntesis its.
+
+**Multiplication to 2**
+
+**Verilog snippet**
+
+```
+module mul2 (input [2:0] a, output [3:0] y);
+	assign y = a * 2;
+endmodule
+```
+
+**Synthesis**
+
+![mult2_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/33a6e74c-7dda-4314-91ca-0f364c6ae58e)
+
+**Verilog after synthesis**
+
+![mult2_net](https://github.com/pitman75/vsd-hdp/assets/12179612/6509c063-c30b-4f4a-80ae-854b12e1328a)
+
+**Multiplication to 9**
+
+**Verilog snippet**
+
+```
+module mult8 (input [2:0] a , output [5:0] y);
+	assign y = a * 9;
+endmodule
+```
+
+**Synthesis**
+
+![mult9_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/0e01b1ce-92ed-4a21-be9a-2cc00d149a58)
+
+**Verilog after synthesis**
+
+![mult9_net](https://github.com/pitman75/vsd-hdp/assets/12179612/ade903fe-03e9-4846-bed4-5e4d68736142)
 
 
