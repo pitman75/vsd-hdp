@@ -288,9 +288,9 @@ endmodule
 
 ![dff_syncres_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/86f07b1a-68ba-429a-8d5f-02ed37cd5a59)
 
-### Special cases optimization
+### Optimize logic for special cases
 
-Let's two special cases with multiplication and how to Yosys syntesis its.
+Let's see two special cases with multiplication and how to Yosys syntesis its.
 
 **Multiplication to 2**
 
