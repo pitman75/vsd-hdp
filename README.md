@@ -1,7 +1,7 @@
 # vsd-hdp
 VLSI Hardware Development program. This repository contains the entire flow from the RTL design to GDSII.
 
-## Day 0
+## Day 0 - Prepare software
  * Create the GitHub repository.
  * Download and install VirtualBox.
  * Download and install Ubuntu 20.04. The VM configured with 8GB of RAM and 70 GB of storage.
@@ -86,7 +86,7 @@ VLSI Hardware Development program. This repository contains the entire flow from
      ```
 ![OpenLANE_install](https://github.com/pitman75/vsd-hdp/assets/12179612/1d0a7ef1-50bb-4c19-995e-2780761a74be)
 
-## Day 1
+## Day 1 - Introduction to Verilog RTL Design and Synthesis
 
 Introduction to Verilog RTL Design and Synthesis.
 
@@ -153,7 +153,7 @@ yosys> write_verilog -noattr good_mux_netlist.v
 
 ![good_mux_netlist](https://github.com/pitman75/vsd-hdp/assets/12179612/5f7ede79-e65c-4b87-88da-c3fcd6aba7e6)
 
-## Day 2
+## Day 2 - Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
 
 Introduction to library file - notation and naming.
 
@@ -328,4 +328,175 @@ endmodule
 
 ![mult9_net](https://github.com/pitman75/vsd-hdp/assets/12179612/ade903fe-03e9-4846-bed4-5e4d68736142)
 
+## Day 3 - Combinational and sequential optimizations
+
+1. Area and power savings are achieved when we perform combinational and Sequential optimisations.
+2. The combinational optimisations are Constant propagation and Boolean optmisation.
+3. The Sequential optimisations are categorised as Basic (Sequential constant propagation) and Advanced (State optimisation, Retiming, Sequential logic cloning). 
+
+**Example 1, sequential logic optimization**
+
+**Verilog snippet**
+
+```
+module opt_check (input a , input b , input c , output y1, output y2);
+wire a1;
+assign y1 = a?b:0;
+assign y2 = ~((a1 & b) | c);
+assign a1 = 1'b0;
+endmodule
+```
+
+**Usage**
+
+For logic optomization workflow process must have additional command `opt_clean -purge` i.e. full workflow is:
+
+```
+$ yosys
+yosys> read_liberty -lib ../path_of_library_file/silicon_library.lib
+yosys> read_verilog design_top_file.v
+yosys> synth -top top_module_name
+yosys> opt_clean -purge
+yosys> abc -liberty ../path_of_library_file/silicon_library.lib
+yosys> show
+```
+
+For the example it's:
+
+```
+$ yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog opt_check.v
+yosys> synth -top opt_check
+yosys> opt_clean -purge
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+**Result**
+
+![opt-1](https://github.com/pitman75/vsd-hdp/assets/12179612/0eadd6bb-46bf-41a8-9080-e292dd52a19f)
+
+**Example 2, sequential logic optimization**
+
+**Verilog snippet**
+
+```
+module opt_check2 (input a , input b , output y);
+	assign y = a?1:b;
+endmodule
+```
+
+**Result**
+
+![opt-2](https://github.com/pitman75/vsd-hdp/assets/12179612/77747353-fded-466a-8c5f-74fe59e692b0)
+
+**Example 3, sequential logic optimization**
+
+**Verilog snippet**
+
+```
+module opt_check3 (input a , input b, input c , output y);
+	assign y = a?(c?b:0):0;
+endmodule
+```
+
+**Result**
+
+![opt-3](https://github.com/pitman75/vsd-hdp/assets/12179612/04dd3e57-e732-43b6-b9e4-1ee6e07a3d67)
+
+**Example 4, sequential logic optimization**
+
+**Verilog snippet**
+
+```
+module opt_check4 (input a , input b , input c , output y);
+ assign y = a?(b?(a & c ):c):(!c);
+endmodule
+```
+
+**Result**
+
+![opt-4](https://github.com/pitman75/vsd-hdp/assets/12179612/4796b7ad-0db5-4503-99d4-4820779d3922)
+
+**Logic optimization Verilog RTL with submodules**
+
+For designes with submodules (must of designes) we should add special command for convertion hierarhical design to flat. Because an optimizer can do optimization only inside one module. In this case our workflof extends to:
+
+```
+$ yosys
+yosys> read_liberty -lib ../path_of_library_file/silicon_library.lib
+yosys> read_verilog design_top_file.v
+yosys> synth -top top_module_name
+yosys> flatten
+yosys> opt_clean -purge
+yosys> abc -liberty ../path_of_library_file/silicon_library.lib
+yosys> show
+```
+
+**Example 1, sequential logic optimization with submodules**
+
+**Verilog snippet**
+
+```
+module sub_module1(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+module sub_module2(input a , input b , output y);
+ assign y = a^b;
+endmodule
+
+module multiple_module_opt(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module1 U1 (.a(a) , .b(1'b1) , .y(n1));
+sub_module2 U2 (.a(n1), .b(1'b0) , .y(n2));
+sub_module2 U3 (.a(b), .b(d) , .y(n3));
+
+assign y = c | (b & n1); 
+
+endmodule
+```
+
+**Usage**
+
+```
+$ yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog multiple_module_opt.v
+yosys> synth -top multiple_module_opt
+yosys> flatten
+yosys> opt_clean -purge
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+**Result**
+
+![opt_module-1](https://github.com/pitman75/vsd-hdp/assets/12179612/c9bce227-ca10-47dc-b027-00ba3d2ba6c4)
+
+**Example 2, sequential logic optimization with submodules**
+
+**Verilog snippet**
+
+```
+module sub_module(input a , input b , output y);
+ assign y = a & b;
+endmodule
+
+module multiple_module_opt2(input a , input b , input c , input d , output y);
+wire n1,n2,n3;
+
+sub_module U1 (.a(a) , .b(1'b0) , .y(n1));
+sub_module U2 (.a(b), .b(c) , .y(n2));
+sub_module U3 (.a(n2), .b(d) , .y(n3));
+sub_module U4 (.a(n3), .b(n1) , .y(y));
+
+endmodule
+```
+
+**Result**
+
+![opt_module-2](https://github.com/pitman75/vsd-hdp/assets/12179612/5c73a5e7-4a92-46d5-99c4-429cdf1d12e1)
 
