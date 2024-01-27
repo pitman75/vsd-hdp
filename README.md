@@ -713,6 +713,8 @@ In the example only 1 bit of 4 used. We can optimize it. Let's see.
 
 ![counter_opt](https://github.com/pitman75/vsd-hdp/assets/12179612/70705d07-b62f-4daa-908e-12123c3bd3a2)
 
+An optimizer removed 3 DFFs and keep only one.
+
 **Example 2, sequential unused outputs**
 
 **Verilog snippet**
@@ -738,3 +740,4 @@ In the example all bits used. Let's see is it possible to optimize or not.
 
 ![counter_opt2](https://github.com/pitman75/vsd-hdp/assets/12179612/2e8557ca-ec94-4d7c-b5a6-4b17d07e8bbc)
 
+An optimizer keep all DFFs, no possible to remove anything.
