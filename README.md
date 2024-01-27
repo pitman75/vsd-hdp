@@ -334,6 +334,8 @@ endmodule
 2. The combinational optimisations are Constant propagation and Boolean optmisation.
 3. The Sequential optimisations are categorised as Basic (Sequential constant propagation) and Advanced (State optimisation, Retiming, Sequential logic cloning). 
 
+### Combinational logic optimizations
+
 **Example 1, sequential logic optimization**
 
 **Verilog snippet**
@@ -421,7 +423,7 @@ endmodule
 
 **Logic optimization Verilog RTL with submodules**
 
-For designes with submodules (must of designes) we should add special command for convertion hierarhical design to flat. Because an optimizer can do optimization only inside one module. In this case our workflof extends to:
+For designes with submodules (must of designes) we should add special command for convertion hierarhical design to flat. Because an optimizer can do optimization only inside one module. In this case our workflow extends to:
 
 ```
 $ yosys
@@ -499,4 +501,185 @@ endmodule
 **Result**
 
 ![opt_module-2](https://github.com/pitman75/vsd-hdp/assets/12179612/5c73a5e7-4a92-46d5-99c4-429cdf1d12e1)
+
+### Sequential logic optimizations
+
+Sometimes a verilog RTL code may generate DFF with sequential constant and some of them we may replace to wires with static values. There are some examples with replacement and without.
+
+_Don't forget to use additional command for DFF_
+
+General workflow is:
+
+```
+yosys> read_liberty -lib ../path_of_library_file/library.lib
+yosys> read_verilog design_verilog_file.v
+yosys> synth -top module_name
+yosys> dfflibmap -liberty ../path_of_library_file/library.lib
+yosys> abc -liberty ../path_of_library_file/library.lib
+yosys> show 
+```
+
+**Example 1, DFF sequential constant**
+
+**Verilog snippet**
+
+```
+module dff_const1(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b0;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+**Testbench**
+
+![dff_const1_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/bee91be6-4c05-4f9e-bd35-de833beb35b1)
+
+**Usage**
+
+```
+$ yosys
+yosys> read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> read_verilog dff_const1.v
+yosys> synth -top dff_const1
+yosys> dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+yosys> show
+```
+
+**Result**
+
+![dff_const1_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/85075b64-d129-48af-8014-1bb5a7d2dbbf)
+
+
+Why it has DFF? Because 1'b1 rised from 0'b1 only on posedge by clock.
+
+**Example 2, DFF sequential constant**
+
+**Verilog snippet**
+
+```
+module dff_const2(input clk, input reset, output reg q);
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+		q <= 1'b1;
+	else
+		q <= 1'b1;
+end
+endmodule
+```
+
+**Testbench**
+
+![dff_const2_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/bbcddec9-c93f-497a-8a7d-56f0ad5da7e0)
+
+As we see, state of **Q** never changed.
+
+**Result**
+
+![dff_const2_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/d4e30792-d48d-4939-9078-d299ca3b91fe)
+
+
+**Example 3, DFFs chain sequential constant**
+
+**Verilog snippet**
+
+```
+module dff_const3(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b0;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+endmodule
+```
+
+**Testbench**
+
+![dff_const3_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/4d0b08d5-b2e3-45b7-a7a4-e9701822201c)
+
+**Result**
+
+![dff_const4_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/a9ffa8c8-5ca7-4fc2-8273-9276ea2fac81)
+
+**Example 4, DFFs chain sequential constant**
+
+**Verilog snippet**
+
+```
+module dff_const4(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b1;
+		q1 <= 1'b1;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+endmodule
+```
+
+**Testbench**
+
+![dff_const4_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/ffc9aa07-8f8b-45a5-86b2-f968e0b16998)
+
+The **q** all time is 1'b1, we can simplify it.
+
+**Result**
+
+![dff_const4_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/4f525fce-fec6-4c65-bc69-1e5a9b84e503)
+
+**Example 5, DFFs chain sequential constant**
+
+**Verilog snippet**
+
+```
+module dff_const5(input clk, input reset, output reg q);
+reg q1;
+
+always @(posedge clk, posedge reset)
+begin
+	if(reset)
+	begin
+		q <= 1'b0;
+		q1 <= 1'b0;
+	end
+	else
+	begin
+		q1 <= 1'b1;
+		q <= q1;
+	end
+end
+endmodule
+```
+
+**Testbench**
+
+![dff_const5_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/48a11259-0363-4f8f-afde-e5c1e505c187)
+
+**Result**
+
+![dff_const5_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/883d6b59-6b28-4ce3-9176-0ec7710b4d88)
 
