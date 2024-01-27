@@ -615,7 +615,8 @@ endmodule
 
 **Result**
 
-![dff_const4_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/a9ffa8c8-5ca7-4fc2-8273-9276ea2fac81)
+![dff_const3_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/3f1364cf-c978-4ee1-8c36-426a63f504f9)
+
 
 **Example 4, DFFs chain sequential constant**
 
