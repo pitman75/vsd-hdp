@@ -684,3 +684,57 @@ endmodule
 
 ![dff_const5_struct](https://github.com/pitman75/vsd-hdp/assets/12179612/883d6b59-6b28-4ce3-9176-0ec7710b4d88)
 
+### Sequential optimization for unused outputs
+
+Sometimes we don't use all features of a verilog module. In this case an optimizer will remove unused part for safe space and power.
+
+**Example 1, sequential unused outputs**
+
+**Verilog snippet**
+
+```
+module counter_opt (input clk , input en, input reset , output q);
+reg [3:0] count;
+assign q = count[0];
+
+always @(posedge clk ,posedge reset)
+begin
+	if(reset)
+		count <= 4'b0000;
+	else if(en)
+		count <= count + 1;
+end
+endmodule
+```
+
+In the example only 1 bit of 4 used. We can optimize it. Let's see.
+
+**Optimization Result**
+
+![counter_opt](https://github.com/pitman75/vsd-hdp/assets/12179612/70705d07-b62f-4daa-908e-12123c3bd3a2)
+
+**Example 2, sequential unused outputs**
+
+**Verilog snippet**
+
+```
+module counter_opt2 (input clk , input reset , output q);
+reg [2:0] count;
+assign q = (count[2:0] == 3'b100);
+
+always @(posedge clk ,posedge reset)
+begin
+	if(reset)
+		count <= 3'b000;
+	else
+		count <= count + 1;
+end
+endmodule
+```
+
+In the example all bits used. Let's see is it possible to optimize or not.
+
+**Optimization Result**
+
+![counter_opt2](https://github.com/pitman75/vsd-hdp/assets/12179612/2e8557ca-ec94-4d7c-b5a6-4b17d07e8bbc)
+
