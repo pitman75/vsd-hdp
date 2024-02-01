@@ -21,7 +21,7 @@
 
 module registers_file 
 #(
-  parameter REGISTERS_INIT_FILE = "registers_file_init.mem"
+  parameter REGISTERS_INIT_FILE = ""
 )
 (
     // Inputs
@@ -38,7 +38,7 @@ module registers_file
 
 reg [31:0] lc_registers [0:31];
 
-initial begin: registers_init
+initial if (REGISTERS_INIT_FILE) begin: registers_init
     integer k;
 
     $display("SRC:INFO: Before start init PC registers file");

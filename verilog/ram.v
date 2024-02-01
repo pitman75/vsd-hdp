@@ -21,7 +21,7 @@
 module ram
 #(
   parameter RAM_SIZE = 32,  //# size of RAM by 4 bytes elements
-  parameter RAM_INIT_FILE = "ram_init.mem"
+  parameter RAM_INIT_FILE = ""
 )
 (
     // Input
@@ -36,7 +36,7 @@ module ram
 
 reg [31:0] ram_array[0 : RAM_SIZE - 1];
 
-initial begin: ram_init
+initial if (RAM_INIT_FILE) begin: ram_init
     integer k;
 
     $display("SRC:INFO: Before start init RAM array");

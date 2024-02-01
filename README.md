@@ -939,4 +939,74 @@ endmodule
 
 Mismatch behavior found. Rewrite Verilog RTL to fix it.
 
+## Day 4
 
+The main idea of this day is: use moroless complex Verilog module to synthesis and test after synthes. How to it works with real cells.
+
+
+
+```
+8.1.2. Re-integrating ABC results.
+ABC RESULTS:   sky130_fd_sc_hd__a2bb2oi_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a211o_1 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__o2111a_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__nor4b_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__o31a_1 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__a31o_1 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__and4_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__nand4b_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__maj3_1 cells:       48
+ABC RESULTS:   sky130_fd_sc_hd__o22a_1 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__o311a_1 cells:        2
+ABC RESULTS:   sky130_fd_sc_hd__nor3b_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__or3_1 cells:        7
+ABC RESULTS:   sky130_fd_sc_hd__xnor2_1 cells:       67
+ABC RESULTS:   sky130_fd_sc_hd__or4_1 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__a21boi_0 cells:        8
+ABC RESULTS:   sky130_fd_sc_hd__nor4_1 cells:       14
+ABC RESULTS:   sky130_fd_sc_hd__a311o_1 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__o2bb2ai_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__o2111ai_1 cells:        1
+ABC RESULTS:   sky130_fd_sc_hd__a2111oi_0 cells:        6
+ABC RESULTS:   sky130_fd_sc_hd__o21a_1 cells:       11
+ABC RESULTS:   sky130_fd_sc_hd__a22o_1 cells:        6
+ABC RESULTS:   sky130_fd_sc_hd__o21bai_1 cells:       17
+ABC RESULTS:   sky130_fd_sc_hd__a221o_1 cells:       25
+ABC RESULTS:   sky130_fd_sc_hd__mux4_2 cells:      104
+ABC RESULTS:   sky130_fd_sc_hd__nand4_1 cells:       17
+ABC RESULTS:   sky130_fd_sc_hd__a32oi_1 cells:       17
+ABC RESULTS:   sky130_fd_sc_hd__o311ai_0 cells:        4
+ABC RESULTS:   sky130_fd_sc_hd__xor2_1 cells:       56
+ABC RESULTS:   sky130_fd_sc_hd__o22ai_1 cells:       46
+ABC RESULTS:   sky130_fd_sc_hd__a21o_1 cells:       16
+ABC RESULTS:   sky130_fd_sc_hd__o31ai_1 cells:        3
+ABC RESULTS:   sky130_fd_sc_hd__nand3b_1 cells:        6
+ABC RESULTS:   sky130_fd_sc_hd__a311oi_1 cells:        6
+ABC RESULTS:   sky130_fd_sc_hd__o221ai_1 cells:       12
+ABC RESULTS:   sky130_fd_sc_hd__a31oi_1 cells:       37
+ABC RESULTS:   sky130_fd_sc_hd__o21ai_0 cells:     1094
+ABC RESULTS:   sky130_fd_sc_hd__o211ai_1 cells:       69
+ABC RESULTS:   sky130_fd_sc_hd__a221oi_1 cells:      357
+ABC RESULTS:   sky130_fd_sc_hd__a211oi_1 cells:      117
+ABC RESULTS:   sky130_fd_sc_hd__mux2i_1 cells:       91
+ABC RESULTS:   sky130_fd_sc_hd__nand2b_1 cells:       71
+ABC RESULTS:   sky130_fd_sc_hd__or2_0 cells:       15
+ABC RESULTS:   sky130_fd_sc_hd__and2_0 cells:       51
+ABC RESULTS:   sky130_fd_sc_hd__nand2_1 cells:      708
+ABC RESULTS:   sky130_fd_sc_hd__nor3_1 cells:      101
+ABC RESULTS:   sky130_fd_sc_hd__nand3_1 cells:      101
+ABC RESULTS:   sky130_fd_sc_hd__mux2_1 cells:     2061
+ABC RESULTS:   sky130_fd_sc_hd__nor2b_1 cells:      171
+ABC RESULTS:   sky130_fd_sc_hd__a22oi_1 cells:     1096
+ABC RESULTS:   sky130_fd_sc_hd__a21oi_1 cells:     1654
+ABC RESULTS:   sky130_fd_sc_hd__o41ai_1 cells:      128
+ABC RESULTS:   sky130_fd_sc_hd__a41oi_1 cells:       35
+ABC RESULTS:   sky130_fd_sc_hd__nor2_1 cells:     1167
+ABC RESULTS:   sky130_fd_sc_hd__and3_1 cells:      104
+ABC RESULTS:   sky130_fd_sc_hd__clkinv_1 cells:      224
+ABC RESULTS:   sky130_fd_sc_hd__buf_1 cells:     6176
+ABC RESULTS:        internal signals:    12753
+ABC RESULTS:           input signals:     9739
+ABC RESULTS:          output signals:     9802
+Removing temp directory.
+```
