@@ -1,0 +1,39 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Thu Feb  1 16:12:14 2024
+[*]
+[dumpfile] "/home/dimon/work/vlsi_training/riscv1/pipelined/tb_cpu_pipeline.vcd"
+[dumpfile_mtime] "Thu Feb  1 16:09:38 2024"
+[dumpfile_size] 86922
+[savefile] "/home/dimon/work/vlsi_training/riscv1/pipelined/cpu_pipeline_tb.gtkw"
+[timestart] 0
+[size] 1846 864
+[pos] -39 -39
+*-14.238342 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] cpu_pipeline_tb.
+[treeopen] cpu_pipeline_tb.dut.
+[sst_width] 233
+[signals_width] 166
+[sst_expanded] 1
+[sst_vpaned_height] 236
+@28
+cpu_pipeline_tb.dut.clk
+cpu_pipeline_tb.dut.rst
+@200
+-
+@22
+cpu_pipeline_tb.dut.fetch.PCD[31:0]
+cpu_pipeline_tb.dut.fetch.InstrD[31:0]
+@201
+-
+@28
+cpu_pipeline_tb.dut.mem_wen
+@22
+cpu_pipeline_tb.dut.mem_addr[31:0]
+cpu_pipeline_tb.dut.mem_write[31:0]
+@200
+-
+@22
+cpu_pipeline_tb.dut.data_result[31:0]
+[pattern_trace] 1
+[pattern_trace] 0
