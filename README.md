@@ -939,11 +939,21 @@ endmodule
 
 Mismatch behavior found. Rewrite Verilog RTL to fix it.
 
-## Day 4
+## Day 5
 
-The main idea of this day is: use moroless complex Verilog module to synthesis and test after synthes. How to it works with real cells.
+The main idea of this day is: use more or less complex Verilog module to synthesis and test after synthes. How to it works with real cells.
 
-
+```
+read_liberty -lib ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+read_verilog cpu_pipeline.v
+hierarchy -top cpu_pipeline -libdir .
+synth -top cpu_pipeline
+flatten
+opt_clean -purge
+dfflibmap -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+write_verilog cpu_pipeline_net.v
+```
 
 ```
 8.1.2. Re-integrating ABC results.
