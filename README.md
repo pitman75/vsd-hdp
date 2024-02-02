@@ -799,6 +799,21 @@ module ternary_operator_mux(i0, i1, sel, y);
 endmodule
 ```
 
+**GLS Simulation**
+
+Syntax:
+```
+iverilog <verilog_model_path: ../mylib/verilog_model/primitives.v> <library_file_path: ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib> <netlist_file: module_netlist.v> <Testbench_file: tb_module.v>
+./a.out
+gtkwave tb_module.vcd
+```
+
+And for this example it's:
+
+```
+iverilog ../../my_lib/verilog_model/primitives.v ../../my_lib/verilog_model/sky130_fd_sc_hd.v ternary_operator_mux_net.v tb_ternary_operator_mux.v
+```
+
 **Testbench**
 
 ![ternary_mux_waves](https://github.com/pitman75/vsd-hdp/assets/12179612/f5d432a3-23f3-4620-8b26-74c9d8de30e8)
