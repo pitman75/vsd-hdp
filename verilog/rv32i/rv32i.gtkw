@@ -1,0 +1,27 @@
+[*]
+[*] GTKWave Analyzer v3.3.103 (w)1999-2019 BSI
+[*] Sat Feb  3 15:01:01 2024
+[*]
+[dumpfile] "/home/dimon/work/vlsi_training/rv32i/iiitb_rv32i.vcd"
+[dumpfile_mtime] "Sat Feb  3 14:57:58 2024"
+[dumpfile_size] 5500
+[savefile] "/home/dimon/work/vlsi_training/rv32i/rv32i.gtkw"
+[timestart] 0
+[size] 1846 864
+[pos] -39 -39
+*-4.388504 27 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] iiitb_rv32i_tb.
+[sst_width] 233
+[signals_width] 150
+[sst_expanded] 1
+[sst_vpaned_height] 236
+@28
+iiitb_rv32i_tb.rv32.clk
+iiitb_rv32i_tb.rv32.RN
+@22
+iiitb_rv32i_tb.rv32.NPC[31:0]
+iiitb_rv32i_tb.rv32.ID_EX_IR[31:0]
+iiitb_rv32i_tb.rv32.EX_MEM_IR[31:0]
+iiitb_rv32i_tb.rv32.WB_OUT[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

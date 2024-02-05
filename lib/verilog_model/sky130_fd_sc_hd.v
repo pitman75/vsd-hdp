@@ -67522,7 +67522,7 @@ module sky130_fd_sc_hd__dlxbn (
     wire D_delayed     ;
     reg  notifier      ;
     wire awake         ;
-    wire 1             ;
+    //wire 1             ;
 
     //                                    Name     Output  Other arguments
     not                                   not0    (GATE  , GATE_N_delayed                       );
@@ -74449,7 +74449,7 @@ endmodule
 `endcelldefine
 
 `default_nettype wire
-`endif SKY130_FD_SC_HD__LPFLOW_BLEEDER_FUNCTIONAL_V
+`endif //SKY130_FD_SC_HD__LPFLOW_BLEEDER_FUNCTIONAL_V
 `else  // FUNCTIONAL
 /*
  * Copyright 2020 The SkyWater PDK Authors
