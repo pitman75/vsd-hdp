@@ -985,68 +985,78 @@ write_verilog iiitb_rv32i_net.v
 **Netlist statistics**
 
 ```
-8.1.2. Re-integrating ABC results.
-ABC RESULTS:   sky130_fd_sc_hd__o211a_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__o31a_1 cells:        2
-ABC RESULTS:   sky130_fd_sc_hd__and4_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__a222oi_1 cells:      194
-ABC RESULTS:   sky130_fd_sc_hd__a21boi_0 cells:        2
-ABC RESULTS:   sky130_fd_sc_hd__nand3b_1 cells:        9
-ABC RESULTS:   sky130_fd_sc_hd__or3b_1 cells:        5
-ABC RESULTS:   sky130_fd_sc_hd__a2bb2oi_1 cells:        2
-ABC RESULTS:   sky130_fd_sc_hd__mux4_2 cells:        3
-ABC RESULTS:   sky130_fd_sc_hd__o21ba_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__nor2b_1 cells:       18
-ABC RESULTS:   sky130_fd_sc_hd__nor3b_1 cells:        8
-ABC RESULTS:   sky130_fd_sc_hd__maj3_1 cells:       16
-ABC RESULTS:   sky130_fd_sc_hd__o32ai_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__a211o_1 cells:        2
-ABC RESULTS:   sky130_fd_sc_hd__or4_1 cells:        6
-ABC RESULTS:   sky130_fd_sc_hd__a32oi_1 cells:        5
-ABC RESULTS:   sky130_fd_sc_hd__nor4_1 cells:       71
-ABC RESULTS:   sky130_fd_sc_hd__o2111ai_1 cells:        2
-ABC RESULTS:   sky130_fd_sc_hd__mux2i_1 cells:       53
-ABC RESULTS:   sky130_fd_sc_hd__a31o_1 cells:        3
-ABC RESULTS:   sky130_fd_sc_hd__a2111oi_0 cells:        5
-ABC RESULTS:   sky130_fd_sc_hd__a22o_1 cells:        3
-ABC RESULTS:   sky130_fd_sc_hd__or3_1 cells:       12
-ABC RESULTS:   sky130_fd_sc_hd__nand2b_1 cells:       39
-ABC RESULTS:   sky130_fd_sc_hd__a21o_1 cells:       54
-ABC RESULTS:   sky130_fd_sc_hd__nor4b_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__a22oi_1 cells:      504
-ABC RESULTS:   sky130_fd_sc_hd__mux2_1 cells:       54
-ABC RESULTS:   sky130_fd_sc_hd__o211ai_1 cells:       13
-ABC RESULTS:   sky130_fd_sc_hd__and2_0 cells:       57
-ABC RESULTS:   sky130_fd_sc_hd__a311oi_1 cells:        5
-ABC RESULTS:   sky130_fd_sc_hd__o22ai_1 cells:       33
-ABC RESULTS:   sky130_fd_sc_hd__o311ai_0 cells:        9
-ABC RESULTS:   sky130_fd_sc_hd__o22a_1 cells:        4
-ABC RESULTS:   sky130_fd_sc_hd__nand4_1 cells:       15
-ABC RESULTS:   sky130_fd_sc_hd__o21bai_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__nand2_1 cells:      669
-ABC RESULTS:   sky130_fd_sc_hd__and3_1 cells:       51
-ABC RESULTS:   sky130_fd_sc_hd__or2_0 cells:       20
-ABC RESULTS:   sky130_fd_sc_hd__a221oi_1 cells:       10
-ABC RESULTS:   sky130_fd_sc_hd__a41oi_1 cells:        7
-ABC RESULTS:   sky130_fd_sc_hd__o311a_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__a221o_1 cells:        1
-ABC RESULTS:   sky130_fd_sc_hd__nor3_1 cells:       67
-ABC RESULTS:   sky130_fd_sc_hd__xor2_1 cells:       50
-ABC RESULTS:   sky130_fd_sc_hd__o31ai_1 cells:       19
-ABC RESULTS:   sky130_fd_sc_hd__xnor2_1 cells:      122
-ABC RESULTS:   sky130_fd_sc_hd__o21a_1 cells:       19
-ABC RESULTS:   sky130_fd_sc_hd__a211oi_1 cells:       27
-ABC RESULTS:   sky130_fd_sc_hd__nor2_1 cells:     1254
-ABC RESULTS:   sky130_fd_sc_hd__a21oi_1 cells:     1526
-ABC RESULTS:   sky130_fd_sc_hd__o21ai_0 cells:      547
-ABC RESULTS:   sky130_fd_sc_hd__nand3_1 cells:       79
-ABC RESULTS:   sky130_fd_sc_hd__a31oi_1 cells:       34
-ABC RESULTS:   sky130_fd_sc_hd__o221ai_1 cells:        7
-ABC RESULTS:   sky130_fd_sc_hd__o32a_1 cells:       19
-ABC RESULTS:   sky130_fd_sc_hd__clkinv_1 cells:      100
-ABC RESULTS:        internal signals:     4682
-ABC RESULTS:           input signals:     1647
-ABC RESULTS:          output signals:     1616
+14. Printing statistics.
+
+=== iiitb_rv32i ===
+
+   Number of wires:               5808
+   Number of wire bits:           7620
+   Number of public wires:          57
+   Number of public wire bits:    1745
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:               7493
+     sky130_fd_sc_hd__a2111oi_0      5
+     sky130_fd_sc_hd__a211o_1        2
+     sky130_fd_sc_hd__a211oi_1      27
+     sky130_fd_sc_hd__a21boi_0       2
+     sky130_fd_sc_hd__a21o_1        54
+     sky130_fd_sc_hd__a21oi_1     1526
+     sky130_fd_sc_hd__a221o_1        1
+     sky130_fd_sc_hd__a221oi_1      10
+     sky130_fd_sc_hd__a222oi_1     194
+     sky130_fd_sc_hd__a22o_1         3
+     sky130_fd_sc_hd__a22oi_1      504
+     sky130_fd_sc_hd__a2bb2oi_1      2
+     sky130_fd_sc_hd__a311oi_1       5
+     sky130_fd_sc_hd__a31o_1         3
+     sky130_fd_sc_hd__a31oi_1       34
+     sky130_fd_sc_hd__a32oi_1        5
+     sky130_fd_sc_hd__a41oi_1        7
+     sky130_fd_sc_hd__and2_0        57
+     sky130_fd_sc_hd__and3_1        51
+     sky130_fd_sc_hd__and4_1         1
+     sky130_fd_sc_hd__clkinv_1     100
+     sky130_fd_sc_hd__dfrtp_1       32
+     sky130_fd_sc_hd__dfxtp_1     1618
+     sky130_fd_sc_hd__maj3_1        16
+     sky130_fd_sc_hd__mux2_1        54
+     sky130_fd_sc_hd__mux2i_1       53
+     sky130_fd_sc_hd__mux4_2         3
+     sky130_fd_sc_hd__nand2_1      669
+     sky130_fd_sc_hd__nand2b_1      39
+     sky130_fd_sc_hd__nand3_1       79
+     sky130_fd_sc_hd__nand3b_1       9
+     sky130_fd_sc_hd__nand4_1       15
+     sky130_fd_sc_hd__nor2_1      1254
+     sky130_fd_sc_hd__nor2b_1       18
+     sky130_fd_sc_hd__nor3_1        67
+     sky130_fd_sc_hd__nor3b_1        8
+     sky130_fd_sc_hd__nor4_1        71
+     sky130_fd_sc_hd__nor4b_1        1
+     sky130_fd_sc_hd__o2111ai_1      2
+     sky130_fd_sc_hd__o211a_1        1
+     sky130_fd_sc_hd__o211ai_1      13
+     sky130_fd_sc_hd__o21a_1        19
+     sky130_fd_sc_hd__o21ai_0      547
+     sky130_fd_sc_hd__o21ba_1        1
+     sky130_fd_sc_hd__o21bai_1       1
+     sky130_fd_sc_hd__o221ai_1       7
+     sky130_fd_sc_hd__o22a_1         4
+     sky130_fd_sc_hd__o22ai_1       33
+     sky130_fd_sc_hd__o311a_1        1
+     sky130_fd_sc_hd__o311ai_0       9
+     sky130_fd_sc_hd__o31a_1         2
+     sky130_fd_sc_hd__o31ai_1       19
+     sky130_fd_sc_hd__o32a_1        19
+     sky130_fd_sc_hd__o32ai_1        1
+     sky130_fd_sc_hd__or2_0         20
+     sky130_fd_sc_hd__or3_1         12
+     sky130_fd_sc_hd__or3b_1         5
+     sky130_fd_sc_hd__or4_1          6
+     sky130_fd_sc_hd__xnor2_1      122
+     sky130_fd_sc_hd__xor2_1        50
 ```
 
 **Netlist simulation**
