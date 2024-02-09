@@ -1093,3 +1093,7 @@ Success!
 **Conclusion**
 
 Functionality of Verilog RTL and generated netlist is the same.
+
+## Day 6 Basic of STA
+
+In progress...
