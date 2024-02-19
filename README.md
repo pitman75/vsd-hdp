@@ -1096,4 +1096,131 @@ Functionality of Verilog RTL and generated netlist is the same.
 
 ## Day 6 Basic of STA
 
-In progress...
+ - Logic Synthesis Flow by Design-Compiler from Synopsys
+ - Basic Logic Synthesis knowledge introduction
+
+```
+* Logic Synthesis
+    1. RTL+.LIB->Netlist(Gates)
+    2. .LIB is collection of logic modules from same function but different strengeh/timing variation
+        * Need Cells that work fast enough to meet required performance (setup-time)
+        * Need Cells that work slow enough to avoid contamination (hold-time)
+* Design Compiler
+    1. SDC, synopsys design constraints, industry standard constraint for EDA automation
+    2. .LIB, design library which contains the standard cell information
+    3. .DB, same as .LIB for DC import related libraries
+    4. .DDC, Synopsys's proprietary format for libraries
+    5. SDC for timing-constraint, UPF for power-constraint
+* Design(RTL) + Library (.DB) + SDC -> Verilog Netlist + DDC + Synthesis Reports
+* Implementation Flow for ASIC
+    `[RTL]->[SYN]->[DFT]->[FP]->[CTS]->[PnR]->[GDS]`
+* DC Synthesis Flow:
+    1. Read STD Cell/Tech .lib
+    2. Read Design (Verilog/VHDL, Design .LIB)
+    3. Read Design Constraints (SDC)
+    4. Link the Design
+    5. Synthesize the Design
+    6. Generate Report and Analyze QoR
+* Library Name : `sky130_fd_sc_hd_tt_025C_1v80.lib`
+    * fd -> fundary, sc -> standard cell, hd->high-density, tt->typical-typical, 025C-> 25 degree temperature, 1v80->1.8V
+* PVT -> Power/Voltage/Temerature
+    * PVT corner -> typical/fast/slow
+* DC Operation Flow
+```
+
+**Build a design**
+
+```
+    $dc_shell
+    >read_verilog lab8.v
+    >read_db sky130.db
+    >set link_library {* sky130.db}
+    >link
+    >compile
+    >write -f verilog -out lib8_net_sky130.v
+    >write -f ddc -out lib8.ddc
+```
+
+**Open gate-level logic in Design Vision**
+
+```
+    $design_vision
+    >start gui
+    //---
+    >read_ddc lab1.ddc
+    //--- Use GTECH (gech.db) /standard.sldb
+    >read_verlog lib1_net_sky130.v
+```
+
+**Start-up Script to set environment**
+
+File-Name: `.synopsys_dc.setup`, put in home directory
+
+**TCL Quick Reference**
+
+```
+    * set a [ expr $a + $b ]
+    * if { cond } { true-stat } else { false-stat }
+    * echo "hello world"
+    * while { cond } { loop-stat }
+    * for { init } {  cond } { end-op } { loop-stat }
+    * foreach <var-name> <list-name> { statements }
+    //DC only
+    * foreach <var-name> <collection-name> { statements }
+    * get_lib_cells */*and* > get collection
+    * source script.tcl
+```
+
+**Set constrains for STA**
+
+```
+    * Max (Setup) and Min (Hold) delay constraints
+    * Delay for Cells:
+        1. Input Transition (Driving Slew-Rate)
+        2. Output Load (Capcitance)
+    * Timing Arc
+        * Combinational Cell: input port to output port changes elasped time
+        * Sequential Cell:
+            1. Clock to Q -> DFF
+            2. Clock to D + D to Q -> D-Latch (DLAT)
+```
+
+![lec-dc-sta01](https://github.com/pitman75/vsd-hdp/assets/12179612/f4bef8af-57c4-4dcc-a4af-4bb07c093d32)
+
+**Timing-Path**
+
+ - Start Point : 1. Input-Port 2. Clock Pin of Register
+ - End Point : 1. Output-Port 2. D Pin of Register
+
+![lec-dc-sta02](https://github.com/pitman75/vsd-hdp/assets/12179612/d248fe0a-f855-4772-81b3-0d0e1177c226)
+
+**Timing-Path Constraint**
+
+ - REG2REG: Clock Constraint
+ - REG2OUT: Output External Delay + Clock Constraint
+ - IN2REG: Input External Delay + Clock Constraint
+
+![lec-dc-sta03](https://github.com/pitman75/vsd-hdp/assets/12179612/b7ea6e21-0578-4eca-aefe-021f1392ea06)
+
+**IO Constraint**
+
+ - Delay isn't ideal as zero -> Consider input transition and output load
+ -  Rule of Thumb: 70% Eternal Delay, 30% Internal Delay from Clock constraint
+    
+**.LIB Timing**
+
+ - `default_+max_transition` in ps
+ - C_load = C_pin+C_net+SUM(C_input_cap) -> max capcitance limit
+ - Add buffer to balance high fanout driving strength
+    
+**Delay Model Table**
+
+ - X-Axis: Output Load (pf)
+ - Y-Axis: Input Transition (ns)
+    
+**Unateness**
+ -> If only 1-pin changes, if output pin has same behavior
+ - Positive: AND, OR
+ - Negative: NOT, NAND, NOR
+ - Non: XOR, DFF
+
