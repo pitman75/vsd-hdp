@@ -1230,24 +1230,28 @@ File-Name: `.synopsys_dc.setup`, put in home directory
  - Useful DC commands
 
 **Constraint for Clock**
-    * Before CTS, clock is an ideal network for Synthesis stage
-    * Post-CTS generate real clock
+
+ - Before CTS, clock is an ideal network for Synthesis stage
+ - Post-CTS generate real clock
     
 **Clock Generation**
-    1. Oscillator
-    2. PLL
-    3. External Clock Source
+
+ - Oscillator
+ - PLL
+ - External Clock Source
         
 **Real Clock : Ideal Clock + Jitter + Skew**
-    * Jitter : physical world stochastic behavior
-    * Skew : Routing topographical delay
+
+ - Jitter : physical world stochastic behavior
+ - Skew : Routing topographical delay
     
 **Clock Modeling**
-    1. Period
-    2. Source Latency
-    3. Clock Network Latency
-    4. Clock Skew
-    5. Jitter
+
+ - Period
+ - Source Latency
+ - Clock Network Latency
+ - Clock Skew
+ - Jitter
     
 Clock Skew+Jitter => Clock Uncertainty
 
