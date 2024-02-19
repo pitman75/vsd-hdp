@@ -1224,3 +1224,167 @@ File-Name: `.synopsys_dc.setup`, put in home directory
  - Negative: NOT, NAND, NOR
  - Non: XOR, DFF
 
+## Day 7 Advanced SDC contraints
+
+ - Clock/Input/Output Constraint Details
+ - Useful DC commands
+
+**Constraint for Clock**
+    * Before CTS, clock is an ideal network for Synthesis stage
+    * Post-CTS generate real clock
+    
+**Clock Generation**
+    1. Oscillator
+    2. PLL
+    3. External Clock Source
+        
+**Real Clock : Ideal Clock + Jitter + Skew**
+    * Jitter : physical world stochastic behavior
+    * Skew : Routing topographical delay
+    
+**Clock Modeling**
+    1. Period
+    2. Source Latency
+    3. Clock Network Latency
+    4. Clock Skew
+    5. Jitter
+    
+Clock Skew+Jitter => Clock Uncertainty
+
+Use Skew+Jitter pre STA simulationand **only** Jitter in post STA simulation.
+
+Define `net` : connecting of two or more pins or ports in target design region
+
+![lec-dc-sta04](https://github.com/pitman75/vsd-hdp/assets/12179612/78b46d3b-7eda-4c88-a752-40f77e3485ed)
+
+**DC commands in/out**
+
+```
+    > get_ports *clk*;
+    > get_ports * -filter "direction == in";
+    > get_ports * -filter "direction == out";
+    > get_clocks * -filter "period > 10";
+    > get_attribute [ get_clocks my_clk ] period ;
+    > get_attribute [ get_clocks my_clk ] is_generated ;
+    > report_clocks my_clk ;
+```
+
+**Hierarchical/Physical Cell/PIn**
+
+```
+    > get_cells * -hier
+    > get_attribute [ get_cells <cell-name> ] is_hierarchical
+```
+
+**Clock Constraint**
+
+Uncertainty in different stage
+ - Jitter+Skew for CTS
+ - Jitter only for PnR
+
+```
+    > create_clock -name <clk-name> -period <time> [get_ports <clk-port>] ;
+    > set_clock_latency <time> <clk-name>
+    > create_clock -name <clk-name> -period <time> [get_ports <clk-port>] -wave { <rise-time-point> <fall-time-point> } ;
+```
+
+**Input IO modeling**
+
+```
+    > set_input_delay -max <time> -clock [get_clocks <clk-name>] [get_ports <port-name>] ;
+    > set_input_delay -min <time> -clock [get_clocks <clk-name>] [get_ports <port-name>] ;
+    > set_input_transition -max <unit> [get_ports <port-name>]
+    > set_input_transition -min <unit> [get_ports <port-name>]
+```
+
+**Output IO modeling**
+
+```
+    > set_output_delay -max <time> -clock [get_clocks <clk_name>] [get_ports <port-name>]
+    > set_output_delay -min <time> -clock [get_clocks <clk_name>] [get_ports <port-name>]
+    > set_output_load -max <cap_unit> [get_ports <port-name>]
+    > set_output_load -min <cap_unit> [get_ports <port-name>]
+```
+
+![lec-dc-sta05](https://github.com/pitman75/vsd-hdp/assets/12179612/e460ebd9-2d68-4899-8848-969ec4c9d982)
+
+**DC shell lab**
+
+```
+    > get_cells/get_ports/get_nets/get_clocks/get_pins
+    > all_connected <net-name>
+    > regex <pattern> <expression> # return 1 when pattern match expression, otherwise 0
+    > get_attribnute [get_pins <pin-name>] clock # report if this is clock pin
+    > get_attribnute [get_pins <pin-name>] clocks # report clocks reach to this pin
+    > current_design # report name of top module
+    > report_clocks *
+    > remove_clock <clk_name>
+```
+
+**Clock network modeling**
+
+```
+    > set_clock_latency -source <time> [get_clocks <clk_name>] # source latency (clock source)
+    > set_clock_latency <time> [get_clocks <clk_name>] # network latency (to top module)
+    > set_clock_uncertainty -setup <time> [get_clocks <clk_name>]
+    > set_clock_uncertainty -hold <time> [get_clocks <clk_name>]
+    > report_timing
+    > report_timing -to <pin-name>
+    > report_timing -to <pin-name> -delay min
+    > report_timing -from <pin-name>
+    > report_timing -verbose
+    > report_port -verbose
+    > report_timing -from <pin-name> -trans -net -cap -nosplit
+    > report_timing -from <pin-name> -trans -net -cap -nosplit -delay_type min # Hold time
+    > set_input_transition -max <amount> [get_ports <port-name>]
+    > set_input_transition -min <amount> [get_ports <port-name>]
+        # add input transition, input pin data arrival time is increased
+    > set_load -max <amount> [get_ports <port-name>]
+    > set_load -min <amount> [get_ports <port-name>]
+        # add output load, output pin data arrival time is increased
+```
+
+**Generated Clock**
+
+```
+    > create_generated_clock -name <gen-clk-name> -master [get_clocks <base-clk>] -source [get_port <src-port>] -div 1 [get_ports <dst-port>]
+    > reset_design # restart a new design
+    > get_generated_clocks
+```
+
+**Constraint for pure combinational path from input to output port**
+    1. set_max_latency
+    2. virtual clock
+
+![lec-dc-sta06](https://github.com/pitman75/vsd-hdp/assets/12179612/97685174-ee3b-4b96-95a6-4c7946419e78)
+
+```
+    > set_max_latency <time> -from [get_ports <input>] -to [get_ports <output>]
+    > create_clock -name <vclk> -period <time> # if path has no clock definition point, virtual clock inferred
+
+    > set_input_delay -max <time> -clock [get_clocks <vclk>] [get_ports <input>]
+    > set_output_delay -max <time> -clock [get_clocks <vclk>] [get_ports <output>]
+    > set_input_delay -max <time> -clock [get_clocks <vclk>] -clock_fall [get_ports <input>] # for virtual negedge sampling DFF
+    > set_output_delay -max <time> -clock [get_clocks <vclk>] -clock_fall [get_ports <output>] # for virtual negedge sampling DFF
+    
+    > set_driving_cell -lib_cell <lib_cell_name> <ports>
+
+    > all_inputs/all_outputs/all_clocks/all_registers
+    > all_fanout -from <pin/port name> (-endpoints_only -flat)
+    > all_fanin -to <pin/port name> (-endpoints_only -flat)
+    > get_cells -of_objects [get_pins <pin-name>]
+    > report_timing -to <output-port> -sig <unit> # report decimal number
+```
+
+**Multi-Clock Path with negedge**
+
+```
+> set_input_delay -max <time> -clock [get_clocks <clk>] [get_ports <input>] # input constrains for first clock with posedge
+> set_input_delay -max <time> -clock [get_clocks <clk>] -clock_fall -add [get_ports <input>] # input constrains for second clock with negedge
+> set_output_delay -max <time> -clock [get_clocks <clk>] [get_ports <output>] # output constrains for first clock with posedge
+> set_output_delay -max <time> -clock [get_clocks <clk>] -clock_fall -add [get_ports <output>] # output constrains for second clock with negedge
+```
+
+## Day8 OpenSTA
+
+In progress...
