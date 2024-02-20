@@ -1391,4 +1391,61 @@ Uncertainty in different stage
 
 ## Day8 OpenSTA
 
-In progress...
+**STA for simple example**
+
+Let's do STA for good_mux.v from previouse lab. All constrains are only for example. Run `sta` in folder with Verilogs
+
+```
+% read_liberty ../../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+% read_verilog good_mux_netlist.v
+% link_design good_mux
+% current_design
+% check_setup -verbose
+% create_clock -period 10 -name clk
+% set_input_delay -clock clk -max 3 [get_ports i0]
+% set_input_delay -clock clk -max 3 [get_ports i1]
+% set_input_delay -clock clk -max 3 [get_ports sel]
+% set_input_delay -clock clk -min 1 [get_ports i0]
+% set_input_delay -clock clk -min 1 [get_ports i1]
+% set_input_delay -clock clk -min 1 [get_ports sel]
+% set_input_transition -max 0.5 [get_ports i0]
+% set_input_transition -max 0.5 [get_ports i1]
+% set_input_transition -max 0.5 [get_ports sel]
+% set_input_transition -min 0.1 [get_ports i0]
+% set_input_transition -min 0.1 [get_ports i1]
+% set_input_transition -min 0.1 [get_ports sel]
+% set_output_delay -clock clk -max 5 [get_ports y]
+% set_output_delay -clock clk -min 1 [get_ports y]
+% report_checks
+```
+
+STA report is
+
+```
+% report_checks
+Startpoint: i1 (input port clocked by clk)
+Endpoint: y (output port clocked by clk)
+Path Group: clk
+Path Type: max
+
+  Delay    Time   Description
+---------------------------------------------------------
+   0.00    0.00   clock clk (rise edge)
+   0.00    0.00   clock network delay (ideal)
+   3.00    3.00 v input external delay
+   0.00    3.00 v i1 (in)
+   0.45    3.45 v _4_/X (sky130_fd_sc_hd__mux2_1)
+   0.00    3.45 v y (out)
+           3.45   data arrival time
+
+  10.00   10.00   clock clk (rise edge)
+   0.00   10.00   clock network delay (ideal)
+   0.00   10.00   clock reconvergence pessimism
+  -5.00    5.00   output external delay
+           5.00   data required time
+---------------------------------------------------------
+           5.00   data required time
+          -3.45   data arrival time
+---------------------------------------------------------
+           1.55   slack (MET)
+```
