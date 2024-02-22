@@ -1606,67 +1606,13 @@ iiitb_rv32i
 % read_sdc iiirv32i.sdc
 % check_setup -verbose
 1
-% report_checks
-Startpoint: RN (input port clocked by clk)
-Endpoint: _15076_ (recovery check against rising-edge clock clk)
-Path Group: asynchronous
-Path Type: max
-
-  Delay    Time   Description
----------------------------------------------------------
-   0.00    0.00   clock clk (rise edge)
-   3.00    3.00   clock network delay (ideal)
-   3.00    6.00 v input external delay
-   0.00    6.00 v RN (in)
-   1.03    7.03 ^ _07262_/Y (sky130_fd_sc_hd__clkinv_1)
-   0.00    7.03 ^ _15076_/RESET_B (sky130_fd_sc_hd__dfrtp_1)
-           7.03   data arrival time
-
-  10.00   10.00   clock clk (rise edge)
-   1.00   11.00   clock network delay (ideal)
-  -0.50   10.50   clock uncertainty
-   0.00   10.50   clock reconvergence pessimism
-          10.50 ^ _15076_/CLK (sky130_fd_sc_hd__dfrtp_1)
-  -0.04   10.46   library recovery time
-          10.46   data required time
----------------------------------------------------------
-          10.46   data required time
-          -7.03   data arrival time
----------------------------------------------------------
-           3.43   slack (MET)
-
-
-Startpoint: _15044_ (rising edge-triggered flip-flop clocked by clk)
-Endpoint: _13509_ (rising edge-triggered flip-flop clocked by clk)
-Path Group: clk
-Path Type: max
-
-  Delay    Time   Description
----------------------------------------------------------
-   0.00    0.00   clock clk (rise edge)
-   3.00    3.00   clock network delay (ideal)
-   0.00    3.00 ^ _15044_/CLK (sky130_fd_sc_hd__dfxtp_1)
-   0.44    3.44 ^ _15044_/Q (sky130_fd_sc_hd__dfxtp_1)
-   0.10    3.53 v _07594_/Y (sky130_fd_sc_hd__clkinv_1)
-   7.77   11.31 ^ _07596_/Y (sky130_fd_sc_hd__nor2_1)
-   2.06   13.37 v _07597_/Y (sky130_fd_sc_hd__clkinv_1)
-   4.00   17.38 ^ _07601_/Y (sky130_fd_sc_hd__nor3_1)
-   0.20   17.58 v _07609_/Y (sky130_fd_sc_hd__a21oi_1)
-   0.00   17.58 v _13509_/D (sky130_fd_sc_hd__dfxtp_1)
-          17.58   data arrival time
-
-  10.00   10.00   clock clk (rise edge)
-   1.00   11.00   clock network delay (ideal)
-  -0.50   10.50   clock uncertainty
-   0.00   10.50   clock reconvergence pessimism
-          10.50 ^ _13509_/CLK (sky130_fd_sc_hd__dfxtp_1)
-  -0.29   10.21   library setup time
-          10.21   data required time
----------------------------------------------------------
-          10.21   data required time
-         -17.58   data arrival time
----------------------------------------------------------
-          -7.37   slack (VIOLATED)
+% report_checks -path_delay min_max -fields {nets cap slew input_pins} -digits {4}
 ```
+
+Min delay
+![rv32i_bad_min](https://github.com/pitman75/vsd-hdp/assets/12179612/78f10a6e-88ff-447d-ba1c-b5f1f01d8d3e)
+
+Max delay
+![rv32i_bad_max](https://github.com/pitman75/vsd-hdp/assets/12179612/af493bb0-e113-4cf9-b7bd-4116b781f2e6)
 
 The netlist is not working for target frequency (100MHz). Need to regenerate with right constrains.
