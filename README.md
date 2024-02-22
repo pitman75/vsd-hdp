@@ -1523,6 +1523,50 @@ Path Type: max
            1.55   slack (MET)
 ```
 
+Let's do `fanout` and `fanin` analysis. Use TCL is very good idea.
+
+For `fanout` of the i0 input:
+
+```
+% foreach  my_in_ports [get_fanout -flat -endpoints_only -from i0] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+y
+```
+
+For `fanout` of the i1 input:
+
+```
+% foreach  my_in_ports [get_fanout -flat -endpoints_only -from i1] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+y
+```
+
+For `fanout` of the sel input:
+
+```
+% foreach  my_in_ports [get_fanout -flat -endpoints_only -from sel] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+y
+```
+
+For `fanin` of the y output:
+
+```
+foreach  my_in_ports [get_fanin -flat -startpoints_only -to y] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+i0
+i1
+sel
+```
+
 Done!
 
 **STA for RV32I core**
@@ -1537,8 +1581,8 @@ set_clock_transition -max 0.4 {clk}
 set_clock_transition -min 0.1 {clk}
 set_clock_uncertainty -setup 0.5 [get_clock clk]
 set_clock_uncertainty -hold 0.2 [get_clock clk]
-set_input_delay -clock clk -max 3 [get_ports RN]
-set_input_delay -clock clk -min 1 [get_ports RN]
+set_input_delay -max 3 [get_ports RN]
+set_input_delay -min 1 [get_ports RN]
 set_input_transition -max 0.5 [get_ports RN]
 set_input_transition -min 0.1 [get_ports RN]
 set_output_delay -clock clk -max 5 [get_ports NPC]
