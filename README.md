@@ -1616,3 +1616,28 @@ Max delay
 ![rv32i_bad_max](https://github.com/pitman75/vsd-hdp/assets/12179612/af493bb0-e113-4cf9-b7bd-4116b781f2e6)
 
 The netlist is not working for target frequency (100MHz). Need to regenerate with right constrains.
+
+Let's check fanout of biggest delay:
+
+```
+% foreach  my_in_ports [get_fanout -flat -endpoints_only -from _07596_/Y] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+_13506_/D
+_13507_/D
+.........
+_14400_/D
+_14401_/D
+```
+
+Wow, the `_07596_/Y` drive 288 D inputs of registers! To be sure that it's right value let's check fanout of `_07609_/Y`
+
+```
+% foreach  my_in_ports [get_fanout -flat -endpoints_only -from _07609_/Y] {
+set port_name [get_full_name $my_in_ports];
+puts $port_name;
+}
+_13509_/D
+```
+It drives only one register.
