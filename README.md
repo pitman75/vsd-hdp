@@ -1803,6 +1803,7 @@ SPICE NMOS id/vgs Diagram
  - Vmin = min(Vgt, Vds, Vd(Sat))
 
 | Long-Chan. | Short-Chan. |
+|------------|-------------|
 | Cut-Off    | Cut-Off     |
 | Resistive  | Resistive   |
 |            | Vel-Sat     |
@@ -1818,6 +1819,7 @@ SPICE NMOS id/vgs Diagram
 **Assume CMOS inverter in 0-2V range**
 
 | Vin 	| Vout 	| PMOS 	| NMOS |
+|-------|-------|-------|------|
 | 0 	| 2 	| LIN 	| OFF  |
 | ~0.5 	| ~1.5 	| LIN 	| SAT  |
 | 1 	| 1 	| SAT 	| SAT  |
@@ -1910,6 +1912,7 @@ Inverter Transient Analysis
 ![inverter_transient](https://github.com/pitman75/vsd-hdp/assets/12179612/0e70a3a5-6e99-4681-99d4-c76af74f6edd)
 
 | ITEM       | TIME (ns) |
+|------------|-----------|
 | Rise-Delay |	0.35432  |
 | Fall-Delay |	0.27345  |
 
@@ -1964,6 +1967,7 @@ Inverter Switching Transition Diagram
 ![noise_margin](https://github.com/pitman75/vsd-hdp/assets/12179612/b7a5452a-226f-4f22-9744-d472cf38f96a)
 
 | ITEM 	| Voltage   |
+|-------|-----------|
 | VOH 	| 1.73273   |
 | VOL 	| 0.098545  |
 | VIH 	| 0.968707  |
