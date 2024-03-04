@@ -1641,3 +1641,452 @@ puts $port_name;
 _13509_/D
 ```
 It drives only one register.
+
+## Day 9 - Fundamental N/P MOSFET Simulation
+
+**N-MOS**
+
+ - P-Substract, n+ Diffusion Region
+ - Isolation Region (SiO2), PolySi or Metal Gate
+ - 4-Terminal element, G (Gate), S (Source), D (Drain), B (Body)
+
+**Threshold Voltage**
+
+ - Vs=0, Vd=0, Vgs large enough to perform Strong Inversion point (Vt), diode B-S and B-D are off
+ - Increase Vgs, electrons from n+ are drawn to the region under gate G as strong inversion
+ - The conductivity of S-D path is modulated by Vgs strength
+ - Add Vsb voltage, additional potential is required for strong inversion
+ - Vto means threshold voltage at Vsb=0, a function of manufacturing process
+
+**SPICE Simulation**
+
+SPICE file: `day1_nfet_idvds_L2_W5.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=5 l=2
+
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vdd 0 1.8 0.1 Vin 0 1.8 0.2
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```
+
+![NMOS_Id_Vds](https://github.com/pitman75/vsd-hdp/assets/12179612/0c651d1c-ce02-4c45-8038-41117044c737)
+
+## Day 10 - Basics of NMOS Drain current (Id) vs Drain-to-source Voltage (Vds)
+
+**Resistive Operation**
+
+ - At Vgs>Vt condition with small Vds
+ - Affect by Effective Channel Length
+ - Currents in this condition
+   - Drift Current, from the difference of potential voltage
+   - Diffusion Current, from the difference of carrier concentration
+ - Id = Kn'*(W/L)*((Vgs-Vt)*Vds-(Vds**2)/2) = Kn*((Vgs-Vt)*Vds-(Vds**2)/2)
+   - Kn', as porocess transconductance
+   - Kn=Kn'*(W/L), as gain factor
+ - While (Vgs-Vt)>>Vds, Id ~= Kn*((Vgs-Vt)*Vds), linear function by Vds
+
+**Saturation Region**
+
+ - Pinch-Off from (Vgs-Vds)<=Vt, electron channel under the gate begins to disappear
+ - Channel Voltage clamp to (Vgs-Vt)
+   - Id(sat) = Kn((Vgs-Vt)*(Vgs-Vt)-((Vgs-Vt)**2)/2) = Kn/2*(Vgs-Vt)**2
+ - Seems a perfect current source from equation, but affected by Vds in reality
+   - Id(sat) = Kn/2*((Vgs-Vt)**2)*(1+lambda*Vds)
+
+**SPICE Simulation**
+
+SPICE File: `day2_nfet_idvds_L015_W039.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=0.39 l=0.15
+
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vdd 0 1.8 0.1 Vin 0 1.8 0.2
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```
+
+SPICE File: `day2_nfet_idvgs_L015_W039.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 Vdd n1 0 0 sky130_fd_pr__nfet_01v8 w=0.39 l=0.15
+
+R1 n1 in 55
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+.dc Vin 0 1.8 0.1 
+
+.control
+
+run
+display
+setplot dc1
+.endc
+
+.end
+```
+
+SPICE NMOS id/vds Diagram, small area but keep same ratio
+
+![NMOS_Id_Vds_small](https://github.com/pitman75/vsd-hdp/assets/12179612/b55dfab0-4bb9-4af7-86f9-cfd6658e612f)
+
+SPICE NMOS id/vgs Diagram
+
+![NMOS_Id_Vgs_small](https://github.com/pitman75/vsd-hdp/assets/12179612/0a797c10-3a9a-4b1f-bf03-45482e3b16c0)
+
+## Day 11 - Velocity Saturation and basics of CMOS inverter VTC
+
+**Velocity Saturation Effect**
+
+ - Long-Channel (>250nm)
+ - Short-Channel (<250nm)
+ - Id = Kn*((Vgt-Vmin)-(Vmin**2)/2)*(1+lambda*Vds)
+ - Vmin = min(Vgt, Vds, Vd(Sat))
+
+| Long-Chan. | Short-Chan. |
+| Cut-Off    | Cut-Off     |
+| Resistive  | Resistive   |
+|            | Vel-Sat     |
+| Saturation | Saturation  |
+
+**Voltage-Transfer Characteristics (VTC)**
+
+ - Transistor
+   - Switch Off when |Vgs|<|Vt|
+   - Switch On when |Vgs|>|Vt|
+ - CMOS inverter => NOT Gate, PMOS+NMOS
+
+**Assume CMOS inverter in 0-2V range**
+
+| Vin 	| Vout 	| PMOS 	| NMOS |
+| 0 	| 2 	| LIN 	| OFF  |
+| ~0.5 	| ~1.5 	| LIN 	| SAT  |
+| 1 	| 1 	| SAT 	| SAT  |
+| ~1.5 	| ~0.5 	| SAT 	| LIN  |
+| 2 	| 0 	| OFF 	| LIN  |
+
+**Switching Threshold**
+
+ - Vm, should near the middle of VTC on CMOS inverter
+ - Vm = R*Vdd/(1+R), R=(Rp*(Wp/Lp)*Vdp)/(Rn*(Wn/Ln)*Vdn)
+
+**Transition Delay**
+
+ - Rise-Delay, Input 0 then Output 1
+ - Fall-Delay, Input 1 then Output 0
+ - Find balanced rise/fall delay based on fixed (Wp/Lp), search in variable (Wn/Ln)
+ - From Device Physics, Ron(PMOS) ~= 2.5*Ron(NMOS)
+ - Regular inverter/buffer preferred for data-path
+
+**SPICE Simulation**
+
+SPICE File: `day3_inv_vtc_Wp084_Wn036.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+.end
+```
+
+VTC from P/NMOS when PMOS bigger than NMOS
+
+![NMOS-PMOS_vtc](https://github.com/pitman75/vsd-hdp/assets/12179612/b51e06de-8b72-41e0-ab6b-030f55764e27)
+
+SPICE File: `day3_inv_tran_Wp084_Wn036.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 PULSE(0V 1.8V 0 0.1ns 0.1ns 2ns 4ns)
+
+*simulation commands
+
+.tran 1n 10n
+
+.control
+run
+.endc
+.end
+```
+
+Inverter Transient Analysis
+
+![inverter_transient](https://github.com/pitman75/vsd-hdp/assets/12179612/0e70a3a5-6e99-4681-99d4-c76af74f6edd)
+
+| ITEM       | TIME (ns) |
+| Rise-Delay |	0.35432  |
+| Fall-Delay |	0.27345  |
+
+## Day 12 - Noise Margine
+
+**Noise Margin**
+
+ - Preserve Noise Margin to against environmental noise
+
+    NMH = VOH-VIH
+    NML = VIL-VOL
+
+![day14_lec_p1](https://github.com/pitman75/vsd-hdp/assets/12179612/06ca0356-2017-4841-bf3e-bee62848c172)
+
+**SPICE Simulation**
+
+SPICE File: `day4_inv_noisemargin_wp1_wn036.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.op
+
+.dc Vin 0 1.8 0.01
+
+.control
+run
+setplot dc1
+display
+.endc
+.end
+```
+
+Inverter Switching Transition Diagram
+
+![noise_margin](https://github.com/pitman75/vsd-hdp/assets/12179612/b7a5452a-226f-4f22-9744-d472cf38f96a)
+
+| ITEM 	| Voltage   |
+| VOH 	| 1.73273   |
+| VOL 	| 0.098545  |
+| VIH 	| 0.968707  |
+| VIL 	| 0.76119   |
+| NMH 	| 0.721623  |
+| NML 	| 0.648545  |
+
+## Day13 - Device variation robustness
+
+**Power Supply Scaling**
+
+    |Gain| = |Vout(VIH)-Vout(VIL)|/|VIH-VIL|
+    
+ - Advantage :
+   - Increase in Gain (~50% improvement)
+   - Reduction in Energy (~90% improvement, from Energy=1/2*C*Vdd**2)
+ - Disadvantage :
+   - Performance Impact on dymanic transition (increasing large delay)
+
+**Process Variation**
+
+ - Etching, layout shape variation, not expect rectangle formation
+ - Oxide Thickness, not uniformly thickness on Oxide layer
+
+**Device Variation**
+
+ - Shift in Vm
+ - Variation in NMH/NML
+ - Operation of Gate is intact
+
+**SPICE Simulation**
+
+**Power variation** SPICE File: `day5_inv_supplyvariation_Wp1_Wn036.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=1 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+.control
+
+let powersupply = 1.8
+alter Vdd = powersupply
+	let voltagesupplyvariation = 0
+	dowhile voltagesupplyvariation < 6
+	dc Vin 0 1.8 0.01
+	let powersupply = powersupply - 0.2
+	alter Vdd = powersupply
+	let voltagesupplyvariation = voltagesupplyvariation + 1
+      end
+ 
+plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in dc6.out vs in xlabel "input voltage(V)" ylabel "output voltage(V)" title "Inveter dc characteristics as a function of supply voltage"
+
+.endc
+.end
+```
+
+Power-Supply Scaling
+
+![inverter_supply_variation](https://github.com/pitman75/vsd-hdp/assets/12179612/4ed8730e-f32f-4a8d-a7ac-a16b6010a29a)
+
+**Device variation** SPICE File: `day5_inv_devicevariation_wp7_wn042.spice`
+
+```
+*Model Description
+.param temp=27
+
+*Including sky130 library files
+.lib "sky130_fd_pr/models/sky130.lib.spice" tt
+
+*Netlist Description
+
+XM1 out in vdd vdd sky130_fd_pr__pfet_01v8 w=0.84 l=0.15
+XM2 out in 0 0 sky130_fd_pr__nfet_01v8 w=0.36 l=0.15
+
+Cload out 0 50fF
+
+Vdd vdd 0 1.8V
+Vin in 0 1.8V
+
+*simulation commands
+
+.control
+
+    let nmoswidth = 0.36
+    alter m.xm2.msky130_fd_pr__nfet_01v8 w = nmoswidth
+    let pmoswidth = 1.2
+    alter m.xm1.msky130_fd_pr__pfet_01v8 w = pmoswidth
+
+    let widthVariation = 0
+    dowhile widthVariation < 5
+        echo "nmos width: $&nmoswidth u"
+        echo "pmos width: $&pmoswidth u"
+        *** dc analysis
+        dc vin 0 1.8 0.01
+        *** change to next env.
+        let nmoswidth = nmoswidth + 0.32
+        let pmoswidth = pmoswidth - 0.12
+        alter @m.xm2.msky130_fd_pr__nfet_01v8[W] = nmoswidth
+        alter @m.xm1.msky130_fd_pr__pfet_01v8[W] = pmoswidth
+        let widthVariation = widthVariation + 1
+    end
+
+    plot dc1.out vs in dc2.out vs in dc3.out vs in dc4.out vs in dc5.out vs in xlabel "input voltage(V)" ylabel "output voltage(V)" title "Inveter dc characteristics as a function of P/NMOS width"
+
+.endc
+
+.end
+```
+
+Device Variation
+
+![inverter_device_variation](https://github.com/pitman75/vsd-hdp/assets/12179612/0c0e502f-0263-42d8-a594-957295ae8f22)
+
