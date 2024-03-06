@@ -2094,3 +2094,55 @@ Device Variation
 
 ![inverter_device_variation](https://github.com/pitman75/vsd-hdp/assets/12179612/0c0e502f-0263-42d8-a594-957295ae8f22)
 
+## Day 13 - PVT Corner analysis
+
+Main goal of PVT corner analysis is test netlist for robustness. All slacks would be positive.
+
+Use TCL script `iiirv32i.tcl` to generate reports for each case of OpenPDK timing library.
+
+```
+read_liberty ../../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_n40C_1v76.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_n40C_1v44.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_n40C_1v40.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_n40C_1v35.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_n40C_1v28.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_100C_1v60.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ss_100C_1v40.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ff_n40C_1v76.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ff_n40C_1v65.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ff_n40C_1v56.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ff_100C_1v95.lib
+#read_liberty ../../lib/sky130_fd_sc_hd__ff_100C_1v65.lib
+
+read_verilog iiitb_rv32i_synth.v
+link_design iiitb_rv32i
+current_design
+read_sdc iiirv32i.sdc
+report_checks -path_delay min_max -fields {nets cap slew input_pins} -digits {4} > sta_out_rep1.txt
+report_worst_slack -max -digits {4} > sta_out_rep2.txt
+report_worst_slack -min -digits {4} > sta_out_rep3.txt
+report_tns -digits {4} > sta_out_rep4.txt
+report_wns -digits {4} > sta_out_rep5.txt
+```
+
+Run OpenSTA: `sta iiirv32i.tcl` , collect reports to separate folders and build comparison table.
+
+PVT Corner Summary 
+
+| PVT-CORNER | WNS | WHS | TNS |
+|------------|-----|-----|-----|
+| tt_025C_1v80 | -7.2783 | -1.8904 | -5797.6802 |
+| ss_n40C_1v76 | -20.6129 | -1.7840 | -20072.2363 |
+| ff_n40C_1v76 | -3.8892 | -1.9816 | -2424.3809 |
+| ff_n40C_1v65 | -6.1646 | -1.9624 | -4556.0923 |
+| ff_n40C_1v56 | -8.7303 | -1.9383 | -7174.8716 |
+| ss_n40C_1v44 | -53.5627 | -1.2965 | -56196.5273 |
+| ss_n40C_1v40 | -62.0164 | -1.1616 | -65340.0859 |
+| ss_n40C_1v35 | -78.8979 | -0.9457 | -83697.0625 |
+| ss_n40C_1v28 | -120.8575 | -0.4866 | -128631.1328 |
+| ss_100C_1v40 | -32.4085 | -1.3567 | -34393.3789 |
+| ss_100C_1v60 | -19.6810 | -1.6085 | -20061.1914 |
+| ff_100C_1v65 | -3.9593 | -1.9751 | -2502.6108 |
+| ff_100C_1v95 | -1.2924 | -2.0084 | -288.4185 |
+
