@@ -2146,3 +2146,11 @@ PVT Corner Summary
 | ff_100C_1v65 | -3.9593 | -1.9751 | -2502.6108 |
 | ff_100C_1v95 | -1.2924 | -2.0084 | -288.4185 |
 
+Setup slack graph
+
+![PVT_WNS_bad](https://github.com/pitman75/vsd-hdp/assets/12179612/ca7322fd-5345-4321-9060-51a2b6fb9050)
+
+Hold slack graph
+
+![PVT_WHS_bad](https://github.com/pitman75/vsd-hdp/assets/12179612/bca0a95a-13f6-41d4-8675-72ac145ef243)
+
