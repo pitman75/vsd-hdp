@@ -2283,7 +2283,8 @@ DRC: Magic, and do SPICE extraction from layout
 LVS: Magic and netgen, extracted spice v.s. verilog netlist
 
 OpenLane Tutorial:
-
-    `sky130A/lib.ref/` -> process design libraries information
-    `sky130/lib.tech/` -> technology information for EDA-tools
+```
+    sky130A/lib.ref/ -> process design libraries information
+    sky130/lib.tech/ -> technology information for EDA-tools
+```
 
