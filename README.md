@@ -2288,3 +2288,24 @@ OpenLane Tutorial:
     sky130/lib.tech/ -> technology information for EDA-tools
 ```
 
+To start work with OpenLANE just:
+ - cd to home folder of OpenLANE
+ - `make mount`
+
+```
+~/work/tools/OpenLane$ make mount
+cd /home/user/work/tools/OpenLane && \
+	docker run --rm -v /home/user:/home/user -v /home/user/work/tools/OpenLane:/openlane -v /home/user/work/tools/OpenLane/empty:/openlane/install -v /home/user/.volare:/home/user/.volare -e PDK_ROOT=/home/user/.volare -e PDK=sky130A  --user 1000:1000 -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/user/.Xauthority:/.Xauthority --network host --security-opt seccomp=unconfined -ti efabless/openlane:9dbd8b5ea2bd891bed4dcc97df5c7439083f0368-amd64
+OpenLane Container (9dbd8b5):/openlane$ 
+```
+
+Workflow
+```
+$ ./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design picorv32a
+  # generate "runs" directory -> check runs/<date>_<time>/config.tcl
+    $ run synthesis
+  # check result netlist: runs/<date>_<time>/synthesis/<deisgn>.synthesis.v
+  # check synth-stat report:                /reports/synthesis/yosys_2_stat.rpt
+  # check timing report:                                      /opensta_main.timing.rpt
