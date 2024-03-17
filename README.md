@@ -2308,6 +2308,9 @@ $ ./flow.tcl -interactive
 $ run_synthesis
 ```
 
+![risc-v32_synth_first](https://github.com/pitman75/vsd-hdp/assets/12179612/6f765e0d-19d6-470c-8599-9431e4bf7e94)
+
+
  - check result netlist: `runs/<date>_<time>/synthesis/<deisgn>.synthesis.v`
  - check synth-stat report: `/reports/synthesis/*.rpt`
  - check timing report: `/opensta_main.timing.rpt`
