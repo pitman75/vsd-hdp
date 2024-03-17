@@ -2154,3 +2154,136 @@ Hold slack graph
 
 ![PVT_WHS_bad](https://github.com/pitman75/vsd-hdp/assets/12179612/bca0a95a-13f6-41d4-8675-72ac145ef243)
 
+## Day 14 - Inception of open-source EDA, OpenLANE and Sky130 PDK
+
+**Package QFN-48**
+
+ - Quad Flat No-lead
+ - Package = Wire-Bond + Chip-Die
+ - Chip-Die = Chip-Core + Pad-ring
+ - Chip-Core = Foundry-IPs + Harden-Macros
+
+**RISCV Architecture**
+
+ - C/Cpp -> Binary Code -> Circuit in Layout
+
+**From Software Application to Hardware**
+
+ - App -> Compiler -> Assembler -> Application Binary Code (ELF or EXE)
+
+**Operation-System, Hardware start Application Binary Code from OS fetch from storage device**
+
+ - Handle IO driver Service
+ - Memory Management
+ - Low-Level System Interface (Program Loader)
+
+### OpenLane Overview
+
+**Digital ASIC Desgin: RTL IP's + EDA Tools + PDK Data**
+    
+PDK : Interface between FAB and the designer, Process Design Kit, include:
+ - Process Design Rule: DRC, LVS, PEX
+ - Device Models
+ - Digital Standard Cell Libraries
+ - I/O Libraries
+
+Is 130nm Fast? Yes, Intel P4EE @3.46GHz (Q4'04)
+
+**OpenLane ASIC Flow : (RTL+PDK) -> |SYN| -> |FP+PP| -> |Place| -> |CTS| -> |Route| -> |Sign-Off| -> (GDS-II)**
+
+**SYN**: Synthesis, Convert RTL to circuit from Standard Cell Library (SCL)
+ - Standard Cells have regular layout
+
+**FP+PP**: Floor-Planning + Power-Planning
+ - Floor-Planning : Partition the chip-die between different IPs, Macros, and I/O Pads
+ - Power-Planning : Share VDD by multiple power pads to power rings/straps (use upper metal layer)
+
+**Place**: Placement, place the std-cells on floorplan rows, aligned with the pitch
+ - Global Place: IP/Macros may overlapped
+ - Detailed Place: Align to rows/columns definition
+
+**CTS**: Clock Tree Synthesis, create a clock distribution network
+ - To deliver the clock to all sequential elements
+ - With small intrinsic skew in practical, zero is hard to achieve
+ - Usually a Tree structure (H, X, ...)
+
+**Route**: Routing, Implement the interconnect using the available metal layers
+ - Metal tracks from a routing grid
+ - Divide and Conquer huge routing grid
+ - Global Routing : Generate Routing Guides
+ - Detailed Routing : Use the routing guides to implement the actual wires
+
+**Sign-Off**:
+ - Physical Verifications
+    - Design Rules Checking (DRC)
+    - Layout v.s. Schematic (LVS)
+ - Timing Verifications
+    - Static Timing Analysis (STA)
+
+**OpenLane Introduction:**
+
+ - Started as an Open-Source Flow for a True Open-Source Tape-Out Experiment (striVe)
+ - Main-Goal: Produce a clean GDS-II with no human intervention flow clean means no LVS violations, no DRC violations, and no Timing violations
+ - Can be used with harden Macros and Chips
+ - Modes of operation: Autonomous or Interactive
+ - Design Space Exploration, find the best setting of flow configuration
+ - Feasible to be used for regression testing (CI)
+
+**OpenLane ASIC Flow:**
+
+ - Synthesis: yosys+abc
+ - Post-Synth STA: OpenSTA
+ - DFT Insertion: Fault DFT
+ - FP + Place + Global-Route + CTS: OpenROAD
+ - Fake Antenna(Ant.) Diode Insertion: OpenROAD
+ - LEC: yosys
+ - Detailed-Route: TritonRoute
+ - Fack Ant. Diode Swapping Script
+ - RC Extraction
+ - Post-Route STA: OpenSTA
+ - Physical Verification: Magic and netgen
+ - GDS2 Streaming: Magic
+
+**OpenROAD: Automated PnR (Place-and-Route)**
+
+ - Floor/Power Planning
+ - End Decoupling Capcitors and Tap-Cells insertion
+ - Placement: Global and Detailed
+ - Post Placement Optimization
+ - Clock-Tree Synthesis (CTS)
+ - Routing: Global and Detailed
+
+**LEC (Logic Equivalence Check)**
+
+Verify modified netlist
+ - Post-CTS
+ - Post-Placement Optimization
+
+Formally confirm that the function didn't change after flow modifying the netlist
+
+**Antenna Didoe: Antenna Rules Violation**
+
+When a metal wire segment is fabricated, it can act as antenna, especially long-wire
+ - Reactive ion etching causes charge to accumulate on wires
+ - Transister gates can be damaged during fabrication
+
+Solution:
+ - Bridging attaches a higer layer bridge (Router awareness, hard to achieve)
+ - Add antenna diode cell to leak away charges, which cell is provided by std-cell library
+
+Preventive Apporach
+ - Add a fake antenna diode next to every cell input after placement
+ - Run the Antenna Checker (Magic) on the routed layout
+ - If checker report a violation on cell input pin, replace the fake diode cell by a real one
+
+**RC Extraction: DEF2SPEF**
+
+DRC: Magic, and do SPICE extraction from layout
+
+LVS: Magic and netgen, extracted spice v.s. verilog netlist
+
+OpenLane Tutorial:
+
+    `sky130A/lib.ref/` -> process design libraries information
+    `sky130/lib.tech/` -> technology information for EDA-tools
+
