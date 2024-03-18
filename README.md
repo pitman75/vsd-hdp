@@ -2315,3 +2315,30 @@ STA violations found.
  - check synth-stat report: `/reports/synthesis/*.rpt`
  - check timing report: `/opensta_main.timing.rpt`
 
+## Day 15 - Understand importance of good floorplan vs bad floorplan and introduction to library cells
+
+**Utilization Factor and Aspect**
+
+ - Utilization Factor = (Area Occupied by Netlist)/(Total Area of the Core)
+ - Aspect Ratio = (Height of Core)/(Width of Core)
+
+**Pre-placed cells, i.e. Hard-Macro or Block-Box Cells**
+
+ - Arrangement of these IP's in a chip is referred as Floor-Planning
+ - Define location of pre-placed cells
+
+**De-coupling Capacitors**
+
+ - Alleviate voltage-drop from circuit switches to currput noise-margin limitation
+ - De-couples main voltage supplier to responsible cells
+ - Replenish the decoupling capcitor after circuit switches
+
+**Power-Planning**
+
+ - De-coupling limitation: single voltage source may leakage through multiple de-coupling region
+ - Solution: multiple voltage source, i.e. power mesh
+
+**Pin-Placement**
+
+ - Place pins near the target/source macro/std-cells
+
