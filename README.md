@@ -2317,6 +2317,8 @@ STA violations found.
 
 ## Day 15 - Understand importance of good floorplan vs bad floorplan and introduction to library cells
 
+### Floorplan and placement
+
 **Utilization Factor and Aspect**
 
  - Utilization Factor = (Area Occupied by Netlist)/(Total Area of the Core)
@@ -2342,7 +2344,7 @@ STA violations found.
 
  - Place pins near the target/source macro/std-cells
 
-**Workflow**
+**Floorplan workflow**
 
 ```
 $ ./flow.tcl -interactive
@@ -2351,6 +2353,8 @@ $ ./flow.tcl -interactive
 % run_synthesis
 % run_floorplan
 ```
+
+![floorplan_log](https://github.com/pitman75/vsd-hdp/assets/12179612/b6ca966b-35ee-47b5-ba09-79b64a1f4e52)
 
 results in `<design>/runs/<date>_<time>/logs`
  - `/floorplan/ioPlacer.log`
@@ -2362,3 +2366,90 @@ Magic open DEF file by command:
 ```
 $ magic -T sky130A.tech lef read .../merged.lef def read .../<design>.floorplan.def
 ```
+
+![magic_io_cells](https://github.com/pitman75/vsd-hdp/assets/12179612/2cfdbb78-e5da-4334-b1ca-be6dba90e7cd)
+
+
+**Bind netlist with physical cells**
+
+ - Get cell actual layout
+ - Get Cell actual timing
+
+**Optimize Placement**
+
+ - Estimate wire length and capcitance, then insert buffer (repeater) to adjust timing
+ - Quick Timing Analysis with ideal clocks
+
+**Placement workflow**
+
+```
+$ ./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design picorv32a
+% run_synthesis
+% run_floorplan
+% run_placement
+```
+
+![picorv32a_placement_log](https://github.com/pitman75/vsd-hdp/assets/12179612/5997a886-4cd4-44b3-80c5-75a1b2b311ae)
+
+Magic open DEF file by command:
+
+```
+$ magic -T sky130A.tech lef read .../merged.lef def read .../<design>.placement.def
+```
+
+Fullview of the chip layout
+
+![picorv32a_placement_fullview](https://github.com/pitman75/vsd-hdp/assets/12179612/5604ff30-5fd9-48a0-ad7e-8fbae863142c)
+
+Zoom to the chip
+
+![picorv32a_placement_detailview](https://github.com/pitman75/vsd-hdp/assets/12179612/77cbc992-4bfb-4d55-957b-be3d5e73487e)
+
+### Cell-Design Flow
+
+Analysis different function, size, Vt lead to corresponding delay, power, area
+ - Cell-Design Input: PDKs
+   - DRC & LVS rules (Tech-File)
+   - SPICE models (SPICE parameters)
+   - User-Defined Spec.
+      - Cell-Height(Width)
+      - Supply Voltage
+      - Metal Layers
+      - Pin Location
+      - Drawn Gate-Length
+
+ - Cell-Deisgn Steps:
+   - Circuit Design:
+     - Circuit Function
+     - PMOS/NMOS Modelling
+   - Layout Design:
+     - Desire PMOS/NMOS network graph
+     - Apply Euler's Path (Go-Through Once) and stick diagram
+   - Characterization
+     - Extract to SPICE netlist from layout information
+     - Software: GUNA
+     - Timing Threshold Definitions(for Buffer):
+       - slew_low_rise
+       - slew_high_rise
+       - slew_low_fall
+       - slew_high_fall
+       - in_rise
+       - in_fall
+       - out_rist
+       - out_fall
+     - Propagation Delay:
+       - Rise: out_rise-in_rise
+       - Fall: out_fall-in_fall
+     - Transition Time:
+       - Rise: slew_high_rise-slew_low_rise
+       - Fall: slew_low_fall-slew_high_fall
+         
+ - Cell-Design Output:
+    - CDL (Circuit Description Language)
+    - GDS-II, LEF, Extraced SPICE Netlist
+    - Timing, Noise, Power, .libs, Function
+
+
+
