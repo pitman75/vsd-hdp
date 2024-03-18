@@ -2290,14 +2290,7 @@ OpenLane Tutorial:
 
 To start work with OpenLANE just:
  - cd to home folder of OpenLANE
- - `make mount`
-
-```
-~/work/tools/OpenLane$ make mount
-cd /home/user/work/tools/OpenLane && \
-	docker run --rm -v /home/user:/home/user -v /home/user/work/tools/OpenLane:/openlane -v /home/user/work/tools/OpenLane/empty:/openlane/install -v /home/user/.volare:/home/user/.volare -e PDK_ROOT=/home/user/.volare -e PDK=sky130A  --user 1000:1000 -e DISPLAY=:0 -v /tmp/.X11-unix:/tmp/.X11-unix -v /home/user/.Xauthority:/.Xauthority --network host --security-opt seccomp=unconfined -ti efabless/openlane:9dbd8b5ea2bd891bed4dcc97df5c7439083f0368-amd64
-OpenLane Container (9dbd8b5):/openlane$ 
-```
+ - docker
 
 **Workflow:**
 
@@ -2308,96 +2301,17 @@ $ ./flow.tcl -interactive
 $ run_synthesis
 ```
 
-![risc-v32_synth_first](https://github.com/pitman75/vsd-hdp/assets/12179612/6f765e0d-19d6-470c-8599-9431e4bf7e94)
+**Synthesis result**
 
+![picorv32a_synth_1](https://github.com/pitman75/vsd-hdp/assets/12179612/1d864d97-86ce-4ae1-a9dc-a2fbeda13635)
+
+**STA result**
+
+![picorv32a_sta_1](https://github.com/pitman75/vsd-hdp/assets/12179612/e509e0c4-ad06-419b-a762-e8afb12d5bc2)
+
+STA violations found.
 
  - check result netlist: `runs/<date>_<time>/synthesis/<deisgn>.synthesis.v`
  - check synth-stat report: `/reports/synthesis/*.rpt`
  - check timing report: `/opensta_main.timing.rpt`
 
-**Synthesis report**
-
-```
-=== picorv32a ===
-
-   Number of wires:              16214
-   Number of wire bits:          16596
-   Number of public wires:        1475
-   Number of public wire bits:    1857
-   Number of memories:               0
-   Number of memory bits:            0
-   Number of processes:              0
-   Number of cells:              16494
-     sky130_fd_sc_hd__a2111o_2       8
-     sky130_fd_sc_hd__a211o_2      255
-     sky130_fd_sc_hd__a211oi_2     134
-     sky130_fd_sc_hd__a21bo_2      140
-     sky130_fd_sc_hd__a21boi_2      40
-     sky130_fd_sc_hd__a21o_2       420
-     sky130_fd_sc_hd__a21oi_2      560
-     sky130_fd_sc_hd__a221o_2      184
-     sky130_fd_sc_hd__a221oi_2       3
-     sky130_fd_sc_hd__a22o_2       392
-     sky130_fd_sc_hd__a22oi_2      222
-     sky130_fd_sc_hd__a2bb2o_2      30
-     sky130_fd_sc_hd__a311o_2       12
-     sky130_fd_sc_hd__a311oi_2       2
-     sky130_fd_sc_hd__a31o_2       200
-     sky130_fd_sc_hd__a31oi_2        8
-     sky130_fd_sc_hd__a32o_2        39
-     sky130_fd_sc_hd__a41o_2         2
-     sky130_fd_sc_hd__and2_2       359
-     sky130_fd_sc_hd__and2b_2      296
-     sky130_fd_sc_hd__and3_2       367
-     sky130_fd_sc_hd__and3b_2       68
-     sky130_fd_sc_hd__and4_2       294
-     sky130_fd_sc_hd__and4b_2       12
-     sky130_fd_sc_hd__and4bb_2      20
-     sky130_fd_sc_hd__buf_1       3037
-     sky130_fd_sc_hd__buf_2         24
-     sky130_fd_sc_hd__conb_1        41
-     sky130_fd_sc_hd__dfxtp_2     1613
-     sky130_fd_sc_hd__inv_2        142
-     sky130_fd_sc_hd__mux2_2      1518
-     sky130_fd_sc_hd__mux4_2        54
-     sky130_fd_sc_hd__nand2_2      929
-     sky130_fd_sc_hd__nand2b_2       4
-     sky130_fd_sc_hd__nand3_2      180
-     sky130_fd_sc_hd__nand3b_2      31
-     sky130_fd_sc_hd__nand4_2       88
-     sky130_fd_sc_hd__nand4b_2       2
-     sky130_fd_sc_hd__nor2_2       753
-     sky130_fd_sc_hd__nor2b_2        1
-     sky130_fd_sc_hd__nor3_2        88
-     sky130_fd_sc_hd__nor3b_2        9
-     sky130_fd_sc_hd__nor4_2        23
-     sky130_fd_sc_hd__o2111a_2       3
-     sky130_fd_sc_hd__o211a_2      318
-     sky130_fd_sc_hd__o211ai_2      79
-     sky130_fd_sc_hd__o21a_2       275
-     sky130_fd_sc_hd__o21ai_2      316
-     sky130_fd_sc_hd__o21ba_2      174
-     sky130_fd_sc_hd__o21bai_2      39
-     sky130_fd_sc_hd__o221a_2       70
-     sky130_fd_sc_hd__o22a_2        94
-     sky130_fd_sc_hd__o22ai_2        5
-     sky130_fd_sc_hd__o2bb2a_2      24
-     sky130_fd_sc_hd__o2bb2ai_2      1
-     sky130_fd_sc_hd__o311a_2       12
-     sky130_fd_sc_hd__o311ai_2       1
-     sky130_fd_sc_hd__o31a_2        21
-     sky130_fd_sc_hd__o31ai_2        8
-     sky130_fd_sc_hd__o32a_2        24
-     sky130_fd_sc_hd__o41a_2         2
-     sky130_fd_sc_hd__or2_2        501
-     sky130_fd_sc_hd__or2b_2       208
-     sky130_fd_sc_hd__or3_2        194
-     sky130_fd_sc_hd__or3b_2        42
-     sky130_fd_sc_hd__or4_2         63
-     sky130_fd_sc_hd__or4b_2        16
-     sky130_fd_sc_hd__or4bb_2       14
-     sky130_fd_sc_hd__xnor2_2     1063
-     sky130_fd_sc_hd__xor2_2       323
-
-   Chip area for module '\picorv32a': 163017.596800
-```
