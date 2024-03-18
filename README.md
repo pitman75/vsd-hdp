@@ -2298,7 +2298,7 @@ To start work with OpenLANE just:
 $ ./flow.tcl -interactive
 % package require openlane 0.9
 % prep -design picorv32a
-$ run_synthesis
+% run_synthesis
 ```
 
 **Synthesis result**
@@ -2342,3 +2342,23 @@ STA violations found.
 
  - Place pins near the target/source macro/std-cells
 
+**Workflow**
+
+```
+$ ./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design picorv32a
+% run_synthesis
+% run_floorplan
+```
+
+results in `<design>/runs/<date>_<time>/logs`
+ - `/floorplan/ioPlacer.log`
+ - `/config.tcl`
+ - '/result/floorplan/<design>.floorplan.def' DIEAREA
+
+Magic open DEF file by command:
+
+```
+$ magic -T sky130A.tech lef read .../merged.lef def read .../<design>.floorplan.def
+```
