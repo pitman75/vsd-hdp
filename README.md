@@ -2546,6 +2546,11 @@ Technology LEF: only available metal layer, via/contact information and DRC for 
 
 Modify SPICE file for simulation
 
+**remove or comment**
+
+ - `.subckt ...` line
+ - `.ends` line
+
 **change scale**
 
  - `.option scale=1000` -> `scale=0.01u`
@@ -2576,9 +2581,41 @@ Modify SPICE file for simulation
     .end
 ```
 
+**increase load capacitance***
+
+ - `C3 Y VGND 0.279f` -> `C3 Y VGND 20f`
+
+![sky130_inv_spice](https://github.com/pitman75/vsd-hdp/assets/12179612/df191746-ab03-4126-960c-eac0bb571a58)
+
 **perform ngspice simulation**
 
 ```
   $ ngspice sky130_inv.spice
   > plot y vs tims a
 ```
+
+![sky130_inv_transient](https://github.com/pitman75/vsd-hdp/assets/12179612/9bbaba92-99a0-4ccd-9085-a5a296260fec)
+
+
+**Result**
+
+ - Rise time: 450ps
+ - Fall time: 143.84ps
+ - Propogation rise delay: 303.93ps
+ - Propogation fall delay: 121ps
+
+
+### Magic DRC
+        
+ - Website: opencircuitdesign.com/magic/
+ - Technology File: Magic Technology File Format
+   - DRC section
+   - Cifoutput section
+ - Lab-File: http://opencircuitdesign.com/open_pdks/archive/drc_test.tgz
+
+`$ magic -d XR`
+
+"Open" -> "met3.mag", errors in SkyWater SKY130 Process Design Rules, Periphery Rules
+fix poly.9 error => poly and polyres are too close
+reload magic tech file
+`% tech load sky130A.tech`
