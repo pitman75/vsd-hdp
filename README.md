@@ -2451,5 +2451,84 @@ Analysis different function, size, Vt lead to corresponding delay, power, area
     - GDS-II, LEF, Extraced SPICE Netlist
     - Timing, Noise, Power, .libs, Function
 
+## Day 16 - Design and characterize one library cell using Magic Layout tool and ngspice
+
+1. CMOS Process Introduction
+2. Cell-Design for SPICE Extration
+
+
+**OpenLane Operation**
+
+Change IO pins place mode
+
+make io-placer stack as std-cells
+
+```
+% set ::env(FP_IO_MODE) 2
+% run floorplan
+```
+
+### 16-Mask CMOS Process
+
+ - Select a substract (P-type, high resistivity (5~50ohms), doping level(10**13 cm**2), orientation(100))
+   - Substract doping should be less than well doping
+  
+ - Create active region for transistors
+   - ~40nm of SiO2 + ~80nm of Si3N4 + ~1um Photo-Resist
+   - Mask1 + UV-Light
+   - Washed out + Si3N4 Etched
+   - Photo-Resist Chemically Removed, residue SI3N4and SiO2
+   - Placed in oxidation furnace, field of SiO2 is grownn for isolation area
+     - LOCOS, local oxidation of silicon
+   - Si3N4 stripped by using hot phosphoric acid
+ 
+ - N-Well and P-Well Formation
+   - Photo-Resist + Mask2 + UV-Light + Wash-OUt
+   - Ion Implantation (Boron, ~200KeV), formating P-Well + Si3N4 etched
+   - Photo-Resist + Mask3 + UV-Light + Wash-Out
+   - Ion Implantation (Phosphorous, ~400KeV), formating N-Well + Si3N4 etched
+   - High Temperature Furnace, drive-in diffusion
+
+ - Formation of Gate (Na(doping concentration), Cox(oxide capcitance)) -> Control Vt
+   - Photo-Resist + Mask4
+   - Ion Implantation (Boron, ~60KeV) on P-Well Region (P-Layer)
+   - Photo-Resist + Mask5
+   - Ion Implantation (Arsenic) on N-Well Region (N-Layer)
+   - Origional Oxide etched/stripped by using dilute hydrofluoric (HF) solution
+   - Re-grown high quality oxide layer (~10um thin), remove defected by process
+   - ~0.4um polysilicon layer
+   - Photo-Resist + Mask6 to mark Gate area
+   - Wash-Out polysilicon with UV-Light
+
+ - Lightly Doped Drain (LDD) Formation
+   - Photo-Resist + Mask7, Phosphorous(lightly doped) in P-Well to form N-implant region around Gate
+   - Photo-Resist + Mask8, Boron(lightly doped) in N-Well to form P-implant region around Gate
+   - ~0.1um Si3N4 or SiO2 + Plasma anisotropic etching, add side-wall spacer
+
+ - Source and Drain Formation
+   - Photo-Resist + Mask9, Arsenic(75KeV, N+ implant) in P-Well Region, enhance LDD region
+   - Photo-Resist + Mask10, Boron(50KeV, P+ implant) in N-Well Region, enhance LDD region
+   - High Temperature furnace, high temperature annealing
+
+ - Form contacts and interconnections (local)
+   - Etch thin oxide in HF Solution
+   - Deposit titanium(very low resistance) on wafer surface, using sputtering
+     - sputtering: Argon(Ar+) gas to smash Ti to spreading on substrate
+   - Wafer heated at about 650~700 C-degree, with N2 ambient for 60 secs, result low resistant TiSi2 (low resistant from SiO2 on Gate) and TiN (local-layer)
+   - Photo-Resist + Mask11, form local TiN connections
+   - TiN is etched using RCA cleaning, form required local connections under mask11
+ - Higher Level Metal Formation
+   - 1um of SiO2, which doped with phosphorous or boron, deposited on wafer surface
+   - Chemical mechanical polishing (CMP) technique for planarizing wafer surface
+   - Photo-Resist + Mask12, etch vertical contact path to local TiN
+   - Aluminum (Al) layer deposition
+   - Photo-Resist + Mask13, then Plasma-Etch Al layer
+   - SiO2 surface deposit + Mask14 for contact holes + TiN with Tungsten + Al-layer
+   - repeat to Mask15, final with dielectric (Si3N4) to protect the chip
+   - Use Mask16 to etch contact hole to bond-wire connect pin
+
+
+
+
 
 
