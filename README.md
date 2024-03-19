@@ -2527,6 +2527,22 @@ make io-placer stack as std-cells
    - repeat to Mask15, final with dielectric (Si3N4) to protect the chip
    - Use Mask16 to etch contact hole to bond-wire connect pin
 
+### Lab on Extracting SPICE form Layout
+
+Clone Git repo to working folder `git clone https://github.com/nickson-jose/vsdstdcelldesign`
+
+Open inverter cell design 'magic -T ./libs/sky130A.tech sky130_inv.mag &'
+
+![sky130_inv](https://github.com/pitman75/vsd-hdp/assets/12179612/8a3b91a9-7137-441c-b284-6c9e69e4ed5c)
+
+
+Technology LEF: only available metal layer, via/contact information and DRC for placer and router. To characterize we need information about capacitance, resistance, etc. Extract SPICE in magic tkcon:
+
+ - `% extract all` to create and extract parameters and write to a sky130_inv.ext file
+ - `% ext2spice cthresh 0 rthresh 0` to extract parasitic parameters
+ - `% ext2spice` to write spice file sky130_inv.spice
+
+![sky130_inv_extract_spice](https://github.com/pitman75/vsd-hdp/assets/12179612/2302f146-3c9d-4393-b8f0-b010bd581e73)
 
 
 
