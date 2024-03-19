@@ -2544,7 +2544,41 @@ Technology LEF: only available metal layer, via/contact information and DRC for 
 
 ![sky130_inv_extract_spice](https://github.com/pitman75/vsd-hdp/assets/12179612/2302f146-3c9d-4393-b8f0-b010bd581e73)
 
+Modify SPICE file for simulation
 
+**change scale**
 
+ - `.option scale=1000` -> `scale=0.01u`
 
+**add model library**
 
+ - `.include ./libs/pshort.lib`
+ - `.include ./libs/nshort.lib`
+
+**modify model name**
+
+ - `pshort` -> `pshort_model.0`
+ - `nshort` -> `nshort_model.0`
+
+**add VDD/GND/Vin**
+
+ - `VDD VPWR 0 3.3V`
+ - `VSS VGND 0 0V`
+ - `Va A VGND PULSE(0V 3.3V 0 0.1ns 0.1ns 2ns 4ns)`
+
+**add analysis command**
+
+```
+    .tran 1n 20n
+    .control
+    run
+    .endc
+    .end
+```
+
+**perform ngspice simulation**
+
+```
+  $ ngspice sky130_inv.spice
+  > plot y vs tims a
+```
