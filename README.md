@@ -2685,3 +2685,22 @@ Bingo! Our new cell exist in the design.
    - Apply delay table to adjust buffer performance to meet timing
  - If input-slew/output-load in the middle of table elements, derive result by linear approximation
 
+### Synthesis/Floorpla/Placement with custom cell
+
+**Fix slack from new vsdinv cell**
+
+The design has big negative slack violation. Let's fix it.
+
+ - Read synthesis strategy `echo $::env(SYNTH_STRATEGY)` -> `AREA 0`
+ - Change to delay optimization `set ::env(SYNTH_STRATEGY) "DELAY 1"`
+ - Read synthesis buffering option `echo $::env(SYNTH_BUFFERING)` -> `1` it's OK
+ - Read synthesis sizing option `echo $::env(SYNTH_SIZING)` -> '0' disabled.
+ - Enable sizing for cells `set ::env(SYNTH_SIZING) 1`
+ - Read synthesis driving cell option `echo $::env(SYNTH_DRIVING_CELL)` -> `sky130_fd_sc_hd__inv_8` it's OK
+
+ Start synthesis and compare result
+
+ ![synt_with_custom_after_optimization](https://github.com/pitman75/vsd-hdp/assets/12179612/c28a18eb-6c37-4af6-aa62-7296cb7de0f4)
+
+ After optimization the result looks acceptable.
+ 
