@@ -2622,6 +2622,8 @@ reload magic tech file
 
 ## Day 17 - Pre-layout timing analysis and importance of good clock tree
 
+### Add custom cell to a design
+
 **Convert grid info to track info**
 
  - LEF file: reduced GDS information, only contains ports(power, ground, input, output) for digital PnR flow.
@@ -2673,6 +2675,13 @@ Synthesis picorv32a design with our new cell
 
 Bingo! Our new cell exist in the design.
 
+### Introduction to delay tables
 
-
+ - Power Aware CTS -> Apply clock-gating cells to disable circuit switching while gated
+ - Observation:
+   - At every level, each node driving same load
+   - Identical buffer at same level
+ - Practical:
+   - Apply delay table to adjust buffer performance to meet timing
+ - If input-slew/output-load in the middle of table elements, derive result by linear approximation
 
