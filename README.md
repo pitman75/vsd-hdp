@@ -2619,3 +2619,19 @@ Modify SPICE file for simulation
 fix poly.9 error => poly and polyres are too close
 reload magic tech file
 `% tech load sky130A.tech`
+
+## Day 17 - Pre-layout timing analysis and importance of good clock tree
+
+**Convert grid info to track info**
+
+ - LEF file: reduced GDS information, only contains ports(power, ground, input, output) for digital PnR flow.
+ - Guide-Line
+   - input/output port must line-up on the intersection of horizontal/vertical tracks
+   - width/height of standard cell should be multiple of horizontal/vertical pitch
+
+ - pdks/sky130A/libs.tech/popenlane/sky130_fd_sc_hd/tracks.info
+   - li1 X 0.23 0.46 # Horizontal Track(0.23) Pitch(0.46)
+   - li1 Y 0.17 0.34 # Vertical   Track(0.17) Pitch(0.34)
+ - adjust magic grid display
+   - `% grid 0.46um 0.34um 0.23um 0.17um`
+
