@@ -2629,7 +2629,7 @@ reload magic tech file
    - input/output port must line-up on the intersection of horizontal/vertical tracks
    - width/height of standard cell should be multiple of horizontal/vertical pitch
 
- - pdks/sky130A/libs.tech/popenlane/sky130_fd_sc_hd/tracks.info
+ - pdks/sky130A/libs.tech/openlane/sky130_fd_sc_hd/tracks.info
    - li1 X 0.23 0.46 # Horizontal Track(0.23) Pitch(0.46)
    - li1 Y 0.17 0.34 # Vertical   Track(0.17) Pitch(0.34)
  - adjust magic grid display
