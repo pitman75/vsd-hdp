@@ -2635,3 +2635,22 @@ reload magic tech file
  - adjust magic grid display
    - `% grid 0.46um 0.34um 0.23um 0.17um`
 
+**Set label for ports, class and use**
+
+ - Select area locali for input/output ports and metal1 for power/ground and add label with properties
+ - Add class
+ - Add use
+
+![set_port_class_use](https://github.com/pitman75/vsd-hdp/assets/12179612/46ee3fb1-eb0d-4641-8dfe-3855fdd9194c)
+
+**Generate a LEF file**
+
+ - `% lef write`
+
+![lef_write](https://github.com/pitman75/vsd-hdp/assets/12179612/3117e7ca-dcae-4bff-8cd4-a1ff8d8b6c65)
+
+The LEF file content
+ 
+![lef_file](https://github.com/pitman75/vsd-hdp/assets/12179612/df99f278-6bda-4b24-968e-33940675319e)
+
+
