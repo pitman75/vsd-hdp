@@ -2653,4 +2653,26 @@ The LEF file content
  
 ![lef_file](https://github.com/pitman75/vsd-hdp/assets/12179612/df99f278-6bda-4b24-968e-33940675319e)
 
+**Include new cell in synthesis*
+
+ - copy sky130_vsdinv.lef to picorv32a/src
+ - copy timing libs (sky130_fd_sc_hd__fast/slow/typical.lib) to picorv32a/src
+ - modify config.tcl
+   - add custom timing libraries
+   - add import lef command
+  
+![config_tcl_with_new_cell](https://github.com/pitman75/vsd-hdp/assets/12179612/fa5b2013-6104-48aa-b8b1-84fdbf927ed0)
+
+Prepare picorv32a design with our new cell
+
+![add_cell_prep_design_merge_lef](https://github.com/pitman75/vsd-hdp/assets/12179612/b06d3d9d-73d9-4b9b-9a59-a2acfdb86767)
+
+Synthesis picorv32a design with our new cell
+
+![add_cell_synthesis](https://github.com/pitman75/vsd-hdp/assets/12179612/7683d6ec-ac63-4e9e-a0df-cc009d4da844)
+
+Bingo! Our new cell exist in the design.
+
+
+
 
