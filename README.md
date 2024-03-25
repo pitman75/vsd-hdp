@@ -2702,5 +2702,17 @@ The design has big negative slack violation. Let's fix it.
 
  ![synt_with_custom_after_optimization](https://github.com/pitman75/vsd-hdp/assets/12179612/c28a18eb-6c37-4af6-aa62-7296cb7de0f4)
 
- After optimization the result looks acceptable.
- 
+ After optimization the result looks acceptable. But I found bad define of period for the core. It should be 80ns for 12.5MHz but wrote 12.5ns for 83MHz. Fix it and determine how to change szie of the chip area and number of our invertos when we use some optimization strategy.
+
+The chip area vs synthesis strategy
+
+![chiparea_vs_strategy](https://github.com/pitman75/vsd-hdp/assets/12179612/75d2b8e4-82a6-47f3-926c-327896b863e3)
+
+How many custom inverters vs synthesis strategy
+
+![invertors_vs_strategy](https://github.com/pitman75/vsd-hdp/assets/12179612/e6dda213-decd-4266-9cfb-6304b90c733b)
+
+Small size of a chip area will reduce cost. New configurate file is:
+
+![config_fix_freq_area_optimization](https://github.com/pitman75/vsd-hdp/assets/12179612/5f3b4e91-6e88-4236-b0ee-55b07f90b5c1)
+
