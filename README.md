@@ -2716,3 +2716,20 @@ Small size of a chip area will reduce cost. New configurate file is:
 
 ![config_fix_freq_area_optimization](https://github.com/pitman75/vsd-hdp/assets/12179612/5f3b4e91-6e88-4236-b0ee-55b07f90b5c1)
 
+Lets build a chip
+
+**Workflow:**
+
+```
+$ ./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design picorv32a
+% run_synthesis
+% run_floorplan
+```
+
+The floorplan process generate an error and exit from the process.
+
+![floorplan_error](https://github.com/pitman75/vsd-hdp/assets/12179612/6503fc82-5aea-4c19-840c-ad16ea1522df)
+
+
