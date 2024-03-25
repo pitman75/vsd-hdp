@@ -2752,3 +2752,13 @@ $ ./flow.tcl -interactive
 Done. I have a chip layout. Let's see it by a command
 
 `~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_15-10/results/placement$ magic -T /home/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &`
+
+The chip layout is:
+
+![vsdinv_chip_layout_all](https://github.com/pitman75/vsd-hdp/assets/12179612/57407996-99f6-4109-8725-6c4dca755a8d)
+
+VSD_inv custom cell in the chip
+
+![vsdinv_in_the_chip](https://github.com/pitman75/vsd-hdp/assets/12179612/6973212c-2f81-4c77-a161-7ec87a32eee1)
+
+
