@@ -2732,4 +2732,23 @@ The floorplan process generate an error and exit from the process.
 
 ![floorplan_error](https://github.com/pitman75/vsd-hdp/assets/12179612/6503fc82-5aea-4c19-840c-ad16ea1522df)
 
+No any macro defined for the design. To mitigate that error I use floorplan/placement workflow without macro placement:
 
+```
+$ ./flow.tcl -interactive
+% package require openlane 0.9
+% prep -design picorv32a
+% run_synthesis
+% init_floorplan
+% place_io
+% global_placement_or
+% detailed_placement
+% tap_decap_or
+% detailed_placement
+```
+
+![floorplan_skip_macro_result](https://github.com/pitman75/vsd-hdp/assets/12179612/c6412678-b751-4f58-a254-f9bd04cc975a)
+
+Done. I have a chip layout. Let's see it by a command
+
+`~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/25-03_15-10/results/placement$ magic -T /home/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/magic/sky130A.tech lef read ../../tmp/merged.lef def read picorv32a.placement.def &`
