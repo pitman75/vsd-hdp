@@ -2761,4 +2761,18 @@ VSD_inv custom cell in the chip
 
 ![vsdinv_in_the_chip](https://github.com/pitman75/vsd-hdp/assets/12179612/6973212c-2f81-4c77-a161-7ec87a32eee1)
 
+### Timing Analysis (Real Clock)
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/3eb68a76-245f-4bfb-b91f-19741181e447)
+
+ - Skew: Physical buffer unbalance between sequential logics
+ - Td1: Clock-Net to launch FF clock-pin delay
+ - Td2: Clock-Net to capture FF clock-pin delay
+ - H: capture FF hold-time
+ - Setup Analysis: (Tc+Td1) < (T+Td2-Ts-Tsu)
+ - Slack (setup) : Data Require Time (T+Td2-Ts-Tsu) - Data Arrival Time (Tc+Td1)
+ - Hold Analysis: (Tc+Td1) > (H + Td2)
+ - Slack (hold) : Data Arrival Time (Tc+Td1) - Data Require Time (H + Td2)
+
+
 
