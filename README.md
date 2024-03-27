@@ -3048,6 +3048,7 @@ if { [file exists $filename] == 1} {
 
 <details>
 	<summary>STA report</summary>
+
 ```
 Startpoint: _42991_ (rising edge-triggered flip-flop clocked by clk)
 Endpoint: _42991_ (rising edge-triggered flip-flop clocked by clk)
@@ -3145,6 +3146,7 @@ Slack reduced but not enought. Also I see huge load for one element. It's _42093
 
 <details>
 	<summary>STA report</summary>
+	
 ```
 Startpoint: _42991_ (rising edge-triggered flip-flop clocked by clk)
 Endpoint: _42991_ (rising edge-triggered flip-flop clocked by clk)
