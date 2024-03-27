@@ -2776,3 +2776,104 @@ VSD_inv custom cell in the chip
 
 Let's do an example for STA and fine tune of design. Clock of this design will be higher than in previouse. Set clock period to 12ns (~83.4MHz) and synthesis strategy as `DELAY 1`. Synthesis and do CTS of the design.
 
+Fast picorv32a configuration file
+
+![fast_12ns_picorv32a_config](https://github.com/pitman75/vsd-hdp/assets/12179612/41b3b0c5-016c-4f88-883b-8512bdf7c4f6)
+
+<details>
+	<summary>Synthesis report</summary>
+
+```
+28. Printing statistics.
+
+=== picorv32a ===
+
+   Number of wires:              22757
+   Number of wire bits:          23139
+   Number of public wires:        1565
+   Number of public wire bits:    1947
+   Number of memories:               0
+   Number of memory bits:            0
+   Number of processes:              0
+   Number of cells:              23037
+     sky130_fd_sc_hd__a2111o_2       7
+     sky130_fd_sc_hd__a2111oi_2      1
+     sky130_fd_sc_hd__a211o_2       48
+     sky130_fd_sc_hd__a211oi_2       7
+     sky130_fd_sc_hd__a21bo_2       44
+     sky130_fd_sc_hd__a21boi_2     125
+     sky130_fd_sc_hd__a21o_2       582
+     sky130_fd_sc_hd__a21oi_2     1078
+     sky130_fd_sc_hd__a221o_2       82
+     sky130_fd_sc_hd__a221oi_2       4
+     sky130_fd_sc_hd__a22o_2       226
+     sky130_fd_sc_hd__a22oi_2      305
+     sky130_fd_sc_hd__a2bb2o_2      24
+     sky130_fd_sc_hd__a2bb2oi_2     17
+     sky130_fd_sc_hd__a311o_2       17
+     sky130_fd_sc_hd__a31o_2        95
+     sky130_fd_sc_hd__a31oi_2       95
+     sky130_fd_sc_hd__a32o_2        41
+     sky130_fd_sc_hd__a32oi_2       15
+     sky130_fd_sc_hd__a41o_2        11
+     sky130_fd_sc_hd__a41oi_2        5
+     sky130_fd_sc_hd__and2_2       492
+     sky130_fd_sc_hd__and2b_2       23
+     sky130_fd_sc_hd__and3_2       411
+     sky130_fd_sc_hd__and3b_2        7
+     sky130_fd_sc_hd__and4_2        76
+     sky130_fd_sc_hd__and4b_2        3
+     sky130_fd_sc_hd__buf_1       1646
+     sky130_fd_sc_hd__buf_2         12
+     sky130_fd_sc_hd__conb_1        42
+     sky130_fd_sc_hd__dfxtp_2     1613
+     sky130_fd_sc_hd__inv_2         97
+     sky130_fd_sc_hd__mux2_1      1224
+     sky130_fd_sc_hd__mux2_2       902
+     sky130_fd_sc_hd__mux4_1       221
+     sky130_fd_sc_hd__nand2_2     3394
+     sky130_fd_sc_hd__nand2b_2       2
+     sky130_fd_sc_hd__nand3_2     2128
+     sky130_fd_sc_hd__nand3b_2     317
+     sky130_fd_sc_hd__nor2_2      1887
+     sky130_fd_sc_hd__nor2b_2       10
+     sky130_fd_sc_hd__nor3_2        61
+     sky130_fd_sc_hd__nor3b_2        7
+     sky130_fd_sc_hd__o2111a_2      15
+     sky130_fd_sc_hd__o2111ai_2     74
+     sky130_fd_sc_hd__o211a_2      338
+     sky130_fd_sc_hd__o211ai_2     249
+     sky130_fd_sc_hd__o21a_2       156
+     sky130_fd_sc_hd__o21ai_2     1040
+     sky130_fd_sc_hd__o21ba_2       17
+     sky130_fd_sc_hd__o21bai_2     151
+     sky130_fd_sc_hd__o221a_2       44
+     sky130_fd_sc_hd__o221ai_2      11
+     sky130_fd_sc_hd__o22a_2        38
+     sky130_fd_sc_hd__o22ai_2      264
+     sky130_fd_sc_hd__o2bb2a_2      25
+     sky130_fd_sc_hd__o2bb2ai_2    323
+     sky130_fd_sc_hd__o311a_2        3
+     sky130_fd_sc_hd__o311ai_2       2
+     sky130_fd_sc_hd__o31a_2        14
+     sky130_fd_sc_hd__o31ai_2        4
+     sky130_fd_sc_hd__o32a_2        12
+     sky130_fd_sc_hd__o32ai_2        2
+     sky130_fd_sc_hd__or2_2        387
+     sky130_fd_sc_hd__or2b_2        28
+     sky130_fd_sc_hd__or3_2         64
+     sky130_fd_sc_hd__or3b_2        10
+     sky130_fd_sc_hd__or4_2         70
+     sky130_fd_sc_hd__or4b_2         3
+     sky130_fd_sc_hd__xnor2_2       36
+     sky130_fd_sc_hd__xor2_2        86
+     sky130_vsdinv                2167
+
+   Chip area for module '\picorv32a': 209179.369600
+
+tns -266.36
+wns -2.95
+```
+</details>
+
+Define STA constrains
