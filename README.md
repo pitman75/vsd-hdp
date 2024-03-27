@@ -2774,5 +2774,5 @@ VSD_inv custom cell in the chip
  - Hold Analysis: (Tc+Td1) > (H + Td2)
  - Slack (hold) : Data Arrival Time (Tc+Td1) - Data Require Time (H + Td2)
 
-
+Let's do an example for STA and fine tune of design. Clock of this design will be higher than in previouse. Set clock period to 12ns (~83.4MHz) and synthesis strategy as `DELAY 1`. Synthesis and do CTS of the design.
 
