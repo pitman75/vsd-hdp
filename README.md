@@ -2761,7 +2761,7 @@ VSD_inv custom cell in the chip
 
 ![vsdinv_in_the_chip](https://github.com/pitman75/vsd-hdp/assets/12179612/6973212c-2f81-4c77-a161-7ec87a32eee1)
 
-### Timing Analysis (Real Clock)
+### Timing Analysis (Ideal Clock)
 
 ![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/3eb68a76-245f-4bfb-b91f-19741181e447)
 
@@ -3317,3 +3317,18 @@ Fanout       Cap      Slew     Delay      Time   Description
 </details>
 
 The slack is negative but it will be fixed in PnR.
+
+### Clock Tree Synthesis (CTS):
+
+ - Clock Tree Synthesis(CTS) is a process which makes sure that the clock gets distributed evenly to all sequential elements in a design.
+ - The goal of CTS is to minimize the clock latency and skew.
+ - H-tree calculates the path from all flops and connects the clock to the midpoint of the flops.
+ - Buffers (with equal rise and fall time) are added on the H-tree path. The CTS run adds clock buffers, so buffer delays are taken into consideration, and the analysis now deals with real clocks.
+ - Setup and hold time slacks can be then analyzed in the post-CTS STA analysis using OpenROAD.
+ - All critical (as shielding all is sometimes not possible) clock nets are shielded to prevent coupling with other components, and hence reducing potential of a glitch.
+ - A glitch is a serious problem as it can reset memory system and can lead to incorrect functionality in the whole system activity.
+ - Crosstalk leads to exponential delta skew, and this is another reason shielding nets is important.
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/60459354-0b76-4eee-beb6-054521db5b7b)
+
+
