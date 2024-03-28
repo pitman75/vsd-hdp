@@ -3570,8 +3570,8 @@ In OpenRoad, the timing analysis is performed by creating a db file using the LE
 A db creation is a one-time process (unless the def changes). To create the db, invoke OpenRoad from within the OpenLANE shell using openroad. Then from within the OpenRoad shell execute the following commands:
 
 ```
-openroad
-read_lef /openLANE_flow/designs/picorv32a/runs/fastpico/tmp/merged.lef
-read_def /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
-write_db picorv32a_cts.db
+% openroad
+% read_lef /openLANE_flow/designs/picorv32a/runs/fastpico/tmp/merged.lef
+% read_def /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+% write_db picorv32a_cts.db
 ```
