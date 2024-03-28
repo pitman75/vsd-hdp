@@ -3142,7 +3142,21 @@ Fanout       Cap      Slew     Delay      Time   Description
 ```
 </details>
 
-Slack reduced but not enought. Also I see huge load for one element. It's _42093_. It should drive 161 input. Wow. Synthesis strategy is "DELAY 1" doesn't work properly with option SYNTH_MAX_FANOUT. To reduce slack mannualy I replace some cells to bugger version.
+
+
+One common reason could a large output slew for a net due to large capacitance load/ fanout which the synthesis tool could not optimize further. In this case a cell drives more cells then we can upsize that cell so that slack can be reduced. For upsizing we have to replace that cell with a more drive strength cell to reduce the delay using the replace_cell command.
+
+```
+Syntax : replace_cell instance lib_cell
+Example: replace_cell _44195_ sky130_fd_sc_hd__inv_4
+       where, _44195_ is the instance name of the cell to be replaced
+              sky130_fd_sc_hd__inv_4 is the upsized std cell version
+```
+
+To check if the violation has been resolved: `report_checks -from  -to  -through  -path_delay max`
+Example: `report_checks -from _50144_ -to _50075_ -through _44195_ -path_delay min_max`
+
+Slack reduced but not enought. Also I see huge load for one element. It's _42093_. It should drive 161 input. Wow. Synthesis strategy is "DELAY 1" doesn't work properly with option SYNTH_MAX_FANOUT. To reduce slack mannualy we replace some cells to bugger version.
 
 ![cell_replacement](https://github.com/pitman75/vsd-hdp/assets/12179612/8f6bdbc0-4881-479e-8e6e-c84469d48474)
 
@@ -3317,6 +3331,8 @@ Fanout       Cap      Slew     Delay      Time   Description
                                        -1.1226   slack (VIOLATED) 
 ```
 </details>
+
+Fixing timing violations by ECOs is an iterative cyclical process.
 
 The slack is negative but it will be fixed in PnR. Let's write changed netlist to the file `picorv32a.synthesis.v` :
 
@@ -3505,3 +3521,57 @@ Done
 </details>
 
 As we see slack is negative but it to be fixed after routing.
+
+### Timing analysis with real clocks using OpenSTA
+
+**Setup timing analysis (single clock, real clock scenario):**
+
+ - Network clk goes through real wires and buffers, which cause delays. D (combinational delay)+ delta1 (time for clk to reach launch flop) < [T (period) + delta2 (time for clk to reach capture flop)]- S (setup: D to clk delay in capture flop) - SU (Setup uncertainty).
+ - delta1-delta2 is known as skew (difference in time the clk reaches the two flops).
+ - D+delta1 = data arrival time,
+ - T+delta2-S-SU = data required time
+ - Slack = data required time - data arrival time => slack should be +ve.
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/90483f3b-93ff-441e-a1b0-9f2988903d1a)
+
+**Hold Timing Analysis using Real Clocks**
+
+Hold timing analysis (single clock, ideal scenario):
+
+ - D > H (hold time: clk to Q in capture flop) + HU (hold uncertainty).
+
+Hold timing analysis (single clock, real clock scenario):
+
+ - D + delta1 > H (hold time: clk to Q in capture flop) + delta2 + HU
+ - The left hand side is called data arrival time while right hand side is called data required time.
+ - In this case, slack = data arrival time - data required time, and slack here should be +ve too.
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/ae693afe-e3a5-4238-91c5-0466eac3d58e)
+
+
+ - Delta1 and delta2 need to be identified for both setup and hold time analysis.
+ - Delta1/delta2 = sum of RC wire delays on path + sum of buffer delays on the path.
+ - The difference is that del1 goes to launch flop, while delta2 goes to capture flop (see picture below to understand the difference).
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/3fdf4115-9f48-4d9b-bc60-b325b5beb766)
+
+In OpenLANE, clock tree synthesis is carried out using TritonCTS tool. CTS should always be done after the floorplanning and placement as the CTS is carried out on a placement.def file that is created during placement stage.
+
+If the design produces any setup timing violaions in the analysis, it can be eliminated or reduced using techniques as follows:
+
+ - Increase the clock period (Not always possible as generally operating frequency is freezed in the specifications)
+ - Scaling the buffers (Causes increase in design area)
+ - Restricting the maximum fan-out of an element.
+
+### Steps to analyze timing with real clocks (Post-CTS STA) using OpenSTA
+
+In OpenRoad, the timing analysis is performed by creating a db file using the LEF and DEF files of the design.
+
+A db creation is a one-time process (unless the def changes). To create the db, invoke OpenRoad from within the OpenLANE shell using openroad. Then from within the OpenRoad shell execute the following commands:
+
+```
+openroad
+read_lef /openLANE_flow/designs/picorv32a/runs/fastpico/tmp/merged.lef
+read_def /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+write_db picorv32a_cts.db
+```
