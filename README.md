@@ -3575,3 +3575,15 @@ A db creation is a one-time process (unless the def changes). To create the db, 
 % read_def /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
 % write_db picorv32a_cts.db
 ```
+
+**STA result**
+
+```
+% read_db picorv32a_cts.db
+% read_verilog /openLANE_flow/designs/picorv32a/runs/fastpico/results/synthesis/picorv32a.synthesis_cts.v
+% read_liberty $::env(LIB_SYNTH_COMPLETE)
+% link_design picorv32a
+% read_sdc /openLANE_flow/designs/picorv32a/src/picorv32a.sdc
+% set_propagated_clock [all_clocks]
+% report_checks -path_delay min_max -fields {slew trans net cap input_pin} -format full_clock_expanded -digits 4
+```
