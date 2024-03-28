@@ -3587,3 +3587,48 @@ STA workflow:
 % set_propagated_clock [all_clocks]
 % report_checks -path_delay min_max -fields {slew trans net cap input_pin} -format full_clock_expanded -digits 4
 ```
+
+ - Be sure to perform the timing analysis with the correct library file which was used for CTS (which was the LIB_SYNTH_COMPLETE or the LIB_TYPICAL in our case).
+ - Note: for now, CTS does not support multi-corner optimization.
+
+**Steps to observe impact of bigger CTS buffers on setup and hold timing**
+
+ - Modify the CTS_CLK_BUFFER_LIST variable to exclude the sky130_fd_sc_hd__clkbuf_1 cell and re-run CTS again.
+
+Read CTS_CLK_BUFFER_LIST 
+
+```
+% echo $::env(CTS_CLK_BUFFER_LIST)
+sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
+```
+
+Set update list by cutting one element from the list (`sky130_fd_sc_hd__clkbuf_1` is removed).
+
+```
+% set ::env(CTS_CLK_BUFFER_LIST) [lreplace $::env(CTS_CLK_BUFFER_LIST) 0 0]
+sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
+```
+
+- Be sure to modify the CURRENT_DEF variable to point to the DEF file after placement before triggering the CTS run.
+
+```
+% set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/latest_21-03/results/placement/picorv32a.placement.def
+% run_cts
+```
+
+We will be able to see the setup and hold slacks having some amount of improvement, but do note that this comes with a potentially large area & power penalty due to the larger clock buffers used.
+
+Commands to know the skews:
+
+```
+% report_clock_skew -hold
+% report_clock_skew -setup
+```
+
+Command to insert clock buffer
+
+```
+% set ::env(CTS_CLK_BUFFER_LIST) [linsert $::env(CTS_CLK_BUFFER_LIST) 0 sky130_fd_sc_hd__clkbuf_1]
+sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
+```
+
