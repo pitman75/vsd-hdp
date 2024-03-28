@@ -982,7 +982,8 @@ abc -liberty ../lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 write_verilog iiitb_rv32i_net.v
 ```
 
-**Netlist statistics**
+<details>
+	<summary>Netlist statistics</summary>
 
 ```
 14. Printing statistics.
@@ -1058,6 +1059,7 @@ write_verilog iiitb_rv32i_net.v
      sky130_fd_sc_hd__xnor2_1      122
      sky130_fd_sc_hd__xor2_1        50
 ```
+</details>
 
 **Netlist simulation**
 
