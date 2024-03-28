@@ -3316,7 +3316,10 @@ Fanout       Cap      Slew     Delay      Time   Description
 ```
 </details>
 
-The slack is negative but it will be fixed in PnR.
+The slack is negative but it will be fixed in PnR. Let's write changed netlist to the file `picorv32a.synthesis.v` :
+
+`write_verilog ~/Desktop/work/tools/openlane_working_dir/openlane/designs/picorv32a/runs/fastpico/results/synthesis/picorv32a.synthesis.v`
+
 
 ### Clock Tree Synthesis (CTS):
 
