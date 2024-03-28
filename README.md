@@ -3576,7 +3576,7 @@ A db creation is a one-time process (unless the def changes). To create the db, 
 % write_db picorv32a_cts.db
 ```
 
-**STA result**
+STA workflow:
 
 ```
 % read_db picorv32a_cts.db
