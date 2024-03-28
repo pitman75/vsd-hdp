@@ -3334,4 +3334,172 @@ The slack is negative but it will be fixed in PnR. Let's write changed netlist t
 
 ![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/60459354-0b76-4eee-beb6-054521db5b7b)
 
+After replacement synthesis file by new fine tuned netlist let's do that workflow for floorplaning, placement and generating clock three:
 
+```
+% init_floorplan
+% place_io
+% global_placement_or
+% detailed_placement
+% tap_decap_or
+% detailed_placement
+% run_cts
+```
+
+<details>
+	<summary>Triton CST report and chip layout image</summary>
+
+```
+Startpoint: _43421_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _42902_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+Fanout     Cap    Slew   Delay    Time   Description
+-----------------------------------------------------------------------------
+                  0.00    0.00    0.00   clock clk (rise edge)
+                          0.00    0.00   clock network delay (ideal)
+                  0.00    0.00    0.00 ^ _43421_/CLK (sky130_fd_sc_hd__dfxtp_2)
+                  0.35    0.83    0.83 ^ _43421_/Q (sky130_fd_sc_hd__dfxtp_2)
+     4    0.04                           pcpi_mul.rs2[18] (net)
+                  0.35    0.01    0.84 ^ _23438_/A (sky130_fd_sc_hd__buf_1)
+                  0.66    0.67    1.51 ^ _23438_/X (sky130_fd_sc_hd__buf_1)
+     6    0.04                           _19876_ (net)
+                  0.66    0.00    1.51 ^ _23439_/A (sky130_fd_sc_hd__buf_1)
+                  0.74    0.81    2.32 ^ _23439_/X (sky130_fd_sc_hd__buf_1)
+     6    0.04                           _19877_ (net)
+                  0.74    0.00    2.32 ^ _23440_/A (sky130_fd_sc_hd__buf_1)
+                  1.04    1.03    3.35 ^ _23440_/X (sky130_fd_sc_hd__buf_1)
+     6    0.06                           _19878_ (net)
+                  1.04    0.00    3.35 ^ _30533_/A1 (sky130_fd_sc_hd__a22o_2)
+                  0.11    0.67    4.02 ^ _30533_/X (sky130_fd_sc_hd__a22o_2)
+     2    0.01                           _07986_ (net)
+                  0.11    0.00    4.02 ^ _30536_/B1 (sky130_fd_sc_hd__a22o_2)
+                  0.19    0.38    4.40 ^ _30536_/X (sky130_fd_sc_hd__a22o_2)
+     2    0.02                           _07989_ (net)
+                  0.19    0.00    4.40 ^ _30540_/B (sky130_fd_sc_hd__nand3_2)
+                  0.20    0.23    4.63 v _30540_/Y (sky130_fd_sc_hd__nand3_2)
+     2    0.01                           _07993_ (net)
+                  0.20    0.00    4.63 v _30541_/A (sky130_vsdinv)
+                  0.28    0.30    4.94 ^ _30541_/Y (sky130_vsdinv)
+     3    0.02                           _07994_ (net)
+                  0.28    0.00    4.94 ^ _30854_/B (sky130_fd_sc_hd__nand3_2)
+                  0.41    0.45    5.39 v _30854_/Y (sky130_fd_sc_hd__nand3_2)
+     6    0.03                           _08306_ (net)
+                  0.41    0.00    5.39 v _30896_/A (sky130_fd_sc_hd__and3_2)
+                  0.12    0.59    5.98 v _30896_/X (sky130_fd_sc_hd__and3_2)
+     3    0.01                           _08348_ (net)
+                  0.12    0.00    5.98 v _30897_/C (sky130_fd_sc_hd__nor3_2)
+                  0.83    0.66    6.64 ^ _30897_/Y (sky130_fd_sc_hd__nor3_2)
+     6    0.03                           _08349_ (net)
+                  0.83    0.00    6.64 ^ _30898_/B2 (sky130_fd_sc_hd__o22ai_2)
+                  0.35    0.55    7.19 v _30898_/Y (sky130_fd_sc_hd__o22ai_2)
+     6    0.03                           _08350_ (net)
+                  0.35    0.00    7.19 v _31189_/A2 (sky130_fd_sc_hd__a31oi_2)
+                  0.32    0.48    7.67 ^ _31189_/Y (sky130_fd_sc_hd__a31oi_2)
+     2    0.01                           _08640_ (net)
+                  0.32    0.00    7.67 ^ _31192_/B (sky130_fd_sc_hd__nand3_2)
+                  0.34    0.41    8.08 v _31192_/Y (sky130_fd_sc_hd__nand3_2)
+     5    0.02                           _08643_ (net)
+                  0.34    0.00    8.08 v _31506_/B1 (sky130_fd_sc_hd__a22oi_2)
+                  0.24    0.33    8.42 ^ _31506_/Y (sky130_fd_sc_hd__a22oi_2)
+     1    0.01                           _08956_ (net)
+                  0.24    0.00    8.42 ^ _31508_/B (sky130_fd_sc_hd__nand3_2)
+                  0.35    0.40    8.82 v _31508_/Y (sky130_fd_sc_hd__nand3_2)
+     5    0.03                           _08958_ (net)
+                  0.35    0.00    8.82 v _31811_/A2_N (sky130_fd_sc_hd__o2bb2ai_2)
+                  0.12    0.38    9.19 v _31811_/Y (sky130_fd_sc_hd__o2bb2ai_2)
+     2    0.01                           _09260_ (net)
+                  0.12    0.00    9.19 v _31812_/B1 (sky130_fd_sc_hd__a21oi_2)
+                  0.34    0.34    9.53 ^ _31812_/Y (sky130_fd_sc_hd__a21oi_2)
+     2    0.02                           _09261_ (net)
+                  0.34    0.00    9.53 ^ _31816_/A (sky130_fd_sc_hd__nor2_2)
+                  0.12    0.23    9.76 v _31816_/Y (sky130_fd_sc_hd__nor2_2)
+     3    0.02                           _09265_ (net)
+                  0.12    0.00    9.76 v _32435_/C (sky130_fd_sc_hd__nand3_2)
+                  0.09    0.14    9.89 ^ _32435_/Y (sky130_fd_sc_hd__nand3_2)
+     1    0.00                           _09882_ (net)
+                  0.09    0.00    9.89 ^ _32437_/A (sky130_fd_sc_hd__nand3_2)
+                  0.17    0.17   10.07 v _32437_/Y (sky130_fd_sc_hd__nand3_2)
+     2    0.01                           _09884_ (net)
+                  0.17    0.00   10.07 v _33861_/A1 (sky130_fd_sc_hd__a21oi_2)
+                  0.30    0.36   10.43 ^ _33861_/Y (sky130_fd_sc_hd__a21oi_2)
+     1    0.01                           _11304_ (net)
+                  0.30    0.00   10.43 ^ _33863_/B (sky130_fd_sc_hd__nand3_2)
+                  1.26    1.08   11.51 v _33863_/Y (sky130_fd_sc_hd__nand3_2)
+     6    0.10                           _11306_ (net)
+                  1.27    0.04   11.55 v _36624_/A1 (sky130_fd_sc_hd__a21boi_2)
+                  0.46    0.81   12.36 ^ _36624_/Y (sky130_fd_sc_hd__a21boi_2)
+     4    0.02                           _14059_ (net)
+                  0.46    0.00   12.36 ^ _37807_/A2 (sky130_fd_sc_hd__o21bai_2)
+                  0.22    0.34   12.70 v _37807_/Y (sky130_fd_sc_hd__o21bai_2)
+     3    0.02                           _15238_ (net)
+                  0.22    0.00   12.70 v _38358_/A1 (sky130_fd_sc_hd__a21boi_2)
+                  0.32    0.40   13.10 ^ _38358_/Y (sky130_fd_sc_hd__a21boi_2)
+     2    0.01                           _15787_ (net)
+                  0.32    0.00   13.10 ^ _38599_/A2 (sky130_fd_sc_hd__o21ai_2)
+                  0.14    0.21   13.31 v _38599_/Y (sky130_fd_sc_hd__o21ai_2)
+     1    0.01                           _16027_ (net)
+                  0.14    0.00   13.31 v _38600_/B (sky130_fd_sc_hd__xnor2_2)
+                  0.21    0.35   13.66 v _38600_/Y (sky130_fd_sc_hd__xnor2_2)
+     1    0.02                           _02666_ (net)
+                  0.21    0.00   13.66 v _42902_/D (sky130_fd_sc_hd__dfxtp_2)
+                                 13.66   data arrival time
+
+                  0.00   12.00   12.00   clock clk (rise edge)
+                          0.00   12.00   clock network delay (ideal)
+                          0.00   12.00   clock reconvergence pessimism
+                                 12.00 ^ _42902_/CLK (sky130_fd_sc_hd__dfxtp_2)
+                         -0.35   11.65   library setup time
+                                 11.65   data required time
+-----------------------------------------------------------------------------
+                                 11.65   data required time
+                                -13.66   data arrival time
+-----------------------------------------------------------------------------
+                                 -2.02   slack (VIOLATED)
+
+
+wns -3.70
+tns -445.97
+Clock clk
+Latency      CRPR       Skew
+_43777_/CLK ^
+   5.63
+_42724_/CLK ^
+   1.45      0.00       4.18
+
+[INFO]: Clock Tree Synthesis was successful
+[INFO]: Changing layout from /openLANE_flow/designs/picorv32a/runs/fastpico/results/placement/picorv32a.placement.def to /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+[INFO]: Writing Verilog...
+[INFO]: current step index: 10
+OpenROAD 0.9.0 1415572a73
+This program is licensed under the BSD-3 license. See the LICENSE file for details.
+Components of this program may be licensed under more restrictive licenses which must be honored.
+Notice 0: Reading LEF file:  /openLANE_flow/designs/picorv32a/runs/fastpico/tmp/merged_unpadded.lef
+Notice 0:     Created 13 technology layers
+Notice 0:     Created 25 technology vias
+Notice 0:     Created 441 library cells
+Notice 0: Finished LEF file:  /openLANE_flow/designs/picorv32a/runs/fastpico/tmp/merged_unpadded.lef
+Notice 0: 
+Reading DEF file: /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+Notice 0: Design: picorv32a
+Notice 0:     Created 409 pins.
+Notice 0:     Created 29628 components and 182841 component-terminals.
+Notice 0:     Created 23403 nets and 80327 connections.
+Notice 0: Finished DEF file: /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+[INFO]: Changing netlist from /openLANE_flow/designs/picorv32a/runs/fastpico/results/synthesis/picorv32a.synthesis.v to /openLANE_flow/designs/picorv32a/runs/fastpico/results/synthesis/picorv32a.synthesis_cts.v
+[INFO]: Taking a Screenshot of the Layout Using Klayout...
+[INFO]: current step index: 11
+Using Techfile: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt
+Using layout file: /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+[INFO] Reading tech file: /home/vsduser/Desktop/work/tools/openlane_working_dir/pdks/sky130A/libs.tech/klayout/sky130A.lyt
+[INFO] Reading Layout file: /openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def
+[INFO] Writing out PNG screenshot '/openLANE_flow/designs/picorv32a/runs/fastpico/results/cts/picorv32a.cts.def.png'
+Done
+```
+
+![picorv32a cts def](https://github.com/pitman75/vsd-hdp/assets/12179612/bb5b0ecb-8772-45ee-afaa-1af48c8d354c)
+
+</details>
+
+As we see slack is negative but it to be fixed after routing.
