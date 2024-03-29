@@ -979,7 +979,7 @@ Mismatch behavior found. Rewrite Verilog RTL to fix it.
 
 </details>
 
-## Day 5
+## Day 5 - Netlist simulation
 
 <details>
 <summary>details...</summary>
@@ -1126,7 +1126,7 @@ Functionality of Verilog RTL and generated netlist is the same.
 
 </details>
 
-## Day 6 Basic of STA
+## Day 6 - Basic of STA
 
 <details>
 <summary>details...</summary>
@@ -1259,8 +1259,13 @@ File-Name: `.synopsys_dc.setup`, put in home directory
  - Negative: NOT, NAND, NOR
  - Non: XOR, DFF
 
-## Day 7 Advanced SDC contraints
+</details>
 
+## Day 7 - Advanced SDC contraints
+
+<details>
+<summary>details...</summary>
+	
  - Clock/Input/Output Constraint Details
  - Useful DC commands
 
@@ -1426,7 +1431,7 @@ Uncertainty in different stage
 
 </details>
 
-## Day8 OpenSTA
+## Day8 - OpenSTA
 
 <details>
 <summary>details...</summary>
