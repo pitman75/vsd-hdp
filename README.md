@@ -1,7 +1,9 @@
 # vsd-hdp
 VLSI Hardware Development program. This repository contains the entire flow from the RTL design to GDSII.
 
-## Day 0 - Prepare software
+<details>
+<summary>## Day 0 - Prepare software</summary>
+	
  * Create the GitHub repository.
  * Download and install VirtualBox.
  * Download and install Ubuntu 20.04. The VM configured with 8GB of RAM and 70 GB of storage.
@@ -85,6 +87,8 @@ VLSI Hardware Development program. This repository contains the entire flow from
      $ make test
      ```
 ![OpenLANE_install](https://github.com/pitman75/vsd-hdp/assets/12179612/1d0a7ef1-50bb-4c19-995e-2780761a74be)
+
+</details>
 
 ## Day 1 - Introduction to Verilog RTL Design and Synthesis
 
