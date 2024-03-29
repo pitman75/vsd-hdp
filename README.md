@@ -2644,6 +2644,9 @@ reload magic tech file
 
 ## Day 17 - Pre-layout timing analysis and importance of good clock tree
 
+<details>
+<summary>details...</summary>
+
 ### Add custom cell to a design
 
 **Convert grid info to track info**
@@ -3867,7 +3870,12 @@ Command to insert clock buffer
 sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
 ```
 
+</details>
+
 ## Day18 - RTL2GDS using TritonRoute and OpenSTA
+
+<details>
+<summary>details...</summary>
 
 ### Introduction to Maze Routing and Lees Algorithm
 
@@ -3879,4 +3887,15 @@ Example of routing by Lee's alghoritm
 
 ![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/c8d7f719-654f-4338-bc10-441840b9b27b)
 
+### Design Rules Check (DRC)
 
+ - DRC are rules that need to be followed when routing.
+ - Some rules define: minimum wire width, minimum wire pitch (distance between two wires from midpoints), and minimum wire spacing (distance between two wires from inner points).
+ - One violation is signal short when two wires meet: to solve it, one wire is put on another metal layer
+ - Via width (inner square width)
+ - Via spacing (from inner close sides).
+ - etc.
+
+ Over 10K rules used to DRC for physical design.
+
+</details>
