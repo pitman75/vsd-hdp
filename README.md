@@ -1,8 +1,9 @@
 # vsd-hdp
 VLSI Hardware Development program. This repository contains the entire flow from the RTL design to GDSII.
 
+## Day 0 - Prepare software
 <details>
-<summary>## Day 0 - Prepare software</summary>
+<summary>details...</summary>
 	
  * Create the GitHub repository.
  * Download and install VirtualBox.
