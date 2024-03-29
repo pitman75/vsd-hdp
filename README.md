@@ -1431,7 +1431,7 @@ Uncertainty in different stage
 
 </details>
 
-## Day8 - OpenSTA
+## Day 8 - OpenSTA
 
 <details>
 <summary>details...</summary>
@@ -2042,7 +2042,7 @@ Inverter Switching Transition Diagram
 
 </details>
 
-## Day13 - Device variation robustness
+## Day 13 - Device variation robustness
 
 <details>
 <summary>details...</summary>
@@ -3942,7 +3942,7 @@ sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sk
 
 </details>
 
-## Day19 - RTL2GDS using TritonRoute and OpenSTA
+## Day 19 - RTL2GDS using TritonRoute and OpenSTA
 
 <details>
 <summary>details...</summary>
