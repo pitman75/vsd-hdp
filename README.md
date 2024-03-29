@@ -93,6 +93,9 @@ VLSI Hardware Development program. This repository contains the entire flow from
 
 ## Day 1 - Introduction to Verilog RTL Design and Synthesis
 
+<details>
+<summary>details...</summary>
+ 
 Introduction to Verilog RTL Design and Synthesis.
 
 RTL design is checked for adherence to spec by simulating the design. The design is a verilog code(or a set of verilog codes) which has the intended functionality to meet the requirements.
@@ -157,6 +160,8 @@ yosys> write_verilog -noattr good_mux_netlist.v
 ```
 
 ![good_mux_netlist](https://github.com/pitman75/vsd-hdp/assets/12179612/5f7ede79-e65c-4b87-88da-c3fcd6aba7e6)
+
+</details>
 
 ## Day 2 - Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
 
