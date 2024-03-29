@@ -764,6 +764,9 @@ An optimizer keep all DFFs, no possible to remove anything.
 
 ## Day 4 - GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
 
+<details>
+<summary>details...</summary>
+
 Main idea of the GLS is use the same testbench as for RTL simulation to evaluate behavior a verilog netlist under stimulus and compare that it's the same. Why it happens:
 
 1. Errors in verilog code
@@ -974,8 +977,13 @@ endmodule
 
 Mismatch behavior found. Rewrite Verilog RTL to fix it.
 
+</details>
+
 ## Day 5
 
+<details>
+<summary>details...</summary>
+	
 The main idea of this day is: use more or less complex Verilog module to synthesis and test after synthes. How to it works with real cells.
 Use a simple RISC-V core from there https://github.com/vinayrayapati/rv32i
 
@@ -1116,8 +1124,13 @@ Success!
 
 Functionality of Verilog RTL and generated netlist is the same.
 
+</details>
+
 ## Day 6 Basic of STA
 
+<details>
+<summary>details...</summary>
+	
  - Logic Synthesis Flow by Design-Compiler from Synopsys
  - Basic Logic Synthesis knowledge introduction
 
@@ -1411,8 +1424,13 @@ Uncertainty in different stage
 > set_output_delay -max <time> -clock [get_clocks <clk>] -clock_fall -add [get_ports <output>] # output constrains for second clock with negedge
 ```
 
+</details>
+
 ## Day8 OpenSTA
 
+<details>
+<summary>details...</summary>
+	
 **STA for simple example**
 
 Let's do STA for good_mux.v from previouse lab. All constrains are only for example. Run `sta` in folder with Verilogs
@@ -1664,8 +1682,13 @@ _13509_/D
 ```
 It drives only one register.
 
+</details>
+
 ## Day 9 - Fundamental N/P MOSFET Simulation
 
+<details>
+<summary>details...</summary>
+	
 **N-MOS**
 
  - P-Substract, n+ Diffusion Region
@@ -1717,8 +1740,13 @@ setplot dc1
 
 ![NMOS_Id_Vds](https://github.com/pitman75/vsd-hdp/assets/12179612/0c651d1c-ce02-4c45-8038-41117044c737)
 
+</details>
+
 ## Day 10 - Basics of NMOS Drain current (Id) vs Drain-to-source Voltage (Vds)
 
+<details>
+<summary>details...</summary>
+	
 **Resistive Operation**
 
  - At Vgs>Vt condition with small Vds
@@ -1815,8 +1843,13 @@ SPICE NMOS id/vgs Diagram
 
 ![NMOS_Id_Vgs_small](https://github.com/pitman75/vsd-hdp/assets/12179612/0a797c10-3a9a-4b1f-bf03-45482e3b16c0)
 
+</details>
+
 ## Day 11 - Velocity Saturation and basics of CMOS inverter VTC
 
+<details>
+<summary>details...</summary>
+	
 **Velocity Saturation Effect**
 
  - Long-Channel (>250nm)
@@ -1938,8 +1971,13 @@ Inverter Transient Analysis
 | Rise-Delay |	0.35432  |
 | Fall-Delay |	0.27345  |
 
+</details>
+
 ## Day 12 - Noise Margine
 
+<details>
+<summary>details...</summary>
+	
 **Noise Margin**
 
  - Preserve Noise Margin to against environmental noise
@@ -1997,8 +2035,13 @@ Inverter Switching Transition Diagram
 | NMH 	| 0.721623  |
 | NML 	| 0.648545  |
 
+</details>
+
 ## Day13 - Device variation robustness
 
+<details>
+<summary>details...</summary>
+	
 **Power Supply Scaling**
 
     |Gain| = |Vout(VIH)-Vout(VIL)|/|VIH-VIL|
@@ -2116,8 +2159,13 @@ Device Variation
 
 ![inverter_device_variation](https://github.com/pitman75/vsd-hdp/assets/12179612/0c0e502f-0263-42d8-a594-957295ae8f22)
 
-## Day 13 - PVT Corner analysis
+</details>
 
+## Day 14 - PVT Corner analysis
+
+<details>
+<summary>details...</summary>
+	
 Main goal of PVT corner analysis is test netlist for robustness. All slacks would be positive.
 
 Use TCL script `iiirv32i.tcl` to generate reports for each case of OpenPDK timing library.
@@ -2176,8 +2224,13 @@ Hold slack graph
 
 ![PVT_WHS_bad](https://github.com/pitman75/vsd-hdp/assets/12179612/bca0a95a-13f6-41d4-8675-72ac145ef243)
 
-## Day 14 - Inception of open-source EDA, OpenLANE and Sky130 PDK
+</details>
 
+## Day 15 - Inception of open-source EDA, OpenLANE and Sky130 PDK
+
+<details>
+<summary>details...</summary>
+	
 **Package QFN-48**
 
  - Quad Flat No-lead
@@ -2337,8 +2390,13 @@ STA violations found.
  - check synth-stat report: `/reports/synthesis/*.rpt`
  - check timing report: `/opensta_main.timing.rpt`
 
-## Day 15 - Understand importance of good floorplan vs bad floorplan and introduction to library cells
+</details>
 
+## Day 16 - Understand importance of good floorplan vs bad floorplan and introduction to library cells
+
+<details>
+<summary>details...</summary>
+	
 ### Floorplan and placement
 
 **Utilization Factor and Aspect**
@@ -2473,8 +2531,13 @@ Analysis different function, size, Vt lead to corresponding delay, power, area
     - GDS-II, LEF, Extraced SPICE Netlist
     - Timing, Noise, Power, .libs, Function
 
-## Day 16 - Design and characterize one library cell using Magic Layout tool and ngspice
+</details>
 
+## Day 17 - Design and characterize one library cell using Magic Layout tool and ngspice
+
+<details>
+<summary>details...</summary>
+	
 1. CMOS Process Introduction
 2. Cell-Design for SPICE Extration
 
@@ -2642,7 +2705,9 @@ fix poly.9 error => poly and polyres are too close
 reload magic tech file
 `% tech load sky130A.tech`
 
-## Day 17 - Pre-layout timing analysis and importance of good clock tree
+</details>
+
+## Day 18 - Pre-layout timing analysis and importance of good clock tree
 
 <details>
 <summary>details...</summary>
@@ -3872,7 +3937,7 @@ sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sk
 
 </details>
 
-## Day18 - RTL2GDS using TritonRoute and OpenSTA
+## Day19 - RTL2GDS using TritonRoute and OpenSTA
 
 <details>
 <summary>details...</summary>
