@@ -3612,7 +3612,7 @@ sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
 - Be sure to modify the CURRENT_DEF variable to point to the DEF file after placement before triggering the CTS run.
 
 ```
-% set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/latest_21-03/results/placement/picorv32a.placement.def
+% set ::env(CURRENT_DEF) /openLANE_flow/designs/picorv32a/runs/fastpico/results/placement/picorv32a.placement.def
 % run_cts
 ```
 
