@@ -3847,3 +3847,16 @@ Command to insert clock buffer
 sky130_fd_sc_hd__clkbuf_1 sky130_fd_sc_hd__clkbuf_2 sky130_fd_sc_hd__clkbuf_4 sky130_fd_sc_hd__clkbuf_8
 ```
 
+## Day18 - RTL2GDS using TritonRoute and OpenSTA
+
+### Introduction to Maze Routing and Lees Algorithm
+
+ - In an ASIC flow, PDN generation is part of floorplan. In OpenLane, however, this is not the case and PDN must be generated after CTS and post-CTS STA analysis.
+ - During routing, algorithm tries to find the best possible connection between points. One such algorithm is maze routing also known as Lee's algorithm.
+ - This algorithm, find the minimum distance between points by a. creating a routing grid, b. labels source and target points, c. labels edge grids of source point as 1 (horizontal and vertical), then labels unlabeled edge grids of those grids as 2 and so on and so forth until we hit the target grid, d. Now all enumarated pathes in order that take from source to target grid are identified as options, e. L shaped routes (if found) would be chosen, otherwise any other identified option is chosen (the lower the number of pins found the better).
+
+Example of routing by Lee's alghoritm
+
+![изображение](https://github.com/pitman75/vsd-hdp/assets/12179612/c8d7f719-654f-4338-bc10-441840b9b27b)
+
+
