@@ -165,6 +165,9 @@ yosys> write_verilog -noattr good_mux_netlist.v
 
 ## Day 2 - Timing libs, hierarchical vs flat synthesis and efficient flop coding styles
 
+<details>
+	<summary>details...</summary>
+	
 Introduction to library file - notation and naming.
 
  1. What information is seen in a .lib file and how is it written and how to understand this. The .lib (library) file consists of all the information on the electrical behaviour of the std silicon cells used in the Chip design. It includes area, power for various standard cells and delays.
@@ -338,7 +341,12 @@ endmodule
 
 ![mult9_net](https://github.com/pitman75/vsd-hdp/assets/12179612/ade903fe-03e9-4846-bed4-5e4d68736142)
 
+</details>
+
 ## Day 3 - Combinational and sequential optimizations
+
+<details>
+<summary>details...</summary>
 
 1. Area and power savings are achieved when we perform combinational and Sequential optimisations.
 2. The combinational optimisations are Constant propagation and Boolean optmisation.
@@ -751,6 +759,8 @@ In the example all bits used. Let's see is it possible to optimize or not.
 ![counter_opt2](https://github.com/pitman75/vsd-hdp/assets/12179612/2e8557ca-ec94-4d7c-b5a6-4b17d07e8bbc)
 
 An optimizer keep all DFFs, no possible to remove anything.
+
+</details>
 
 ## Day 4 - GLS, blocking vs non-blocking and Synthesis-Simulation mismatch
 
