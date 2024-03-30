@@ -4448,6 +4448,12 @@ _47660_/CLK ^
 
 ![picorv32a def](https://github.com/pitman75/vsd-hdp/assets/12179612/13937a1d-487a-4a73-8f06-104920239fd7)
 
+Let's check that our custom cell vsdinv exist in the layout:
+
+![routed_vsdinv_in_chip](https://github.com/pitman75/vsd-hdp/assets/12179612/cf693fb8-f942-405c-bbdb-c11693052435)
+
+Yes, it is.
+
 Conclusion: The design should be improved to met STA.
 
 </details>
