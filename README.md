@@ -4089,6 +4089,7 @@ When we change configuration of project or libs we should restart all process fr
 <details>
 <summary>Routing result</summary>
 
+```
 complete detail routing
 total wire length = 1827751 um
 total wire length on LAYER li1 = 983 um
