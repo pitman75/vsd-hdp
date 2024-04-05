@@ -4457,3 +4457,262 @@ Yes, it is.
 Conclusion: The design should be improved to met STA.
 
 </details>
+
+## Day 20 - Physical Design of project
+
+<details>
+	<summary>details...</summary>
+
+New version of an OpenLANE was installed in Day 0.
+
+### Adding Designs
+
+To add a new design, the following command creates a configuration file for your design:
+
+```
+# JSON Configuration File
+./flow.tcl -design <design_name> -init_design_config -add_to_designs
+```
+
+Or for TCL version use
+
+```
+# Tcl Configuration File
+./flow.tcl -design <design_name> -init_design_config -add_to_designs -config_file config.tcl
+```
+
+This will create the following directory structure: 
+
+```
+designs/<design_name>
+├── config.json (or config.tcl)
+```
+
+**IMPORTANT NOTE**: The <design_name> must match the top-level module name of your design exactly. Otherwise, OpenLane will throw an error (at least by the run_synthesis stage).
+
+It is recommended to place the verilog files of the design in a src directory inside the folder of the design as following:
+
+```
+designs/<design_name>
+├── config.tcl
+├── src
+│   ├── design.v
+```
+
+Fine tune config file for the project:
+
+```
+set ::env(DESIGN_NAME) {iiitb_rv32i}
+set ::env(VERILOG_FILES) [glob $::env(DESIGN_DIR)/src/*.v]
+set ::env(CLOCK_PORT) "clk"
+set ::env(CLOCK_PERIOD) "10.0"
+
+set ::env(FP_PDN_MULTILAYER) {1}
+
+set ::env(QUIT_ON_SYNTH_CHECKS) 0
+set ::env(BASE_SDC_FILE) "$::env(DESIGN_DIR)/src/iiirv32i.sdc"
+
+set ::env(SYNTH_STRATEGY) "DELAY 1"
+set ::env(SYNTH_SIZING) 1
+
+set ::env(OUTPUT_CAP_LOAD) 17.65
+set ::env(MAX_TRANSITION_CONSTRAINT) 1.2
+set ::env(MAX_FANOUT_CONSTRAINT) 4
+
+set tech_specific_config "$::env(DESIGN_DIR)/$::env(PDK)_$::env(STD_CELL_LIBRARY)_config.tcl"
+if { [file exists $tech_specific_config] == 1 } {
+    source $tech_specific_config
+}
+```
+
+Constrains to STA of the project `iiirv32i.sdc` :
+
+```
+create_clock -period 10 -name clk {clk}
+set_clock_latency -source -max 3 {clk}
+set_clock_latency -source -min 1 {clk}
+set_clock_transition -max 0.4 {clk}
+set_clock_transition -min 0.1 {clk}
+set_clock_uncertainty -setup 0.5 [get_clock clk]
+set_clock_uncertainty -hold 0.2 [get_clock clk]
+set_input_delay -max 3 [get_ports RN]
+set_input_delay -min 1 [get_ports RN]
+set_input_transition -max 0.5 [get_ports RN]
+set_input_transition -min 0.1 [get_ports RN]
+set_output_delay -clock clk -max 3 [get_ports NPC]
+set_output_delay -clock clk -min 0.5 [get_ports NPC]
+set_output_delay -clock clk -max 3 [get_ports WB_OUT]
+set_output_delay -clock clk -min 0.5 [get_ports WB_OUT]
+```
+
+### Running the flow for the design
+
+To run the automated flow: 
+
+```
+./flow.tcl -design <design_name>
+```
+
+To run the flow interactively
+
+```
+$ ./flow.tcl -interactive
+OpenLane 9dbd8b5ea2bd891bed4dcc97df5c7439083f0368
+All rights reserved. (c) 2020-2023 Efabless Corporation and contributors.
+Available under the Apache License, version 2.0. See the LICENSE file for more details. 
+```
+
+Workflow:
+
+```
+% package require openlane 0.9
+% prep -design <design> [-tag TAG] [-config CONFIG] [-init_design_config] [-overwrite]
+% run_synthesis
+% run_floorplan
+% run_placement
+% run_cts
+% run_routing
+% write_powered_verilog -output_def <def filename> -output_verilog <verilog filename>
+% set_netlist $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
+% run_magic
+% run_magic_spice_export
+% run_magic_drc
+% run_lvs
+% run_antenna_check
+```
+
+Working log:
+
+```
+$ ./flow.tcl -interactive
+OpenLane 9dbd8b5ea2bd891bed4dcc97df5c7439083f0368
+All rights reserved. (c) 2020-2023 Efabless Corporation and contributors.
+Available under the Apache License, version 2.0. See the LICENSE file for more details.
+
+% package require openlane 0.9
+0.9
+% prep -design iiitb_rv32i -tag fastpico -overwrite
+[INFO]: Using configuration in 'designs/iiitb_rv32i/config.tcl'...
+[INFO]: PDK Root: /home/dimon/.volare
+[INFO]: Process Design Kit: sky130A
+[INFO]: Standard Cell Library: sky130_fd_sc_hd
+[INFO]: Optimization Standard Cell Library: sky130_fd_sc_hd
+[INFO]: Run Directory: /openlane/designs/iiitb_rv32i/runs/fastpico
+[INFO]: Removing existing /openlane/designs/iiitb_rv32i/runs/fastpico...
+[INFO]: Saving runtime environment...
+[INFO]: Preparing LEF files for the nom corner...
+[INFO]: Preparing LEF files for the min corner...
+[INFO]: Preparing LEF files for the max corner...
+% run_synthesis
+[STEP 1]
+[INFO]: Running Synthesis (log: designs/iiitb_rv32i/runs/fastpico/logs/synthesis/1-synthesis.log)...
+[STEP 2]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/synthesis/2-sta.log)...
+% run_floorplan
+[STEP 3]
+[INFO]: Running Initial Floorplanning (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/3-initial_fp.log)...
+[INFO]: Floorplanned with width 424.12 and height 421.6.
+[STEP 4]
+[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/4-io.log)...
+[STEP 5]
+[INFO]: Running Tap/Decap Insertion (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/5-tap.log)...
+[INFO]: Power planning with power {VPWR} and ground {VGND}...
+[STEP 6]
+[INFO]: Generating PDN (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/6-pdn.log)...
+% run_placement
+[STEP 7]
+[INFO]: Running Global Placement (skip_io) (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/6-global_skip_io.log)...
+[STEP 8]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/8-gpl_sta.log)...
+[STEP 9]
+[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/9-io.log)...
+[STEP 10]
+[INFO]: Running Global Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/9-global.log)...
+[STEP 11]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/11-gpl_sta.log)...
+[STEP 12]
+[INFO]: Running Placement Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/12-resizer.log)...
+[STEP 13]
+[INFO]: Running Detailed Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/13-detailed.log)...
+[STEP 14]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/14-dpl_sta.log)...
+% run_cts
+[STEP 15]
+[INFO]: Running Clock Tree Synthesis (log: designs/iiitb_rv32i/runs/fastpico/logs/cts/15-cts.log)...
+[STEP 16]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/cts/16-cts_sta.log)...
+% run_routing
+[STEP 17]
+[INFO]: Running Global Routing Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/17-resizer_design.log)...
+[STEP 18]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/18-rsz_design_sta.log)...
+[STEP 19]
+[INFO]: Running Global Routing Resizer Timing Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/19-resizer_timing.log)...
+[STEP 20]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/20-rsz_timing_sta.log)...
+[STEP 21]
+[INFO]: Running Global Routing (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/21-global.log)...
+[STEP 22]
+[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/21-global_write_netlist.log)...
+[STEP 23]
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/23-grt_sta.log)...
+[STEP 24]
+[INFO]: Running Fill Insertion (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/24-fill.log)...
+[STEP 25]
+[INFO]: Running Detailed Routing (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/25-detailed.log)...
+[INFO]: No Magic DRC violations after detailed routing.
+[STEP 26]
+[INFO]: Checking Wire Lengths (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/26-wire_lengths.log)...
+1712129960
+% write_powered_verilog -output_def iiitb_rv32i_powered_verilog.def -output_verilog $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
+[WARNING]: The -output_verilog option of write_powered_verilog is deprecated.
+[WARNING]: Update your invocation to:
+[WARNING]:     write_powered_verilog -output_nl <UNPOWERED_NETLIST> -output_pnl <POWERED_NETLIST>
+[STEP 27]
+[INFO]: Writing Powered Verilog (logs: designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_def.log, designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_verilog.log)...
+[STEP 28]
+[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_verilog.log)...
+% set_netlist $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
+% run_magic
+[STEP 29]
+[INFO]: Running Magic to generate various views...
+[INFO]: Streaming out GDSII with Magic (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/29-gdsii.log)...
+[INFO]: Generating MAGLEF views...
+[INFO]: Generating lef with Magic (/openlane/designs/iiitb_rv32i/runs/fastpico/logs/signoff/29-lef.log)...
+% run_magic_spice_export
+[STEP 30]
+[INFO]: Running Magic Spice Export from LEF (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/30-spice.log)...
+% run_magic_drc
+[STEP 31]
+[INFO]: Running Magic DRC (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/31-drc.log)...
+[INFO]: Converting Magic DRC database to various tool-readable formats...
+[INFO]: No Magic DRC violations after GDS streaming out.
+% run_lvs
+[STEP 32]
+[INFO]: Writing Powered Verilog (logs: designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_def.log, designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_verilog.log)...
+[STEP 33]
+[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_verilog.log)...
+[STEP 34]
+[INFO]: Running LVS (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/34-lvs.lef.log)...
+% run_antenna_check
+[STEP 35]
+[INFO]: Running OpenROAD Antenna Rule Checker (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/35-arc.log)...
+% 
+```
+
+No DRC errors found. Let's STA for post-synthesis and post-routing:
+
+GDSII files for production are there
+
+![openlane_gds_files](https://github.com/pitman75/vsd-hdp/assets/12179612/7566db4f-9d80-4993-befc-1f0aba9f7cf7)
+
+ASIC chip looks like
+
+![iiitb_rv32i](https://github.com/pitman75/vsd-hdp/assets/12179612/ec83d25e-8046-4bb1-8379-edd93a7f672d)
+
+Inside the ASIC
+
+![iiitb_rv32i_inside](https://github.com/pitman75/vsd-hdp/assets/12179612/d07a3a61-e2d8-4df0-9388-c6d1391616c5)
+
+
+</details>
