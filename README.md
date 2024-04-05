@@ -4702,6 +4702,15 @@ Available under the Apache License, version 2.0. See the LICENSE file for more d
 
 No DRC errors found. Let's STA for post-synthesis and post-routing:
 
+**Setup slack graph**
+
+![iiitb_rv32a-STA-setup](https://github.com/pitman75/vsd-hdp/assets/12179612/cd1d6037-ff28-4df1-9dce-96dd6068679c)
+
+**Hold slack graph**
+
+![iiitb_rv32a-STA-hold](https://github.com/pitman75/vsd-hdp/assets/12179612/c951480e-5e63-4a33-b805-093d73dc3819)
+
+
 GDSII files for production are there
 
 ![openlane_gds_files](https://github.com/pitman75/vsd-hdp/assets/12179612/7566db4f-9d80-4993-befc-1f0aba9f7cf7)
