@@ -4700,16 +4700,68 @@ Available under the Apache License, version 2.0. See the LICENSE file for more d
 % 
 ```
 
-No DRC errors found. Let's STA for post-synthesis and post-routing:
+No DRC errors found. Let's STA for post-synthesis and post-routing. As we know after CTS we should remove clock skew from SDC file and add set_propogated_clock command. New versions of SDC and TCL files are:
+
+PostCTS SDC file `iiirv32i_post_cts.sdc`:
+
+```
+create_clock -period 10 -name clk {clk}
+set_clock_latency -source -max 3 {clk}
+set_clock_latency -source -min 1 {clk}
+set_clock_transition -max 0.4 {clk}
+set_clock_transition -min 0.1 {clk}
+set_clock_uncertainty -setup 0.2 [get_clock clk]
+set_clock_uncertainty -hold 0.1 [get_clock clk]
+set_propagated_clock [all_clocks]
+set_input_delay -max 3 [get_ports RN]
+set_input_delay -min 1 [get_ports RN]
+set_input_transition -max 0.5 [get_ports RN]
+set_input_transition -min 0.1 [get_ports RN]
+set_output_delay -clock clk -max 3 [get_ports NPC]
+set_output_delay -clock clk -min 0.5 [get_ports NPC]
+set_output_delay -clock clk -max 3 [get_ports WB_OUT]
+set_output_delay -clock clk -min 0.5 [get_ports WB_OUT] 
+```
+
+PostCTS TCL file `iiirv32i_post_cts.tcl`:
+
+```
+read_liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_n40C_1v76.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_n40C_1v44.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_n40C_1v40.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_n40C_1v35.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_n40C_1v28.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_100C_1v60.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ss_100C_1v40.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ff_n40C_1v76.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ff_n40C_1v65.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ff_n40C_1v56.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ff_100C_1v95.lib
+#read_liberty ./lib/sky130_fd_sc_hd__ff_100C_1v65.lib
+
+read_verilog ../runs/fastpico/results/routing/iiitb_rv32i.pnl.v
+link_design iiitb_rv32i
+current_design
+read_sdc iiirv32i_post_cts.sdc
+report_checks -path_delay min_max -fields {nets cap slew input_pins} -digits {4} > sta_out_min-max.txt
+report_worst_slack -max -digits {4} > sta_out_worst-max.txt
+report_worst_slack -min -digits {4} > sta_out_worst-min.txt
+report_tns -digits {4} > sta_out_tns.txt
+report_wns -digits {4} > sta_out_wns.txt
+exit 
+```
 
 **Setup slack graph**
 
-![iiitb_rv32a-STA-setup](https://github.com/pitman75/vsd-hdp/assets/12179612/cd1d6037-ff28-4df1-9dce-96dd6068679c)
+![iiitb_rv32a-STA-setup](https://github.com/pitman75/vsd-hdp/assets/12179612/e6084ff8-e160-45f2-8e4a-f3dea3a5f7ec)
+
 
 **Hold slack graph**
 
-![iiitb_rv32a-STA-hold](https://github.com/pitman75/vsd-hdp/assets/12179612/c951480e-5e63-4a33-b805-093d73dc3819)
+![iiitb_rv32a-STA-hold](https://github.com/pitman75/vsd-hdp/assets/12179612/8570b92f-b67f-4ff3-993d-ab89ca6a9243)
 
+For typical process and typical voltage 1.8V we acheive right values for hold/setup slack. Both are positive.
 
 GDSII files for production are there
 
