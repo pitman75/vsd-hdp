@@ -4700,7 +4700,11 @@ Available under the Apache License, version 2.0. See the LICENSE file for more d
 % 
 ```
 
-No DRC errors found. Let's STA for post-synthesis and post-routing. As we know after CTS we should remove clock skew from SDC file and add set_propogated_clock command. New versions of SDC and TCL files are:
+No DRC errors found. 
+
+### STA for post-synthesis and post-routing. 
+
+As we know after CTS we should remove clock skew from SDC file and add set_propogated_clock command. New versions of SDC and TCL files are:
 
 PostCTS SDC file `iiirv32i_post_cts.sdc`:
 
