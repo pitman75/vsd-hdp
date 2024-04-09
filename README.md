@@ -4557,177 +4557,155 @@ To run the flow interactively
 
 ```
 $ ./flow.tcl -interactive
-OpenLane 9dbd8b5ea2bd891bed4dcc97df5c7439083f0368
-All rights reserved. (c) 2020-2023 Efabless Corporation and contributors.
-Available under the Apache License, version 2.0. See the LICENSE file for more details. 
 ```
 
-Workflow:
+Let's build an ASIC in fully automated mode by command:
 
 ```
-% package require openlane 0.9
-% prep -design <design> [-tag TAG] [-config CONFIG] [-init_design_config] [-overwrite]
-% run_synthesis
-% run_floorplan
-% run_placement
-% run_cts
-% run_routing
-% write_powered_verilog -output_def <def filename> -output_verilog <verilog filename>
-% set_netlist $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
-% run_magic
-% run_magic_spice_export
-% run_magic_drc
-% run_lvs
-% run_antenna_check
+./flow.tcl -design iiitb_rv32i
 ```
 
-Working log:
+**Result**
 
 ```
-$ ./flow.tcl -interactive
+OpenLane Container (9dbd8b5):/openlane$ ./flow.tcl -design iiitb_rv32i
 OpenLane 9dbd8b5ea2bd891bed4dcc97df5c7439083f0368
 All rights reserved. (c) 2020-2023 Efabless Corporation and contributors.
 Available under the Apache License, version 2.0. See the LICENSE file for more details.
 
-% package require openlane 0.9
-0.9
-% prep -design iiitb_rv32i -tag fastpico -overwrite
 [INFO]: Using configuration in 'designs/iiitb_rv32i/config.tcl'...
 [INFO]: PDK Root: /home/dimon/.volare
 [INFO]: Process Design Kit: sky130A
 [INFO]: Standard Cell Library: sky130_fd_sc_hd
 [INFO]: Optimization Standard Cell Library: sky130_fd_sc_hd
-[INFO]: Run Directory: /openlane/designs/iiitb_rv32i/runs/fastpico
-[INFO]: Removing existing /openlane/designs/iiitb_rv32i/runs/fastpico...
+[INFO]: Run Directory: /openlane/designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04
 [INFO]: Saving runtime environment...
 [INFO]: Preparing LEF files for the nom corner...
 [INFO]: Preparing LEF files for the min corner...
 [INFO]: Preparing LEF files for the max corner...
-% run_synthesis
+[INFO]: Running linter (Verilator) (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/synthesis/linter.log)...
+[INFO]: 0 errors found by linter
+[WARNING]: 19 warnings found by linter
 [STEP 1]
-[INFO]: Running Synthesis (log: designs/iiitb_rv32i/runs/fastpico/logs/synthesis/1-synthesis.log)...
+[INFO]: Running Synthesis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/synthesis/1-synthesis.log)...
 [STEP 2]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/synthesis/2-sta.log)...
-% run_floorplan
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/synthesis/2-sta.log)...
 [STEP 3]
-[INFO]: Running Initial Floorplanning (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/3-initial_fp.log)...
+[INFO]: Running Initial Floorplanning (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/floorplan/3-initial_fp.log)...
 [INFO]: Floorplanned with width 424.12 and height 421.6.
 [STEP 4]
-[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/4-io.log)...
+[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/floorplan/4-io.log)...
 [STEP 5]
-[INFO]: Running Tap/Decap Insertion (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/5-tap.log)...
+[INFO]: Running Tap/Decap Insertion (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/floorplan/5-tap.log)...
 [INFO]: Power planning with power {VPWR} and ground {VGND}...
 [STEP 6]
-[INFO]: Generating PDN (log: designs/iiitb_rv32i/runs/fastpico/logs/floorplan/6-pdn.log)...
-% run_placement
+[INFO]: Generating PDN (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/floorplan/6-pdn.log)...
 [STEP 7]
-[INFO]: Running Global Placement (skip_io) (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/6-global_skip_io.log)...
+[INFO]: Running Global Placement (skip_io) (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/6-global_skip_io.log)...
 [STEP 8]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/8-gpl_sta.log)...
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/8-gpl_sta.log)...
 [STEP 9]
-[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/9-io.log)...
+[INFO]: Running IO Placement (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/9-io.log)...
 [STEP 10]
-[INFO]: Running Global Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/9-global.log)...
+[INFO]: Running Global Placement (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/9-global.log)...
 [STEP 11]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/11-gpl_sta.log)...
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/11-gpl_sta.log)...
 [STEP 12]
-[INFO]: Running Placement Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/12-resizer.log)...
+[INFO]: Running Placement Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/12-resizer.log)...
 [STEP 13]
-[INFO]: Running Detailed Placement (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/13-detailed.log)...
+[INFO]: Running Detailed Placement (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/13-detailed.log)...
 [STEP 14]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/placement/14-dpl_sta.log)...
-% run_cts
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/placement/14-dpl_sta.log)...
 [STEP 15]
-[INFO]: Running Clock Tree Synthesis (log: designs/iiitb_rv32i/runs/fastpico/logs/cts/15-cts.log)...
+[INFO]: Running Clock Tree Synthesis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/cts/15-cts.log)...
 [STEP 16]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/cts/16-cts_sta.log)...
-% run_routing
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/cts/16-cts_sta.log)...
 [STEP 17]
-[INFO]: Running Global Routing Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/17-resizer_design.log)...
+[INFO]: Running Placement Resizer Timing Optimizations (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/cts/17-resizer.log)...
 [STEP 18]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/18-rsz_design_sta.log)...
+[INFO]: Running Global Routing Resizer Design Optimizations (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/18-resizer_design.log)...
 [STEP 19]
-[INFO]: Running Global Routing Resizer Timing Optimizations (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/19-resizer_timing.log)...
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/19-rsz_design_sta.log)...
 [STEP 20]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/20-rsz_timing_sta.log)...
+[INFO]: Running Global Routing Resizer Timing Optimizations (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/20-resizer_timing.log)...
 [STEP 21]
-[INFO]: Running Global Routing (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/21-global.log)...
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/21-rsz_timing_sta.log)...
 [STEP 22]
-[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/21-global_write_netlist.log)...
+[INFO]: Running Global Routing (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/22-global.log)...
+[INFO]: Starting antenna repair iteration 1 with 1 violations...
+[INFO]: [Iteration 1] Reduced antenna violations (1 -> 0)
 [STEP 23]
-[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/23-grt_sta.log)...
+[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/22-global_write_netlist.log)...
 [STEP 24]
-[INFO]: Running Fill Insertion (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/24-fill.log)...
+[INFO]: Running Single-Corner Static Timing Analysis (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/24-grt_sta.log)...
 [STEP 25]
-[INFO]: Running Detailed Routing (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/25-detailed.log)...
-[INFO]: No Magic DRC violations after detailed routing.
+[INFO]: Running Fill Insertion (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/25-fill.log)...
 [STEP 26]
-[INFO]: Checking Wire Lengths (log: designs/iiitb_rv32i/runs/fastpico/logs/routing/26-wire_lengths.log)...
-1712129960
-% write_powered_verilog -output_def iiitb_rv32i_powered_verilog.def -output_verilog $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
-[WARNING]: The -output_verilog option of write_powered_verilog is deprecated.
-[WARNING]: Update your invocation to:
-[WARNING]:     write_powered_verilog -output_nl <UNPOWERED_NETLIST> -output_pnl <POWERED_NETLIST>
+[INFO]: Running Detailed Routing (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/26-detailed.log)...
+[INFO]: No Magic DRC violations after detailed routing.
 [STEP 27]
-[INFO]: Writing Powered Verilog (logs: designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_def.log, designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_verilog.log)...
+[INFO]: Checking Wire Lengths (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/routing/27-wire_lengths.log)...
 [STEP 28]
-[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/27-write_powered_verilog.log)...
-% set_netlist $::env(routing_logs)/$::env(DESIGN_NAME).powered.v
-% run_magic
+[INFO]: Running SPEF Extraction at the min process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/28-parasitics_extraction.min.log)...
 [STEP 29]
-[INFO]: Running Magic to generate various views...
-[INFO]: Streaming out GDSII with Magic (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/29-gdsii.log)...
-[INFO]: Generating MAGLEF views...
-[INFO]: Generating lef with Magic (/openlane/designs/iiitb_rv32i/runs/fastpico/logs/signoff/29-lef.log)...
-% run_magic_spice_export
+[INFO]: Running Multi-Corner Static Timing Analysis at the min process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/29-rcx_mcsta.min.log)...
 [STEP 30]
-[INFO]: Running Magic Spice Export from LEF (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/30-spice.log)...
-% run_magic_drc
+[INFO]: Running SPEF Extraction at the max process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/30-parasitics_extraction.max.log)...
 [STEP 31]
-[INFO]: Running Magic DRC (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/31-drc.log)...
+[INFO]: Running Multi-Corner Static Timing Analysis at the max process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/31-rcx_mcsta.max.log)...
+[STEP 32]
+[INFO]: Running SPEF Extraction at the nom process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/32-parasitics_extraction.nom.log)...
+[STEP 33]
+[INFO]: Running Multi-Corner Static Timing Analysis at the nom process corner (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/33-rcx_mcsta.nom.log)...
+[WARNING]: VSRC_LOC_FILES was not given a value, which may make the results of IR drop analysis inaccurate. If you are not integrating a top-level chip for manufacture, you may ignore this warning, otherwise, see the documentation for VSRC_LOC_FILES.
+[STEP 34]
+[INFO]: Creating IR Drop Report (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/34-irdrop.log)...
+[STEP 35]
+[INFO]: Running Magic to generate various views...
+[INFO]: Streaming out GDSII with Magic (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/35-gdsii.log)...
+[INFO]: Generating MAGLEF views...
+[INFO]: Generating lef with Magic (/openlane/designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/35-lef.log)...
+[STEP 36]
+[INFO]: Streaming out GDSII with KLayout (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/36-gdsii-klayout.log)...
+[STEP 37]
+[INFO]: Running XOR on the layouts using KLayout (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/37-xor.log)...
+[INFO]: No XOR differences between KLayout and Magic gds.
+[STEP 38]
+[INFO]: Running Magic Spice Export from LEF (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/38-spice.log)...
+[STEP 39]
+[INFO]: Writing Powered Verilog (logs: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/39-write_powered_def.log, designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/39-write_powered_verilog.log)...
+[STEP 40]
+[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/39-write_powered_verilog.log)...
+[STEP 41]
+[INFO]: Running LVS (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/41-lvs.lef.log)...
+[STEP 42]
+[INFO]: Running Magic DRC (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/42-drc.log)...
 [INFO]: Converting Magic DRC database to various tool-readable formats...
 [INFO]: No Magic DRC violations after GDS streaming out.
-% run_lvs
-[STEP 32]
-[INFO]: Writing Powered Verilog (logs: designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_def.log, designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_verilog.log)...
-[STEP 33]
-[INFO]: Writing Verilog (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/32-write_powered_verilog.log)...
-[STEP 34]
-[INFO]: Running LVS (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/34-lvs.lef.log)...
-% run_antenna_check
-[STEP 35]
-[INFO]: Running OpenROAD Antenna Rule Checker (log: designs/iiitb_rv32i/runs/fastpico/logs/signoff/35-arc.log)...
-% 
+[STEP 43]
+[INFO]: Running KLayout DRC (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/43-drc-klayout.log)...
+[INFO]: No KLayout DRC violations after GDS streaming out.
+[STEP 44]
+[INFO]: Running OpenROAD Antenna Rule Checker (log: designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/logs/signoff/44-arc.log)...
+[INFO]: Saving current set of views in 'designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/results/final'...
+[INFO]: Saving runtime environment...
+[INFO]: Generating final set of reports...
+[INFO]: Created manufacturability report at 'designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/reports/manufacturability.rpt'.
+[INFO]: Created metrics report at 'designs/iiitb_rv32i/runs/RUN_2024.04.09_03.57.04/reports/metrics.csv'.
+[INFO]: There are no max slew, max fanout or max capacitance violations in the design at the Typical corner.
+[INFO]: There are no hold violations in the design at the Typical corner.
+[INFO]: There are no setup violations in the design at the Typical corner.
+[SUCCESS]: Flow complete.
+[INFO]: Note that the following warnings have been generated:
+[WARNING]: 19 warnings found by linter
+[WARNING]: VSRC_LOC_FILES was not given a value, which may make the results of IR drop analysis inaccurate. If you are not integrating a top-level chip for manufacture, you may ignore this warning, otherwise, see the documentation for VSRC_LOC_FILES.
 ```
 
-No DRC errors found. 
+The flow completed without any issues.
 
 ### STA for post-synthesis and post-routing. 
 
-As we know after CTS we should remove clock skew from SDC file and add set_propogated_clock command. New versions of SDC and TCL files are:
-
-PostCTS SDC file `iiirv32i_post_cts.sdc`:
-
-```
-create_clock -period 10 -name clk {clk}
-set_clock_latency -source -max 3 {clk}
-set_clock_latency -source -min 1 {clk}
-set_clock_transition -max 0.4 {clk}
-set_clock_transition -min 0.1 {clk}
-set_clock_uncertainty -setup 0.2 [get_clock clk]
-set_clock_uncertainty -hold 0.1 [get_clock clk]
-set_propagated_clock [all_clocks]
-set_input_delay -max 3 [get_ports RN]
-set_input_delay -min 1 [get_ports RN]
-set_input_transition -max 0.5 [get_ports RN]
-set_input_transition -min 0.1 [get_ports RN]
-set_output_delay -clock clk -max 3 [get_ports NPC]
-set_output_delay -clock clk -min 0.5 [get_ports NPC]
-set_output_delay -clock clk -max 3 [get_ports WB_OUT]
-set_output_delay -clock clk -min 0.5 [get_ports WB_OUT] 
-```
-
-PostCTS TCL file `iiirv32i_post_cts.tcl`:
+For the STA we will use special TCL script `iiirv32i_post_cts.tcl`:
 
 ```
 read_liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
@@ -4744,32 +4722,195 @@ read_liberty ./lib/sky130_fd_sc_hd__tt_025C_1v80.lib
 #read_liberty ./lib/sky130_fd_sc_hd__ff_100C_1v95.lib
 #read_liberty ./lib/sky130_fd_sc_hd__ff_100C_1v65.lib
 
-read_verilog ../runs/fastpico/results/routing/iiitb_rv32i.pnl.v
+read_verilog ../runs/RUN_2024.04.09_03.57.04/results/final/verilog/gl/iiitb_rv32i.v
 link_design iiitb_rv32i
 current_design
-read_sdc iiirv32i_post_cts.sdc
+read_spef ../runs/RUN_2024.04.09_03.57.04/results/final/spef/iiitb_rv32i.spef
+read_sdc ../runs/RUN_2024.04.09_03.57.04/results/final/sdc/iiitb_rv32i.sdc
 report_checks -path_delay min_max -fields {nets cap slew input_pins} -digits {4} > sta_out_min-max.txt
 report_worst_slack -max -digits {4} > sta_out_worst-max.txt
 report_worst_slack -min -digits {4} > sta_out_worst-min.txt
 report_tns -digits {4} > sta_out_tns.txt
 report_wns -digits {4} > sta_out_wns.txt
-exit 
+exit
+```
+
+In that script the OpenSTA read powered netlist, SPEFs file and final constraints file for analysis.
+
+**STA report for Setup and typical process/voltage(1.8V)**
+
+```
+Startpoint: _14399_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _14463_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: max
+
+      Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------
+                       0.0000    0.0000   clock clk (rise edge)
+                       0.8373    0.8373   clock network delay (propagated)
+             0.1226    0.0000    0.8373 ^ _14399_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.0153    0.0788    0.3670    1.2044 v _14399_/Q (sky130_fd_sc_hd__dfxtp_1)
+                                          ID_EX_B[18] (net)
+             0.0788    0.0008    1.2051 v _10474_/A (sky130_fd_sc_hd__buf_1)
+   0.0150    0.0918    0.1559    1.3611 v _10474_/X (sky130_fd_sc_hd__buf_1)
+                                          _04036_ (net)
+             0.0918    0.0003    1.3614 v _10746_/A (sky130_fd_sc_hd__nor3_2)
+   0.0285    0.4914    0.4617    1.8231 ^ _10746_/Y (sky130_fd_sc_hd__nor3_2)
+                                          _04308_ (net)
+             0.4914    0.0015    1.8245 ^ _10749_/A (sky130_fd_sc_hd__nand4_4)
+   0.0303    0.2179    0.2395    2.0640 v _10749_/Y (sky130_fd_sc_hd__nand4_4)
+                                          _04311_ (net)
+             0.2179    0.0020    2.0660 v _10771_/D (sky130_fd_sc_hd__nor4_1)
+   0.0137    0.6028    0.5192    2.5852 ^ _10771_/Y (sky130_fd_sc_hd__nor4_1)
+                                          _04333_ (net)
+             0.6028    0.0003    2.5855 ^ _10779_/A (sky130_fd_sc_hd__buf_1)
+   0.0137    0.1679    0.2330    2.8185 ^ _10779_/X (sky130_fd_sc_hd__buf_1)
+                                          _04341_ (net)
+             0.1679    0.0002    2.8186 ^ _10786_/A (sky130_fd_sc_hd__dlymetal6s2s_1)
+   0.0207    0.2214    0.2488    3.0674 ^ _10786_/X (sky130_fd_sc_hd__dlymetal6s2s_1)
+                                          _04348_ (net)
+             0.2214    0.0008    3.0683 ^ _11048_/A2 (sky130_fd_sc_hd__a22oi_2)
+   0.0089    0.0797    0.1325    3.2008 v _11048_/Y (sky130_fd_sc_hd__a22oi_2)
+                                          _04609_ (net)
+             0.0797    0.0003    3.2011 v _11281_/A0 (sky130_fd_sc_hd__mux2_1)
+   0.0021    0.0516    0.2824    3.4835 v _11281_/X (sky130_fd_sc_hd__mux2_1)
+                                          _04840_ (net)
+             0.0516    0.0001    3.4835 v _11283_/A0 (sky130_fd_sc_hd__mux2_1)
+   0.0201    0.1342    0.3729    3.8565 v _11283_/X (sky130_fd_sc_hd__mux2_1)
+                                          _04842_ (net)
+             0.1342    0.0006    3.8571 v _11290_/A2 (sky130_fd_sc_hd__o22a_1)
+   0.0242    0.1401    0.3188    4.1758 v _11290_/X (sky130_fd_sc_hd__o22a_1)
+                                          _04849_ (net)
+             0.1401    0.0015    4.1774 v _11291_/B2 (sky130_fd_sc_hd__o2bb2a_1)
+   0.0037    0.0576    0.3169    4.4942 v _11291_/X (sky130_fd_sc_hd__o2bb2a_1)
+                                          _04850_ (net)
+             0.0576    0.0001    4.4944 v _11302_/A2 (sky130_fd_sc_hd__a211o_1)
+   0.0288    0.1547    0.4096    4.9039 v _11302_/X (sky130_fd_sc_hd__a211o_1)
+                                          _04861_ (net)
+             0.1547    0.0020    4.9060 v _11321_/A (sky130_fd_sc_hd__nand3_1)
+   0.0122    0.1470    0.1731    5.0791 ^ _11321_/Y (sky130_fd_sc_hd__nand3_1)
+                                          _04880_ (net)
+             0.1470    0.0006    5.0797 ^ _11353_/B1 (sky130_fd_sc_hd__a22o_2)
+   0.0432    0.2244    0.2980    5.3777 ^ _11353_/X (sky130_fd_sc_hd__a22o_2)
+                                          _01523_ (net)
+             0.2244    0.0015    5.3792 ^ _14463_/D (sky130_fd_sc_hd__dfxtp_1)
+                                 5.3792   data arrival time
+
+                      10.0000   10.0000   clock clk (rise edge)
+                       0.7395   10.7395   clock network delay (propagated)
+                      -0.2000   10.5395   clock uncertainty
+                       0.0000   10.5395   clock reconvergence pessimism
+                                10.5395 ^ _14463_/CLK (sky130_fd_sc_hd__dfxtp_1)
+                      -0.0910   10.4485   library setup time
+                                10.4485   data required time
+-------------------------------------------------------------------------------
+                                10.4485   data required time
+                                -5.3792   data arrival time
+-------------------------------------------------------------------------------
+                                 5.0693   slack (MET) 
+```
+
+**STA report for Hold and typical process/voltage(1.8V)**
+
+```
+Startpoint: _13907_ (rising edge-triggered flip-flop clocked by clk)
+Endpoint: _14453_ (rising edge-triggered flip-flop clocked by clk)
+Path Group: clk
+Path Type: min
+
+      Cap      Slew     Delay      Time   Description
+-------------------------------------------------------------------------------
+                       0.0000    0.0000   clock clk (rise edge)
+                       0.7588    0.7588   clock network delay (propagated)
+             0.0872    0.0000    0.7588 ^ _13907_/CLK (sky130_fd_sc_hd__dfxtp_1)
+   0.0062    0.0408    0.3210    1.0799 v _13907_/Q (sky130_fd_sc_hd__dfxtp_1)
+                                          IF_ID_NPC[25] (net)
+             0.0408    0.0002    1.0801 v _14453_/D (sky130_fd_sc_hd__dfxtp_1)
+                                 1.0801   data arrival time
+
+                       0.0000    0.0000   clock clk (rise edge)
+                       0.7865    0.7865   clock network delay (propagated)
+                       0.1000    0.8865   clock uncertainty
+                       0.0000    0.8865   clock reconvergence pessimism
+                                 0.8865 ^ _14453_/CLK (sky130_fd_sc_hd__dfxtp_1)
+                      -0.0341    0.8524   library hold time
+                                 0.8524   data required time
+-------------------------------------------------------------------------------
+                                 0.8524   data required time
+                                -1.0801   data arrival time
+-------------------------------------------------------------------------------
+                                 0.2276   slack (MET) 
 ```
 
 **Setup slack graph**
 
-![iiitb_rv32a-STA-setup](https://github.com/pitman75/vsd-hdp/assets/12179612/e6084ff8-e160-45f2-8e4a-f3dea3a5f7ec)
+![iiitb_rv32a-STA-setup](https://github.com/pitman75/vsd-hdp/assets/12179612/14cb580a-3fcf-4026-8320-98741566e456)
 
 
 **Hold slack graph**
 
-![iiitb_rv32a-STA-hold](https://github.com/pitman75/vsd-hdp/assets/12179612/8570b92f-b67f-4ff3-993d-ab89ca6a9243)
+![iiitb_rv32a-STA-hold](https://github.com/pitman75/vsd-hdp/assets/12179612/75540079-c1be-40e5-b55d-d2b577feb102)
+
 
 For typical process and typical voltage 1.8V we acheive right values for hold/setup slack. Both are positive.
 
-GDSII files for production are there
+**Power**
 
-![openlane_gds_files](https://github.com/pitman75/vsd-hdp/assets/12179612/7566db4f-9d80-4993-befc-1f0aba9f7cf7)
+```
+===========================================================================
+ report_power
+============================================================================
+======================= Fastest Corner ===================================
+
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             9.54e-03   1.78e-03   5.28e-08   1.13e-02  48.3%
+Combinational          3.18e-03   4.96e-03   4.56e-08   8.14e-03  34.7%
+Clock                  1.47e-03   2.52e-03   1.97e-08   3.99e-03  17.0%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.42e-02   9.27e-03   1.18e-07   2.35e-02 100.0%
+                          60.5%      39.5%       0.0%
+
+======================= Slowest Corner ===================================
+
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             6.46e-03   1.18e-03   2.31e-05   7.66e-03  48.1%
+Combinational          2.30e-03   3.28e-03   3.91e-05   5.61e-03  35.2%
+Clock                  1.06e-03   1.60e-03   1.57e-06   2.66e-03  16.7%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  9.82e-03   6.05e-03   6.38e-05   1.59e-02 100.0%
+                          61.6%      38.0%       0.4%
+
+======================= Typical Corner ===================================
+
+Group                  Internal  Switching    Leakage      Total
+                          Power      Power      Power      Power (Watts)
+----------------------------------------------------------------
+Sequential             8.26e-03   1.50e-03   4.22e-08   9.76e-03  48.3%
+Combinational          2.86e-03   4.18e-03   3.16e-08   7.05e-03  34.9%
+Clock                  1.29e-03   2.11e-03   1.61e-08   3.40e-03  16.8%
+Macro                  0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+Pad                    0.00e+00   0.00e+00   0.00e+00   0.00e+00   0.0%
+----------------------------------------------------------------
+Total                  1.24e-02   7.79e-03   8.99e-08   2.02e-02 100.0%
+                          61.4%      38.6%       0.0%
+```
+
+**Final report**
+
+ - TotalCells: 23256
+ - CoreArea_um^2: 178808.992
+ - DIEAREA_mm^2 : 0.194174539625
+ - Final_Util: 53.9892
+ - wire_length: 400328
 
 ASIC chip looks like
 
