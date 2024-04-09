@@ -4511,6 +4511,8 @@ set ::env(FP_PDN_MULTILAYER) {1}
 
 set ::env(QUIT_ON_SYNTH_CHECKS) 0
 set ::env(BASE_SDC_FILE) "$::env(DESIGN_DIR)/src/iiirv32i.sdc"
+set ::env(PNR_SDC_FILE) "$::env(DESIGN_DIR)/src/iiirv32i_post_cts.sdc"
+set ::env(SIGNOFF_SDC_FILE) "$::env(DESIGN_DIR)/src/iiirv32i_post_cts.sdc" 
 
 set ::env(SYNTH_STRATEGY) "DELAY 1"
 set ::env(SYNTH_SIZING) 1
